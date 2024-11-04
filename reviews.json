@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Aishah Ahmad",
+        "address": "Kota Bharu, Kelantan",
+        "review": "Kelantan has beautiful beaches and unique culture. My stay at Hotel Perdana was amazing with top-notch service.",
+        "profileImg": "assets/images/client/us1.jpg"
+    },
+    {
+        "name": "Fatimah Az Zahra",
+        "address": "Kuala Lumpur",
+        "review": "Kuala Lumpur is vibrant and modern. The views from Traders Hotel overlooking the Petronas Towers were breathtaking.",
+        "profileImg": "assets/images/client/us2.jpg"
+    },
+    {
+        "name": "Nurul Ain Rahman",
+        "address": "Melaka",
+        "review": "Melaka’s historical charm is unforgettable. Staying at the Majestic Hotel added a touch of elegance to the experience.",
+        "profileImg": "assets/images/client/us3.jpg"
+    },
+    {
+        "name": "Ros Yaacob",
+        "address": "Bukit Fraser, Pahang",
+        "review": "The serenity of Bukit Fraser in Pahang was refreshing. I enjoyed the cool air and beautiful trails. I really love it and enjoy my trip.",
+        "profileImg": "assets/images/client/us4.jpg"
+    },
+    {
+        "name": "Adam Zainal",
+        "address": "George Town, Penang",
+        "review": "Penang has an incredible mix of culture and food. My stay at the Eastern & Oriental Hotel was luxurious and relaxing.",
+        "profileImg": "assets/images/client/us5.jpg"
+    },
+    {
+        "name": "Ahmad Faiz Othman",
+        "address": "Ipoh, Perak",
+        "review": "Ipoh’s limestone caves and heritage buildings were a highlight of my trip. The Banjaran Hotsprings Retreat is a hidden gem.",
+        "profileImg": "assets/images/client/us6.jpg"
+    },
+    {
+        "name": "Roslina Abdul",
+        "address": "Kuantan, Pahang",
+        "review": "Kuantan has pristine beaches and a relaxed vibe. My stay at Swiss-Garden Beach Resort was comfortable and enjoyable.",
+        "profileImg": "assets/images/client/us7.jpg"
+    }
+]

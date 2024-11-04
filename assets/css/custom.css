@@ -1,0 +1,23 @@
+.money_input {
+    display: flex;
+    align-items: center;
+}
+
+.money_input span {
+    margin-right: 5px;
+    color: gray;
+}
+
+.travel-filter-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.travel-filter{
+    flex: 1;
+}
+
+.travel-filter:first-of-type {
+    margin-right: 10px;
+}
+
