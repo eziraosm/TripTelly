@@ -75,6 +75,8 @@ if (isset($_SESSION['userID'])) {
 
 		<link rel="stylesheet" href="assets/css/custom.css">
 
+		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 
@@ -110,6 +112,11 @@ if (isset($_SESSION['userID'])) {
 								<div class="collapse navbar-collapse">		  
 									<ul class="nav navbar-nav navbar-right">
 										<li>
+											<button class="cart-btn">
+												<i class="bx bxs-cart"></i>
+											</button>
+										</li>
+										<li>
 										<?php
 											if (isset($_SESSION['userID']) && isset($username)) {
 												echo '<button class="book-btn" onclick="window.location.href = \'fn_signout.php\'">' . htmlspecialchars($username) . '</button>';
@@ -132,8 +139,78 @@ if (isset($_SESSION['userID'])) {
 
 		
 		<!--about-us start -->
-		<section id="home" class="about-us">
-			
+		<section id="home" class="result">
+			<div class="bus-container">
+				<div class="table-title">
+					<h3>Bus Trip List</h3>
+				</div>
+				<div class="origin-dest-container">
+					<h4>Kuala Lumpur</h4> <i class="bx bx-right-arrow-alt"></i> <h4>Kelantan</h4>
+				</div>
+				<div class="table-container">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Bus Name</th>
+							<th>Station</th>
+							<th>Departure Time</th>
+							<th>Arrival Time</th>
+							<th>Price</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>SuperBus Express</td>
+							<td>Kuala Lumpur</td>
+							<td>08:00 AM</td>
+							<td>12:00 PM</td>
+							<td>RM 35</td>
+							<td><button>Book</button></td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>Golden Coach</td>
+							<td>Penang</td>
+							<td>09:30 AM</td>
+							<td>02:00 PM</td>
+							<td>RM 45</td>
+							<td><button>Book</button></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>CityLink Bus</td>
+							<td>Johor Bahru</td>
+							<td>10:00 AM</td>
+							<td>02:30 PM</td>
+							<td>RM 50</td>
+							<td><button>Book</button></td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>ExpressWay Travels</td>
+							<td>Melaka</td>
+							<td>11:15 AM</td>
+							<td>03:00 PM</td>
+							<td>RM 25</td>
+							<td><button>Book</button></td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>Comfort Bus</td>
+							<td>Ipoh</td>
+							<td>01:00 PM</td>
+							<td>04:30 PM</td>
+							<td>RM 40</td>
+							<td><button>Book</button></td>
+						</tr>
+					</tbody>
+				</table>
+
+				</div>
+			</div>
 		</section><!--/.about-us-->
 		<!--about-us end -->
 
