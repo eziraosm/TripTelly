@@ -1,6 +1,12 @@
 <?php
 session_start(); 
 include 'dbconnect.php';
+
+// date for date picker
+$todayDate = date("d/m/Y");
+$returnDate = date("m/d/Y", strtotime("+5 days"));
+$today = date("Y-m-d");
+
 $apiUrl = 'https://newsapi.org/v2/everything?apiKey=c1440b57c68c4a419497642de1a65677&q="travel"+AND+vacation+OR+Budget+travel+tips&pageSize=7';
 
 $ch = curl_init();
@@ -272,8 +278,6 @@ if (isset($_SESSION['userID'])) {
 																	<option value="penang">Penang</option>
 																	<option value="perak">Perak</option>
 																	<option value="perlis">Perlis</option>
-																	<option value="sabah">Sabah</option>
-																	<option value="sarawak">Sarawak</option>
 																	<option value="selangor">Selangor</option>
 																	<option value="terengganu">Terengganu</option>
 																	<option value="kuala lumpur">Wilayah Persekutuan Kuala Lumpur</option>
@@ -296,8 +300,6 @@ if (isset($_SESSION['userID'])) {
 																	<option value="penang">Penang</option>
 																	<option value="perak">Perak</option>
 																	<option value="perlis">Perlis</option>
-																	<option value="sabah">Sabah</option>
-																	<option value="sarawak">Sarawak</option>
 																	<option value="selangor">Selangor</option>
 																	<option value="terengganu">Terengganu</option>
 																	<option value="kuala lumpur">Wilayah Persekutuan Kuala Lumpur</option>
@@ -314,7 +316,7 @@ if (isset($_SESSION['userID'])) {
 														<div class="single-tab-select-box">
 															<h2>Departure</h2>
 															<div class="travel-check-icon">
-																	<input type="text" name="departure_date" class="form-control" data-toggle="datepicker" placeholder="12/01/2024 " required>
+																	<input type="text" name="departure_date" class="form-control" data-toggle="datepicker" min="<?php echo $today; ?>" placeholder="<?php echo $todayDate ?>" required>
 															</div><!-- /.travel-check-icon -->
 														</div><!--/.single-tab-select-box-->
 													</div><!--/.col-->
@@ -323,7 +325,7 @@ if (isset($_SESSION['userID'])) {
 														<div class="single-tab-select-box">
 															<h2>Return</h2>
 															<div class="travel-check-icon">
-																	<input type="text" name="return_date" class="form-control"  data-toggle="datepicker" placeholder="22/01/2024 " required>
+																	<input type="text" name="return_date" class="form-control"  data-toggle="datepicker" min="<?php echo $today; ?>" placeholder="<?php echo $returnDate ?>" required>
 															</div><!-- /.travel-check-icon -->
 														</div><!--/.single-tab-select-box-->
 													</div><!--/.col-->
@@ -738,6 +740,16 @@ if (isset($_SESSION['userID'])) {
 				}
 
 				requestAnimationFrame(smoothScroll);  // Start smooth scrolling
+			});
+		</script>
+		<script>
+			// JavaScript to update the 'min' date for return_date based on selected departure_date
+			document.getElementById('departureDate').addEventListener('change', function() {
+				// Get selected departure date
+				const departureDate = this.value;
+
+				// Set the min attribute of return_date to be the selected departure date
+				document.getElementById('returnDate').min = departureDate;
 			});
 		</script>
 	</body>
