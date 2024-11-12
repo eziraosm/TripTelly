@@ -42,7 +42,6 @@
     align-items: center;
 }
 
-
 .result{
 	display: flex;
     justify-content: center;
@@ -65,10 +64,10 @@
 .bus-container {
     z-index: 1;
     width: 90%;
-    height: 600px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    margin-top: 20px;
     background-color: rgba(62, 160, 230, 0.5);
     padding: 20px;
     border-radius: 30px;
