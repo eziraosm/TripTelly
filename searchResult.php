@@ -18,6 +18,26 @@ if (isset($_SESSION['userID'])) {
 		$username = null;
 	}
 }
+
+echo '<pre>';
+print_r($_SESSION['hotel_data']);
+echo '</pre>';
+
+
+// Check if hotel data exists in the session
+if (!isset($_SESSION['hotel_data'])) {
+    echo "No search results found.";
+    exit();
+}
+
+$hotel_data = $_SESSION['hotel_data']; // Retrieve the hotel data from the session
+
+// Function to generate random price up to maxHotelPrice
+function generateRandomPrice($maxHotelPrice) {
+    return rand(100, $maxHotelPrice);
+}
+
+
 ?>
 
 
@@ -143,76 +163,58 @@ if (isset($_SESSION['userID'])) {
 			<div class="result">
 				<div class="bus-container">
 					<div class="table-title">
-						<h3>Bus Trip List</h3>
+						<h3>Hotel List</h3>
 					</div>
 					<div class="origin-dest-container">
-						<h4>Kuala Lumpur</h4> <i class="bx bx-right-arrow-alt"></i> <h4>Kelantan</h4>
+						<h4>Kuala Lumpur</h4>
 					</div>
 					<div class="table-container">
 					<table class="table">
 						<thead>
 							<tr>
 								<th scope="col">No</th>
-								<th scope="col">Bus Name</th>
-								<th scope="col">Station</th>
-								<th scope="col">Departure Time</th>
-								<th scope="col">Arrival Time</th>
+								<th scope="col">Hotel Name</th>
+								<th scope="col">Location</th>
+								<th scope="col">Ratings</th>
+								<th scope="col">Image</th>
 								<th scope="col">Price</th>
+								<th scope="col">Map</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td scope="row">1</td>
-								<td>SuperBus Express</td>
-								<td>Kuala Lumpur</td>
-								<td>08:00 AM</td>
-								<td>12:00 PM</td>
-								<td>RM 35</td>
-								<td><button>Book</button></td>
-							</tr>
-							<tr>
-								<td scope="row">2</td>
-								<td>Golden Coach</td>
-								<td>Penang</td>
-								<td>09:30 AM</td>
-								<td>02:00 PM</td>
-								<td>RM 45</td>
-								<td><button>Book</button></td>
-							</tr>
-							<tr>
-								<td scope="row">3</td>
-								<td>CityLink Bus</td>
-								<td>Johor Bahru</td>
-								<td>10:00 AM</td>
-								<td>02:30 PM</td>
-								<td>RM 50</td>
-								<td><button>Book</button></td>
-							</tr>
-							<tr>
-								<td scope="row">4</td>
-								<td>ExpressWay Travels</td>
-								<td>Melaka</td>
-								<td>11:15 AM</td>
-								<td>03:00 PM</td>
-								<td>RM 25</td>
-								<td><button>Book</button></td>
-							</tr>
-							<tr>
-								<td scope="row">5</td>
-								<td>Comfort Bus</td>
-								<td>Ipoh</td>
-								<td>01:00 PM</td>
-								<td>04:30 PM</td>
-								<td>RM 40</td>
-								<td><button>Book</button></td>
-							</tr>
+							<?php
+							$count = 1;
+							foreach ($hotel_data as $hotel) {
+								$price = generateRandomPrice(200); // Assuming max price is 200
+
+								$photoUrl = isset($hotel['photos'][0]['photo_reference']) ?
+									"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" . $hotel['photos'][0]['photo_reference'] . "&key=YOUR_GOOGLE_API_KEY" : '';
+
+								echo "<tr>";
+								echo "<td scope='row'>{$count}</td>";
+								echo "<td>" . htmlspecialchars($hotel['name']) . "</td>";
+								echo "<td>" . htmlspecialchars($hotel['vicinity']) . "</td>";
+								echo "<td>" . htmlspecialchars($hotel['rating'] ?? 'N/A') . "</td>";
+								echo "<td><img src='" . htmlspecialchars($photoUrl) . "' alt='Hotel Image' style='width:100px;height:auto;'></td>";
+								echo "<td>RM " . number_format($price, 2) . "</td>";
+								echo "<td><a href='https://www.google.com/maps/search/?api=1&query=" . $hotel['geometry']['location']['lat'] . "," . $hotel['geometry']['location']['lng'] . "' target='_blank'><button>Google Map</button></a></td>";
+								echo "<td><button>Book</button></td>";
+								echo "</tr>";
+
+								$count++;
+								if ($count > 20) break; // Limit to 20 hotels
+							}
+							if ($count == 1) {
+								echo "<tr><td colspan='8'>No hotels found within your budget.</td></tr>";
+							}
+							?>
 						</tbody>
 					</table>
 					</div>
 				</div>
 			</div>
-		</section><!--/.about-us-->
+		</section>
 		<!--about-us end -->
 
 		<!-- footer-copyright start -->
