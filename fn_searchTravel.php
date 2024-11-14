@@ -19,30 +19,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Google Places API key
     $apiKey = 'AIzaSyBPPRCXXI6VEcmYilJ9NLelumfUuEfI6qs';
 
-    // Define the location and other search parameters
-    $location = '3.1390,101.6869'; // Coordinates for Kuala Lumpur, Malaysia
-    $radius = 5000; // Search within 5 km radius
-    $type = 'lodging'; // Type filter for hotels/lodging
+    // Step 1: Convert destination location to latitude and longitude using Geocoding API
+    $geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($destination_loc) . "&key=$apiKey";
 
-    // Build the URL for the API request
-    $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$location&radius=$radius&type=$type&key=$apiKey";
+    // Make the API request for geocoding
+    $geocodeResponse = file_get_contents($geocodeUrl);
 
-    // Make the API request
-    $response = file_get_contents($url);
-
-    // Check if the response was successful
-    if ($response === FALSE) {
-        die("Error occurred while fetching data from Google Places API");
+    if ($geocodeResponse === FALSE) {
+        die("Error occurred while fetching data from Google Geocoding API");
     }
 
-    // Decode JSON response into an array
-    $data = json_decode($response, true);
+    $geocodeData = json_decode($geocodeResponse, true);
 
-    // Store the results in session
-    $_SESSION['hotel_data'] = $data['results']; // Store only the results array
+    // Check if any results were returned
+    if (isset($geocodeData['results'][0])) {
+        $latitude = $geocodeData['results'][0]['geometry']['location']['lat'];
+        $longitude = $geocodeData['results'][0]['geometry']['location']['lng'];
+        
+        // Step 2: Use the coordinates to search for hotels
+        $radius = 5000; // Search within a 5 km radius
+        $type = 'lodging'; // Filter for lodging type
 
-    // Redirect to searchResult.php
-    header("Location: searchResult.php");
-    exit();
+        $placesUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$latitude,$longitude&radius=$radius&type=$type&key=$apiKey";
+
+        // Make the API request for nearby places
+        $placesResponse = file_get_contents($placesUrl);
+
+        if ($placesResponse === FALSE) {
+            die("Error occurred while fetching data from Google Places API");
+        }
+
+        $placesData = json_decode($placesResponse, true);
+
+        // Store the results in the session
+        $_SESSION['hotel_data'] = $placesData['results'];
+        $_SESSION['max_budget'] = $max_budget;
+
+        // Redirect to searchResult.php
+        header("Location: searchResult.php");
+        exit();
+    } else {
+        $_SESSION['errorMsg'] = "Location not found. Please enter a valid destination.";
+        header("Location: searchForm.php");
+        exit();
+    }
 }
+
 ?>

@@ -19,10 +19,6 @@ if (isset($_SESSION['userID'])) {
 	}
 }
 
-echo '<pre>';
-print_r($_SESSION['hotel_data']);
-echo '</pre>';
-
 
 // Check if hotel data exists in the session
 if (!isset($_SESSION['hotel_data'])) {
@@ -31,152 +27,73 @@ if (!isset($_SESSION['hotel_data'])) {
 }
 
 $hotel_data = $_SESSION['hotel_data']; // Retrieve the hotel data from the session
-
+$hotel_budget = $_SESSION['max_budget'] * 0.25;
 // Function to generate random price up to maxHotelPrice
 function generateRandomPrice($maxHotelPrice) {
-    return rand(100, $maxHotelPrice);
+    return rand(80, $maxHotelPrice);
 }
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html class="no-js"  lang="en">
 
 	<head>
-		<!-- META DATA -->
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-		<!--font-family-->
-		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet" />
-
-		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
-
-		<!-- TITLE OF SITE -->
-		<title>Travel</title>
-
-		<!-- favicon img -->
-		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
-
-		<!--font-awesome.min.css-->
-		<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
-
-		<!--animate.css-->
-		<link rel="stylesheet" href="assets/css/animate.css" />
-
-		<!--hover.css-->
-		<link rel="stylesheet" href="assets/css/hover-min.css">
-
-		<!--datepicker.css-->
-		<link rel="stylesheet"  href="assets/css/datepicker.css" >
-
-		<!--owl.carousel.css-->
-        <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-		<link rel="stylesheet" href="assets/css/owl.theme.default.min.css"/>
-
-		<!-- range css-->
-        <link rel="stylesheet" href="assets/css/jquery-ui.min.css" />
-
-		<!--bootstrap.min.css-->
-		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-
-		<!-- bootsnav -->
-		<link rel="stylesheet" href="assets/css/bootsnav.css"/>
 
 		<!--style.css-->
 		<link rel="stylesheet" href="assets/css/custom.css">
-		<link rel="stylesheet" href="assets/css/style.css" />
-
-		<!--responsive.css-->
-		<link rel="stylesheet" href="assets/css/responsive.css" />
-
-
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title>Search Result</title>	
+		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
 		<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-
-		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-
-		<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 	</head>
 
 	<body>
-		
-		<header class="top-area">
-			<div class="header-area">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-2">
-							<div class="logo">
-								<a href="index.php">
-									trip<span>Telly</span>
-								</a>
-							</div><!-- /.logo-->
-						</div><!-- /.col-->
-						<div class="col-sm-10">
-							<div class="main-menu">
-							
-								<!-- Brand and toggle get grouped for better mobile display -->
-								<div class="navbar-header">
-									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-										<i class="fa fa-bars"></i>
-									</button><!-- / button-->
-								</div><!-- /.navbar-header-->
-								<div class="collapse navbar-collapse">		  
-									<ul class="nav navbar-nav navbar-right">
-										<li>
-											<button class="cart-btn">
-												<i class="bx bxs-cart"></i>
-											</button>
-										</li>
-										<li>
-										<?php
-											if (isset($_SESSION['userID']) && isset($username)) {
-												echo '<button class="book-btn" onclick="window.location.href = \'fn_signout.php\'">' . htmlspecialchars($username) . '</button>';
-											} else {
-												echo '<button class="book-btn" onclick="window.location.href = \'signin.php\'">Sign In</button>';
-											}
-										?>
-										</li><!--/.project-btn--> 
-									</ul>
-								</div><!-- /.navbar-collapse -->
-							</div><!-- /.main-menu-->
-						</div><!-- /.col-->
-					</div><!-- /.row -->
-					<div class="home-border"></div><!-- /.home-border-->
-				</div><!-- /.container-->
-			</div><!-- /.header-area -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="logo">
+				<a href="index.php">
+					trip<span>Telly</span>
+				</a>
+			</div>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-		</header><!-- /.top-area-->
-		<!-- main-menu End -->
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+				<!-- <li class="nav-item active">
+					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li> -->
+				</ul>
+				<div class="action-btn">
+					<button class="cart-btn">
+						<i class="bx bxs-cart"></i>
+					</button>
+					<button type="button" class="btn btn-secondary" onclick="window.location.href='fn_signout.php'"><?php echo htmlspecialchars($username) ?></button>
+				</div>
+			</div>
+		</nav>
 
-		
-		<!--about-us start -->
-		<section id="home">
-			<div class="result">
-				<div class="bus-container">
-					<div class="table-title">
-						<h3>Hotel List</h3>
-					</div>
-					<div class="origin-dest-container">
-						<h4>Kuala Lumpur</h4>
-					</div>
-					<div class="table-container">
-					<table class="table">
-						<thead>
+		<main>
+			<div class="container">
+				<div class="title">
+					<h3>Hotels</h3>
+					<h5>Select accommodations within your budget</h5>
+				</div>
+				<div class="hotel-table">
+				<table class="table table-hover table-dark">
+					<thead>
 							<tr>
 								<th scope="col">No</th>
 								<th scope="col">Hotel Name</th>
 								<th scope="col">Location</th>
 								<th scope="col">Ratings</th>
-								<th scope="col">Image</th>
 								<th scope="col">Price</th>
 								<th scope="col">Map</th>
 								<th scope="col">Action</th>
@@ -186,7 +103,7 @@ function generateRandomPrice($maxHotelPrice) {
 							<?php
 							$count = 1;
 							foreach ($hotel_data as $hotel) {
-								$price = generateRandomPrice(200); // Assuming max price is 200
+								$price = generateRandomPrice($hotel_budget); 
 
 								$photoUrl = isset($hotel['photos'][0]['photo_reference']) ?
 									"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" . $hotel['photos'][0]['photo_reference'] . "&key=YOUR_GOOGLE_API_KEY" : '';
@@ -196,106 +113,23 @@ function generateRandomPrice($maxHotelPrice) {
 								echo "<td>" . htmlspecialchars($hotel['name']) . "</td>";
 								echo "<td>" . htmlspecialchars($hotel['vicinity']) . "</td>";
 								echo "<td>" . htmlspecialchars($hotel['rating'] ?? 'N/A') . "</td>";
-								echo "<td><img src='" . htmlspecialchars($photoUrl) . "' alt='Hotel Image' style='width:100px;height:auto;'></td>";
 								echo "<td>RM " . number_format($price, 2) . "</td>";
-								echo "<td><a href='https://www.google.com/maps/search/?api=1&query=" . $hotel['geometry']['location']['lat'] . "," . $hotel['geometry']['location']['lng'] . "' target='_blank'><button>Google Map</button></a></td>";
-								echo "<td><button>Book</button></td>";
+								echo "<td><a href='https://www.google.com/maps/search/?api=1&query=" . $hotel['geometry']['location']['lat'] . "," . $hotel['geometry']['location']['lng'] . "' target='_blank'><button class='btn btn-primary'>GMap</button></a></td>";
+								echo "<td><button class='btn btn-success'>Book</button></td>";
 								echo "</tr>";
 
 								$count++;
-								if ($count > 20) break; // Limit to 20 hotels
+								if ($count > 10) break; // Limit to 20 hotels
 							}
 							if ($count == 1) {
 								echo "<tr><td colspan='8'>No hotels found within your budget.</td></tr>";
 							}
 							?>
 						</tbody>
-					</table>
-					</div>
+				</table>
 				</div>
 			</div>
-		</section>
-		<!--about-us end -->
-
-		<!-- footer-copyright start -->
-		<footer  class="footer-copyright">
-			<div class="container">
-				
-				<hr>
-				<div class="foot-icons ">
-					<ul class="footer-social-links list-inline list-unstyled">
-		                <li><a href="#" target="_blank" class="foot-icon-bg-1"><i class="fa fa-facebook"></i></a></li>
-		                <li><a href="#" target="_blank" class="foot-icon-bg-2"><i class="fa fa-twitter"></i></a></li>
-		                <li><a href="#" target="_blank" class="foot-icon-bg-3"><i class="fa fa-instagram"></i></a></li>
-		        	</ul>
-		        	<p>&copy; 2017 <a href="https://www.themesine.com">ThemeSINE</a>. All Right Reserved</p>
-
-		        </div><!--/.foot-icons-->
-				<div id="scroll-Top">
-					<i class="fa fa-angle-double-up return-to-top" id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
-				</div><!--/.scroll-Top-->
-			</div><!-- /.container-->
-
-		</footer><!-- /.footer-copyright-->
-		<!-- footer-copyright end -->
-
-
-
-
-		<script src="assets/js/jquery.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-
-		<!--modernizr.min.js-->
-		<script  src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-
-
-		<!--bootstrap.min.js-->
-		<script  src="assets/js/bootstrap.min.js"></script>
-
-		<!-- bootsnav js -->
-		<script src="assets/js/bootsnav.js"></script>
-
-		<!-- jquery.filterizr.min.js -->
-		<script src="assets/js/jquery.filterizr.min.js"></script>
-
-		<script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-
-		<!--jquery-ui.min.js-->
-        <script src="assets/js/jquery-ui.min.js"></script>
-
-        <!-- counter js -->
-		<script src="assets/js/jquery.counterup.min.js"></script>
-		<script src="assets/js/waypoints.min.js"></script>
-
-		<!--owl.carousel.js-->
-        <script  src="assets/js/owl.carousel.min.js"></script>
-
-        <!-- jquery.sticky.js -->
-		<script src="assets/js/jquery.sticky.js"></script>
-
-        <!--datepicker.js-->
-        <script  src="assets/js/datepicker.js"></script>
-
-		<!--Custom JS-->
-		<script src="assets/js/custom.js"></script>
-
-		<script>
-			document.getElementById("scrollButton").addEventListener("click", function() {
-				let totalScrollDistance = 700; // Total pixels to scroll down (100 pixels x 7 times)
-				let scrollStep = 5;  // Small increments of pixels for smooth scrolling
-				let currentScroll = 0;  // Tracks how much has been scrolled
-
-				function smoothScroll() {
-					if (currentScroll < totalScrollDistance) {
-						window.scrollBy(0, scrollStep);
-						currentScroll += scrollStep;
-						requestAnimationFrame(smoothScroll);  // Continue smooth scrolling
-					}
-				}
-
-				requestAnimationFrame(smoothScroll);  // Start smooth scrolling
-			});
-		</script>
+		</main>
 	</body>
-
+		
 </html>
