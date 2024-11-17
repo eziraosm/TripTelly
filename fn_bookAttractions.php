@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt_att -> bind_param("ssssd", $currentCartID, $place_id, $place_name, $place_address, $place_price);
 
     if ($stmt_att -> execute()) {
-        $_SESSION['success_msg'] = "Attraction added to cart successfully!";
+        $_SESSION['success_msg'] = $place_name . " added to cart successfully!";
         header("Location: searchAttractions.php");
     }
 }

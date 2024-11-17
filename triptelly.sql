@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2024 at 04:15 PM
+-- Generation Time: Nov 17, 2024 at 05:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,73 @@ SET time_zone = "+00:00";
 --
 -- Database: `triptelly`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cartID` varchar(11) NOT NULL,
+  `userID` varchar(225) NOT NULL,
+  `fromLocation` varchar(255) NOT NULL,
+  `destinationLocation` varchar(255) NOT NULL,
+  `departureDate` date NOT NULL,
+  `returnDate` date NOT NULL,
+  `member` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cartID`, `userID`, `fromLocation`, `destinationLocation`, `departureDate`, `returnDate`, `member`) VALUES
+('aNO5CIHsy3H', '69e6a1311ecaca54', 'kedah', 'kuala lumpur', '2011-10-08', '1977-04-25', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_attractions`
+--
+
+CREATE TABLE `cart_attractions` (
+  `cartID` varchar(11) NOT NULL,
+  `attID` varchar(225) NOT NULL COMMENT 'google places id',
+  `attName` varchar(255) NOT NULL,
+  `attLocation` varchar(255) NOT NULL,
+  `attPrice` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart_attractions`
+--
+
+INSERT INTO `cart_attractions` (`cartID`, `attID`, `attName`, `attLocation`, `attPrice`) VALUES
+('aNO5CIHsy3H', 'ChIJ9_6dH8dJzDERC7k4SHbqU3o', 'The National Museum of Malaysia', 'Department of Museum, Jalan Damansara, Tasik Perdana, Kuala Lumpur', 67),
+('aNO5CIHsy3H', 'ChIJqaULqPxSzDERn8ySiuUKEmw', 'Trick Art Museum @ i-City', 'i-Gallery, Jalan Multimedia 7/Ah, I-city, Shah Alam', 100),
+('aNO5CIHsy3H', 'ChIJvy1SAMZPzDERS6HN5ms9Xwo', 'Shawnalyzer Studio', '15, Jalan Zuhrah U5/151, Taman Subang Murni, Shah Alam', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_hotel`
+--
+
+CREATE TABLE `cart_hotel` (
+  `cartID` varchar(11) NOT NULL,
+  `hotelID` varchar(255) NOT NULL COMMENT 'google places ID',
+  `hotelName` varchar(255) NOT NULL,
+  `hotelLocation` varchar(255) NOT NULL,
+  `hotelPrice` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart_hotel`
+--
+
+INSERT INTO `cart_hotel` (`cartID`, `hotelID`, `hotelName`, `hotelLocation`, `hotelPrice`) VALUES
+('aNO5CIHsy3H', 'ChIJNySdvdFJzDERZLNbuoRR-DQ', 'Impiana KLCC Hotel', 'Impiana KLCC Hotel, 13, Jalan Pinang, Kuala Lumpur', 60.00);
 
 -- --------------------------------------------------------
 
@@ -45,6 +112,26 @@ INSERT INTO `user` (`userID`, `username`, `userFname`, `userEmail`, `userPasswor
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cartID`),
+  ADD KEY `userID` (`userID`);
+
+--
+-- Indexes for table `cart_attractions`
+--
+ALTER TABLE `cart_attractions`
+  ADD PRIMARY KEY (`attID`),
+  ADD KEY `cartID` (`cartID`);
+
+--
+-- Indexes for table `cart_hotel`
+--
+ALTER TABLE `cart_hotel`
+  ADD PRIMARY KEY (`hotelID`);
 
 --
 -- Indexes for table `user`

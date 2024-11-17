@@ -3,19 +3,47 @@ session_start();
 include 'dbconnect.php';
 
 if (isset($_SESSION['userID'])) {
-
     $userID = $_SESSION['userID'];
-    $userDataQuery = "SELECT * FROM USER WHERE userID = ?";
-    $stmt = $conn->prepare(query: $userDataQuery);
+
+    // Fetch username
+    $userDataQuery = "SELECT username FROM user WHERE userID = ?";
+    $stmt = $conn->prepare($userDataQuery);
     $stmt->bind_param("s", $userID);
     $stmt->execute();
     $result = $stmt->get_result();
+    $username = $result->num_rows > 0 ? $result->fetch_assoc()['username'] : 'Guest';
 
-    if ($result->num_rows > 0) {
-        $userData = $result->fetch_assoc();
-        $username = $userData['username'];
-    } else {
-        $username = null;
+    // Fetch cart details (excluding hotels and attractions)
+    $cartQuery = "SELECT fromLocation, destinationLocation, departureDate, returnDate, member FROM cart WHERE userID = ?";
+    $stmt = $conn->prepare($cartQuery);
+    $stmt->bind_param("s", $userID);
+    $stmt->execute();
+    $cartResult = $stmt->get_result();
+    $cartData = [];
+    while ($row = $cartResult->fetch_assoc()) {
+        $cartData[] = $row;
+    }
+
+    // Fetch hotel data
+    $hotelQuery = "SELECT hotelID, hotelName, hotelLocation, hotelPrice, cartID FROM cart_hotel WHERE cartID IN (SELECT cartID FROM cart WHERE userID = ?)";
+    $stmt = $conn->prepare($hotelQuery);
+    $stmt->bind_param("s", $userID);
+    $stmt->execute();
+    $hotelResult = $stmt->get_result();
+    $hotelData = [];
+    while ($row = $hotelResult->fetch_assoc()) {
+        $hotelData[] = $row;
+    }
+
+    // Fetch attraction data
+    $attQuery = "SELECT attID, attName, attLocation, attPrice, cartID FROM cart_attractions WHERE cartID IN (SELECT cartID FROM cart WHERE userID = ?)";
+    $stmt = $conn->prepare($attQuery);
+    $stmt->bind_param("s", $userID);
+    $stmt->execute();
+    $attResult = $stmt->get_result();
+    $attData = [];
+    while ($row = $attResult->fetch_assoc()) {
+        $attData[] = $row;
     }
 }
 ?>
@@ -23,7 +51,6 @@ if (isset($_SESSION['userID'])) {
 <html lang="en">
 
 <head>
-
     <!--style.css-->
     <link rel="stylesheet" href="assets/css/custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -40,7 +67,7 @@ if (isset($_SESSION['userID'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="assets/css/cart.css">
 </head>
 
 <body>
@@ -74,147 +101,112 @@ if (isset($_SESSION['userID'])) {
         </div>
     </nav>
 
-    <section class="h-100 h-custom" style="background-color: #00d8ff;">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12">
-                    <div class="card card-registration card-registration-2" style="border-radius: 15px;">
-                        <div class="card-body p-0">
-                            <div class="row g-0">
-                                <div class="col-lg-8">
-                                    <div class="p-5">
-                                        <div class="d-flex justify-content-between align-items-center mb-5">
+    <main>
+        <section class="h-100 h-custom">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12">
+                        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                            <div class="card-body p-0">
+                                <div class="row g-0">
+                                    <div class="col-lg-8">
+                                        <div class="p-5">
                                             <h1 class="fw-bold mb-0">Shopping Cart</h1>
-                                            <h6 class="mb-0 text-muted">3 items</h6>
-                                        </div>
-                                        <hr class="my-4">
+                                            <div class="travel-data-container mb-5 mt-3">
+                                                <?php if (!empty($cartData)) {
+                                                    $firstRow = $cartData[0];
+                                                    ?>
+                                                    <h5><?php echo $firstRow['fromLocation']; ?> <i
+                                                            class='bx bx-right-arrow-alt'></i>
+                                                        <?php echo $firstRow['destinationLocation']; ?></h5>
+                                                    <h6><?php echo $firstRow['departureDate']; ?> <i
+                                                            class='bx bx-right-arrow-alt'></i>
+                                                        <?php echo $firstRow['returnDate']; ?></h6>
+                                                    <h6><?php echo $firstRow['member']; ?> Person</h6>
+                                                <?php } ?>
+                                            </div>
 
-                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                            <div class="col-md-2 col-lg-2 col-xl-2">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img5.webp"
-                                                    class="img-fluid rounded-3" alt="Cotton T-shirt">
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3">
-                                                <h6 class="text-muted">Shirt</h6>
-                                                <h6 class="mb-0">Cotton T-shirt</h6>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                <button data-mdb-button-init data-mdb-ripple-init
-                                                    class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
+                                            <!-- Hotels Section -->
+                                            <h5>Hotels</h5>
+                                            <hr class="my-4">
+                                            <?php 
+                                            $hotelTotal = 0;
+                                            $hasHotelItems = false;
+                                            foreach ($hotelData as $row) {
+                                                $hotelTotal += $row['hotelPrice'];
+                                                $hasHotelItems = true; ?>
+                                                <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                                    <div class="col-md-5">
+                                                        <h7><?php echo htmlspecialchars($row['hotelName']); ?></h7>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h7>RM<?php echo htmlspecialchars(number_format($row['hotelPrice'], 2)); ?></h7>
+                                                    </div>
+                                                    <a href="fn_removeItemCart.php?type=hotel&id=<?php echo $row['hotelID']; ?>">
+                                                        <i class='bx bx-x-circle' style='color:#dd2525'></i>
+                                                    </a>
+                                                </div>
+                                                <hr>
+                                            <?php }
+                                            if (!$hasHotelItems) { ?>
+                                                <div class="row">
+                                                    <div class="col-12 text-center">
+                                                        <a href="searchHotel.php" class="btn btn-primary">Search Hotels</a>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
 
-                                                <input id="form1" min="0" name="quantity" value="1" type="number"
-                                                    class="form-control form-control-sm" />
-
-                                                <button data-mdb-button-init data-mdb-ripple-init
-                                                    class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                            </div>
-                                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                <h6 class="mb-0">€ 44.00</h6>
-                                            </div>
-                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
-                                            </div>
-                                        </div>
-
-                                        <hr class="my-4">
-
-                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                            <div class="col-md-2 col-lg-2 col-xl-2">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img6.webp"
-                                                    class="img-fluid rounded-3" alt="Cotton T-shirt">
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3">
-                                                <h6 class="text-muted">Shirt</h6>
-                                                <h6 class="mb-0">Cotton T-shirt</h6>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                <button data-mdb-button-init data-mdb-ripple-init
-                                                    class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-
-                                                <input id="form1" min="0" name="quantity" value="1" type="number"
-                                                    class="form-control form-control-sm" />
-
-                                                <button data-mdb-button-init data-mdb-ripple-init
-                                                    class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                            </div>
-                                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                <h6 class="mb-0">€ 44.00</h6>
-                                            </div>
-                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
-                                            </div>
-                                        </div>
-
-                                        <hr class="my-4">
-
-                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                            <div class="col-md-2 col-lg-2 col-xl-2">
-                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img7.webp"
-                                                    class="img-fluid rounded-3" alt="Cotton T-shirt">
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3">
-                                                <h6 class="text-muted">Shirt</h6>
-                                                <h6 class="mb-0">Cotton T-shirt</h6>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                <button data-mdb-button-init data-mdb-ripple-init
-                                                    class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-
-                                                <input id="form1" min="0" name="quantity" value="1" type="number"
-                                                    class="form-control form-control-sm" />
-
-                                                <button data-mdb-button-init data-mdb-ripple-init
-                                                    class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                            </div>
-                                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                <h6 class="mb-0">€ 44.00</h6>
-                                            </div>
-                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
-                                            </div>
-                                        </div>
-
-                                        <hr class="my-4">
-
-                                        <div class="pt-5">
-                                            <h6 class="mb-0"><a href="#!" class="text-body"><i
-                                                        class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a>
-                                            </h6>
+                                            <!-- Attractions Section -->
+                                            <h5>Attractions</h5>
+                                            <hr class="my-4">
+                                            <?php 
+                                            $attractionTotal = 0;
+                                            $hasAttractionItems = false;
+                                            foreach ($attData as $row) {
+                                                $attractionTotal += $row['attPrice'];
+                                                $hasAttractionItems = true; ?>
+                                                <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                                    <div class="col-md-5">
+                                                        <h7><?php echo htmlspecialchars($row['attName']); ?></h7>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h7>RM<?php echo htmlspecialchars(number_format($row['attPrice'], 2)); ?></h7>
+                                                    </div>
+                                                    <a href="fn_removeItemCart.php?type=attraction&id=<?php echo $row['attID']; ?>">
+                                                        <i class='bx bx-x-circle' style='color:#dd2525'></i>
+                                                    </a>
+                                                </div>
+                                                <hr>
+                                            <?php }
+                                            if (!$hasAttractionItems) { ?>
+                                                <div class="row">
+                                                    <div class="col-12 text-center">
+                                                        <a href="searchAttractions.php" class="btn btn-primary">Search Attractions</a>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 bg-body-tertiary">
-                                    <div class="p-5">
-                                        <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                                        <hr class="my-4">
 
-                                        <div class="d-flex justify-content-between mb-5">
-                                            <h5 class="text-uppercase">Total price</h5>
-                                            <h5>€ 137.00</h5>
+                                    <!-- Summary Section -->
+                                    <div class="col-lg-4 bg-body-tertiary summary-container">
+                                        <div class="p-5">
+                                            <h3 class="fw-bold">Summary</h3>
+                                            <hr>
+                                            <h5>Hotels Total: </h5>
+                                            <div class="total">
+                                                <span>RM<?php echo number_format($hotelTotal, 2); ?></span>
+                                            </div>
+                                            <h5>Attractions Total: </h5>
+                                            <div class="total">
+                                                <span>RM<?php echo number_format($attractionTotal, 2); ?></span>
+                                            </div>
+                                            <h5>Grand Total: </h5>
+                                            <div class="total">
+                                                <h6>RM<?php echo number_format($hotelTotal + $attractionTotal, 2); ?></h6>
+                                            </div>
+                                            <button class="btn btn-dark btn-block btn-lg">Checkout</button>
                                         </div>
-
-                                        <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                            class="btn btn-dark btn-block btn-lg"
-                                            data-mdb-ripple-color="dark">Checkout</button>
-
                                     </div>
                                 </div>
                             </div>
@@ -222,8 +214,8 @@ if (isset($_SESSION['userID'])) {
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 </body>
 
 </html>

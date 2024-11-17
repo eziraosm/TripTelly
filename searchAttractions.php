@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "dbconnect.php";
+include "fn_triptelly.php";
 
 if (isset($_SESSION['userID'])) {
 
@@ -19,7 +20,38 @@ if (isset($_SESSION['userID'])) {
 	}
 }
 
-// Check if hotel data exists in the session
+if (isset($_SESSION['userID'])) {
+	$userID = $_SESSION['userID'];
+
+	// Fetch current cartID
+	$cartQuery = "SELECT cartID FROM cart WHERE userID = ?";
+	$stmt = $conn->prepare($cartQuery);
+	$stmt->bind_param("s", $userID);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	$cartID = null;
+	if ($result->num_rows > 0) {
+		$row = $result->fetch_assoc();
+		$cartID = $row['cartID'];
+	}
+
+	// Fetch attractions already in the cart
+	$bookedAttractions = [];
+	if ($cartID) {
+		$bookedQuery = "SELECT attID FROM cart_attractions WHERE cartID = ?";
+		$stmt = $conn->prepare($bookedQuery);
+		$stmt->bind_param("s", $cartID);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		while ($row = $result->fetch_assoc()) {
+			$bookedAttractions[] = $row['attID'];
+		}
+	}
+}
+
+// Check if attraction data exists in the session
 if (!isset($_SESSION['attraction_data'])) {
 	echo "No search results found.";
 	exit();
@@ -28,21 +60,7 @@ if (!isset($_SESSION['attraction_data'])) {
 $form_data = $_SESSION['form_data'];
 $attraction_data = $_SESSION['attraction_data'];
 
-$attraction_budget = $form_data['max_budget'] * 0.6;
-
-function generateRandomPrice($maxAttractionBudget)
-{
-	// 5% chance to exceed 100
-	if (rand(1, 100) <= 10) {
-		// Ensure the price is more than 100 but within the maximum budget
-		return rand(101, $maxAttractionBudget);
-	}
-
-	// Otherwise, return a regular price between 3 and 100
-	return rand(3, min(100, $maxAttractionBudget));
-}
-
-// toast controller
+// Toast controller
 $toastMessage = '';
 $toastClass = '';
 
@@ -151,34 +169,41 @@ if (isset($_SESSION['success_msg'])) {
 						<?php
 						$count = 1;
 						foreach ($attraction_data as $poi) {
-							$price = generateRandomPrice($attraction_budget);
+							$isBooked = in_array($poi['place_id'], $bookedAttractions);
 
 							echo "<tr>";
 							echo "<td scope='row'>{$count}</td>";
 							echo "<td>" . htmlspecialchars($poi['name']) . "</td>";
 							echo "<td>" . htmlspecialchars($poi['address']) . "</td>";
 							echo "<td>" . htmlspecialchars($poi['rating'] ?? 'N/A') . "</td>";
-							echo "<td>RM " . number_format($price, 2) . "</td>";
+							echo "<td>RM " . number_format($poi['price'], 2) . "</td>";
 							echo "<td><a href='https://www.google.com/maps/search/?api=1&query=" . urlencode($poi['name']) . "' target='_blank'><button class='btn btn-primary'>GMap</button></a></td>";
 							echo "<td>
-										<form action='fn_bookAttractions.php' method='post'>
-											<input type='hidden' name='place_name' value='" . htmlspecialchars($poi['name']) . "'>
-											<input type='hidden' name='place_address' value='" . htmlspecialchars($poi['address']) . "'>
-											<input type='hidden' name='place_rating' value='" . htmlspecialchars($poi['rating'] ?? 'N/A') . "'>
-											<input type='hidden' name='place_price' value='" . number_format($price, 2) . "'>
-											<input type='hidden' name='place_id' value='" . htmlspecialchars($poi['place_id']) . "'>
-											<button type='submit' class='btn btn-success'>Book</button>
-										</form>
-									</td>";
+                <form action='fn_bookAttractions.php' method='post'>
+                    <input type='hidden' name='place_name' value='" . htmlspecialchars($poi['name']) . "'>
+                    <input type='hidden' name='place_address' value='" . htmlspecialchars($poi['address']) . "'>
+                    <input type='hidden' name='place_rating' value='" . htmlspecialchars($poi['rating'] ?? 'N/A') . "'>
+                    <input type='hidden' name='place_price' value='" . number_format($poi['price'], 2) . "'>
+                    <input type='hidden' name='place_id' value='" . htmlspecialchars($poi['place_id']) . "'>";
+
+							if ($isBooked) {
+								echo "<button type='button' class='btn btn-secondary' disabled title='Already in cart'>Booked</button>";
+							} else {
+								echo "<button type='submit' class='btn btn-success' style='width:100%'>Book</button>";
+							}
+
+							echo "</form>
+              </td>";
 							echo "</tr>";
 
 							$count++;
 						}
 						if ($count == 1) {
-							echo "<tr><td colspan='8'>No hotels found within your budget.</td></tr>";
+							echo "<tr><td colspan='8'>No attractions found.</td></tr>";
 						}
 						?>
 					</tbody>
+
 				</table>
 			</div>
 			<div class="btn-container">

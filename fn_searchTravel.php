@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
                     'place_id' => $place['place_id'],
                     'address' => $place['vicinity'] ?? 'test',
                     'rating' => $place['rating'] ?? 'N/A',
-                    'price' => generateRandomPrice($max_budget),
+                    'price' => generateHotelPrice($max_budget),
                     'user_ratings_total' => $place['user_ratings_total'] ?? 0,
                 ];
             }
@@ -82,7 +82,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
 
             // Store the hotel data in the session
             $_SESSION['hotel_data'] = $hotels;
-            $_SESSION['form_data'] = $_POST;
+            $_SESSION['form_data'] = [
+                'from_loc' => $from_loc,
+                'destination_loc' => $destination_loc,
+                'departure_date' => $departure_date,
+                'return_date' => $return_date,
+                'people_num' => $people_num
+            ];
+            
 
             $attractionTypes = 'museum|tourist_attraction|point_of_interest'; // POI types for attractions
 
@@ -103,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
                         'place_id' => $place['place_id'],
                         'address' => $place['vicinity'] ?? 'N/A',
                         'rating' => $place['rating'] ?? 'N/A',
+                        'price' => generateAttractionPrice($max_budget),
                         'user_ratings_total' => $place['user_ratings_total'] ?? 0,
                     ];
                 }

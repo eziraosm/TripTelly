@@ -14,9 +14,24 @@ function generateCartID()
     return $id;
 }
 
-function generateRandomPrice($maxHotelPrice)
+function generateHotelPrice($maxHotelPrice)
 {
     $hotel_budget = $maxHotelPrice * 0.25;
     return rand(100, $hotel_budget);
+}
+
+
+
+function generateAttractionPrice($maxAttractionBudget)
+{
+    $attraction_budget = $maxAttractionBudget * 0.6;
+	// 5% chance to exceed 100
+	if (rand(1, 100) <= 10) {
+		// Ensure the price is more than 100 but within the maximum budget
+		return rand(101, $attraction_budget);
+	}
+
+	// Otherwise, return a regular price between 3 and 100
+	return rand(3, min(100, $attraction_budget));
 }
 ?>

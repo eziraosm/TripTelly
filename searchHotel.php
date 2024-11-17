@@ -20,6 +20,40 @@ if (isset($_SESSION['userID'])) {
 	}
 }
 
+if (isset($_SESSION['userID'])) {
+	$userID = $_SESSION['userID'];
+
+	// Fetch the cartID associated with this user
+	$cartQuery = "SELECT cartID FROM cart WHERE userID = ?";
+	$stmt = $conn->prepare($cartQuery);
+	$stmt->bind_param("s", $userID);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	$userCarts = [];
+	while ($row = $result->fetch_assoc()) {
+		$userCarts[] = $row['cartID'];
+	}
+
+	// Check if any hotel is already booked
+	$hasBookedHotel = false;
+	if (!empty($userCarts)) {
+		$cartPlaceholders = implode(',', array_fill(0, count($userCarts), '?'));
+		$cartHotelQuery = "SELECT COUNT(*) AS bookedCount FROM cart_hotel WHERE cartID IN ($cartPlaceholders)";
+		$stmt = $conn->prepare($cartHotelQuery);
+		$stmt->bind_param(str_repeat('s', count($userCarts)), ...$userCarts);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		if ($row = $result->fetch_assoc()) {
+			$hasBookedHotel = $row['bookedCount'] > 0;
+		}
+	}
+} else {
+	// Redirect user to login page if not authenticated
+	header("Location: login.php");
+	exit();
+}
 
 // Check if hotel data exists in the session
 if (!isset($_SESSION['hotel_data'])) {
@@ -27,12 +61,10 @@ if (!isset($_SESSION['hotel_data'])) {
 	exit();
 }
 
-$hotel_data = $_SESSION['hotel_data']; 
+$hotel_data = $_SESSION['hotel_data'];
 $form_data = $_SESSION['form_data'];
 $max_budget = $_SESSION['max_budget'];
 $destination = $_SESSION['destination'];
-
-// Function to generate random price up to maxHotelPrice
 
 ?>
 
@@ -114,7 +146,6 @@ $destination = $_SESSION['destination'];
 						<?php
 						$count = 1;
 						foreach ($hotel_data as $hotel) {
-
 							echo "<tr>";
 							echo "<td scope='row'>{$count}</td>";
 							echo "<td>" . htmlspecialchars($hotel['name']) . "</td>";
@@ -124,19 +155,26 @@ $destination = $_SESSION['destination'];
 							echo "<td><a href='https://www.google.com/maps/search/?api=1&query=" . urlencode($hotel['name']) . "' target='_blank'><button class='btn btn-primary'>GMap</button></a></td>";
 							echo "<td>
 										<form action='fn_bookHotel.php' method='post'>
-											<input type='hidden' name='hotel_name' value='" . htmlspecialchars($hotel['name']) . "'>
-											<input type='hidden' name='hotel_address' value='" . htmlspecialchars($hotel['address']) . "'>
-											<input type='hidden' name='hotel_rating' value='" . htmlspecialchars($hotel['rating'] ?? 'N/A') . "'>
-											<input type='hidden' name='hotel_price' value='" . number_format($hotel['price'], 2) . "'>
-											<input type='hidden' name='place_id' value='" . htmlspecialchars($hotel['place_id']) . "'>
-											<button type='submit' class='btn btn-success'>Book</button>
-										</form>
-									</td>";
+										<input type='hidden' name='hotel_name' value='" . htmlspecialchars($hotel['name']) . "'>
+										<input type='hidden' name='hotel_address' value='" . htmlspecialchars($hotel['address']) . "'>
+										<input type='hidden' name='hotel_rating' value='" . htmlspecialchars($hotel['rating'] ?? 'N/A') . "'>
+										<input type='hidden' name='hotel_price' value='" . number_format($hotel['price'], 2) . "'>
+										<input type='hidden' name='place_id' value='" . htmlspecialchars($hotel['place_id']) . "'>";
+
+												// Disable all buttons if the user has booked a hotel
+												if ($hasBookedHotel) {
+													echo "<button type='button' class='btn btn-secondary' disabled title='You can only book one hotel'>Booked</button>";
+												} else {
+													echo "<button type='submit' class='btn btn-success'>Book</button>";
+												}
+
+												echo "</form>
+								</td>";
 							echo "</tr>";
 
 							$count++;
 							if ($count > 10)
-								break; // Limit to 20 hotels
+								break; // Limit to 10 hotels
 						}
 						if ($count == 1) {
 							echo "<tr><td colspan='8'>No hotels found within your budget.</td></tr>";
@@ -144,6 +182,19 @@ $destination = $_SESSION['destination'];
 						?>
 					</tbody>
 				</table>
+			</div>
+			<div class="btn-container">
+				<button class="cssbuttons-io-button" onclick="window.location.href='searchAttractions.php'">
+					Next
+					<div class="icon">
+						<svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+								fill="currentColor"></path>
+						</svg>
+					</div>
+				</button>
+
 			</div>
 		</div>
 	</main>
