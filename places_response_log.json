@@ -1,0 +1,987 @@
+{
+    "html_attributions": [],
+    "next_page_token": "AdDdOWqx0c9Hbw3yGHiRPvFmGH6twVEspQt17btjDApf_YRJZZQ-aqjx9GkKErAtUKwY75NngaL_eCbXNfZqmHEgh-TJnvxTLINlLuppsDPiL3fEkvEoiM-h1W37yYl3azw-gXpaqPtpkn-yuDTTBUQ1SPP7gzk0HS8p2vzU9VFwRgz4dCsG7z3os8Ja8GyYVmrOVydURylhHJpawORWWmaagrnI81xlp4abV0DqVvzjnk_BsO0UUMq_uCy4lQq4Pog8hkygUfC4mhcJieJKIjaU4ZBlYaPKD7-yg5lGIH449LMfMSQAwYMvok3PnUorpiAIdAXwWEdGrwLqCj7xkZTgk2JrM6QMyL2j8R3gHOdJek0Csg6aLivsTsU7D1wi4CTdfduO0QjCcx4TsobjIU_7eNTQwQu4XX8pA0e3eIbEwo-aqO11M5tOdz6U",
+    "results": [
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1587929,
+                    "lng": 101.7000245
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.159948380291502,
+                        "lng": 101.7013813302915
+                    },
+                    "southwest": {
+                        "lat": 3.157250419708499,
+                        "lng": 101.6986833697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Sheraton Imperial Kuala Lumpur Hotel",
+            "photos": [
+                {
+                    "height": 810,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/110763563312442575491\">Sheraton Imperial Kuala Lumpur Hotel<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWqk0jOzny6SnOhELaWTW5xrENm9WkZ3SQ_rDUzEv5XMj_MFOSVAIK5MOfCSXvPi23nIE53NZDJq8AaEBk1YDVFEh0I2zimVt0pGv46NgIM7lWJwboPvraQWhh66xEAAP0deLJ4EkVWhG9mdX8PEtAXgM9UZP_euDWnoQQS4lCpkKfcu",
+                    "width": 1440
+                }
+            ],
+            "place_id": "ChIJjZesIC9IzDERtFMi4QYhsoQ",
+            "plus_code": {
+                "compound_code": "5P52+G2 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM35P52+G2"
+            },
+            "rating": 4.3,
+            "reference": "ChIJjZesIC9IzDERtFMi4QYhsoQ",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 4950,
+            "vicinity": "Jalan Sultan Ismail, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1478489,
+                    "lng": 101.7145371
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.149010580291502,
+                        "lng": 101.7159881302915
+                    },
+                    "southwest": {
+                        "lat": 3.146312619708499,
+                        "lng": 101.7132901697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "The Westin Kuala Lumpur",
+            "photos": [
+                {
+                    "height": 320,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/112004908166873969517\">The Westin Kuala Lumpur<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpY9IP20isutOk-7zrhEPon57JN9SI8IG7Z6OCHpEgmAysWt6KhHwjopa7fWJ_nxPdQLSOOrUhLPBVmeKtCActeqWgVInDN0nreTJUD-udlrOkybJBlFLqEn6Nhf4Me3MbJFgZYvimHbs-kUghKqbod2eCFHDOXyhUJrefkU2jaJyxv",
+                    "width": 480
+                }
+            ],
+            "place_id": "ChIJFzYGbyw2zDERzuQSBDS9Tb0",
+            "plus_code": {
+                "compound_code": "4PX7+4R Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM34PX7+4R"
+            },
+            "price_level": 3,
+            "rating": 4.4,
+            "reference": "ChIJFzYGbyw2zDERzuQSBDS9Tb0",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 5290,
+            "vicinity": "199, Jalan Bukit Bintang, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.0793701,
+                    "lng": 101.598761
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.080649780291501,
+                        "lng": 101.5996861802915
+                    },
+                    "southwest": {
+                        "lat": 3.077951819708498,
+                        "lng": 101.5969882197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Holiday Villa Hotel & Conference Centre Subang",
+            "photos": [
+                {
+                    "height": 2976,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/102060389888838252952\">M. Nazri SP<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpzmnUNr_sHr1goHmEx-2h6r4Qv4kQ8b01K7pGSKyfiY0ESNtE1diZOW8j-vCy41PerdeNy43CwuFtifcKm1lsFGn6meew5zkZPfNoHKYAwqc0979f60-QL2vKOi8JfK_2-OXUUt-ZV3wBO2x3U8-_JEv9RLp_xPB-TOrDzgOr5643w",
+                    "width": 3968
+                }
+            ],
+            "place_id": "ChIJ3aAABGRMzDERSZKnRep_6ZM",
+            "plus_code": {
+                "compound_code": "3HHX+PG Subang Jaya, Selangor, Malaysia",
+                "global_code": "6PM33HHX+PG"
+            },
+            "rating": 4.1,
+            "reference": "ChIJ3aAABGRMzDERSZKnRep_6ZM",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 2144,
+            "vicinity": "9, Jalan SS 12\/1, Ss 12, Subang Jaya"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.156581699999999,
+                    "lng": 101.6084813
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.157767680291502,
+                        "lng": 101.6101983802915
+                    },
+                    "southwest": {
+                        "lat": 3.155069719708498,
+                        "lng": 101.6075004197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Royale Chulan Damansara",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 2592,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/104516829507301375026\">Ahmad Mustapha Sharif<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWqheBW4Ar8oy5_J6dUCCt1CllwwICZbsyk10pGGFkoPOIukoq891exEMPpu1JLIvxvMt26V2b35dS7AlhhGshpfC-5sTGiKeZTsTGs3Ca2r9AEzmBLxN0FCTT8cQUhlxEgd_zkwDdVtYms4VsVDjmT7lLlzkAtXOUzX1lwzjnhYdLjg",
+                    "width": 4608
+                }
+            ],
+            "place_id": "ChIJJ2V7SClPzDER779w0YaYOXU",
+            "plus_code": {
+                "compound_code": "5J45+J9 Petaling Jaya, Selangor, Malaysia",
+                "global_code": "6PM35J45+J9"
+            },
+            "rating": 4.1,
+            "reference": "ChIJJ2V7SClPzDER779w0YaYOXU",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 3341,
+            "vicinity": "2A, Jalan PJU 7\/3, Mutiara Damansara, Petaling Jaya"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1442414,
+                    "lng": 101.7056647
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.145664980291502,
+                        "lng": 101.7070596302915
+                    },
+                    "southwest": {
+                        "lat": 3.142967019708498,
+                        "lng": 101.7043616697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Swiss-Garden Hotel Bukit Bintang Kuala Lumpur",
+            "photos": [
+                {
+                    "height": 4912,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/103129116456878557365\">Swiss-Garden Hotel Bukit Bintang Kuala Lumpur<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpzlr8cHQc-Ibughen9MFc8Lj0EDSwrRt3sIj7ODt-hkcUQcpNbsMK2IPAyvqxJ9lYjk-MBmiTH6DYH5V7LFZLgy2L5aMUGgf9TaG02NY8ULj6nLrO3YUdTEKsYV086q3kMRewukk5zUkSM4K7xNWpxxjB27DzfGCtyFXZvprrVZ4Zg",
+                    "width": 7496
+                }
+            ],
+            "place_id": "ChIJ45QwVSY2zDERclDylVRcVsQ",
+            "plus_code": {
+                "compound_code": "4PV4+M7 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM34PV4+M7"
+            },
+            "rating": 4.2,
+            "reference": "ChIJ45QwVSY2zDERclDylVRcVsQ",
+            "scope": "GOOGLE",
+            "types": [
+                "tourist_attraction",
+                "travel_agency",
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 7256,
+            "vicinity": "117, Jalan Pudu, Bukit Bintang, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.102045,
+                    "lng": 101.6410032
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.103270530291502,
+                        "lng": 101.6422670802915
+                    },
+                    "southwest": {
+                        "lat": 3.100572569708498,
+                        "lng": 101.6395691197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Hilton Petaling Jaya",
+            "photos": [
+                {
+                    "height": 1629,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/116691757661331527722\">Hilton Petaling Jaya<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpSx4qSHcvNo8lRY9Kd_81HJWWlIDZYAF9cWOCTcc-obxhL0MWDiDEKB00CH5XWcl_s7X12YH-R76uvGWdTFczr13b7ejutBXgHLgYtKj-TtIYnBzK420GA8YdZVCmJv0xgefmg_CieSLwsl-tbByIlFP1kQXcJ3mmsnZgtXcBYnt7p",
+                    "width": 2500
+                }
+            ],
+            "place_id": "ChIJtR_J1sJLzDER3hkX1anrVCc",
+            "plus_code": {
+                "compound_code": "4J2R+RC Petaling Jaya, Selangor, Malaysia",
+                "global_code": "6PM34J2R+RC"
+            },
+            "rating": 4.2,
+            "reference": "ChIJtR_J1sJLzDER3hkX1anrVCc",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 6351,
+            "vicinity": "2, Jalan Barat, Petaling Jaya"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1535593,
+                    "lng": 101.7113219
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.154870030291502,
+                        "lng": 101.7129412802915
+                    },
+                    "southwest": {
+                        "lat": 3.152172069708498,
+                        "lng": 101.7102433197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Impiana KLCC Hotel",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 1349,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/116886511856879881106\">Impiana KLCC Hotel<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpyzgyuHD8tdK18EkhMABDlp3-93hF577Xsv8zeaJudQuJaSf_PtsI6ppcgFMzER9v8gatdBL0D2S-oRXeL5FRrOj21kVQ9lx4BfaRs9uBsJE7H2foy_Jljl9cuO4tj4M4e5RSSDPAhifIewsK1GRe4o2OHipF15-iilvlNgyYqEHVM",
+                    "width": 2024
+                }
+            ],
+            "place_id": "ChIJNySdvdFJzDERZLNbuoRR-DQ",
+            "plus_code": {
+                "compound_code": "5P36+CG Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM35P36+CG"
+            },
+            "rating": 4.2,
+            "reference": "ChIJNySdvdFJzDERZLNbuoRR-DQ",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 5821,
+            "vicinity": "Impiana KLCC Hotel, 13, Jalan Pinang, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1263769,
+                    "lng": 101.6447553
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.127837480291502,
+                        "lng": 101.6460634802915
+                    },
+                    "southwest": {
+                        "lat": 3.125139519708498,
+                        "lng": 101.6433655197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Eastin Hotel Kuala Lumpur",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 3760,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/118366184548013380191\">Eastin Hotel Kuala Lumpur<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWo6umAQd0Jzf6od3jTOQ29xABD5fcHGOy68B1bei5p4UuKWjn5IN-F9XsiYAmpgRkKXVbkFemziH9c5vqVHz49mTAWsFUyicahWmTgOc-b20-S5__saAhx70rYI3J67Lb2OKuihYTW9WB1tj7zkDHmD92g-gzxLheKVY6n1GFP5lLzS",
+                    "width": 5940
+                }
+            ],
+            "place_id": "ChIJEzJLjGdIzDERhhHLtniAFO0",
+            "plus_code": {
+                "compound_code": "4JGV+HW Petaling Jaya, Selangor, Malaysia",
+                "global_code": "6PM34JGV+HW"
+            },
+            "rating": 4.2,
+            "reference": "ChIJEzJLjGdIzDERhhHLtniAFO0",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 3942,
+            "vicinity": "Pusat Dagang, 13, Jalan 16\/11, Seksyen 16, Petaling Jaya"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1473632,
+                    "lng": 101.7156635
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.148640330291502,
+                        "lng": 101.7171191802915
+                    },
+                    "southwest": {
+                        "lat": 3.145942369708499,
+                        "lng": 101.7144212197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Dorsett Kuala Lumpur",
+            "photos": [
+                {
+                    "height": 2080,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/110919434913375749399\">Dorsett Residences by Luxury Homes<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWp4lm50CP05jTWpuFcLMsu48LMFJkIMTOx9MXrqjB32jm_KkUZBwIrV1QZ7h3hy-ioICBJOwbxSQtjqNMP-YvCypeOohmR5uukVd8228Y8vTrLlgZkc5yE4ObRCsup0O0Qelh6b4vlX3oS9MHxHmcRPLdPw41DD8w47oOOczvM4QCiG",
+                    "width": 3120
+                }
+            ],
+            "place_id": "ChIJ3QPM6i42zDER_myUmq8gWm4",
+            "plus_code": {
+                "compound_code": "4PW8+W7 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM34PW8+W7"
+            },
+            "rating": 4.1,
+            "reference": "ChIJ3QPM6i42zDER_myUmq8gWm4",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 5546,
+            "vicinity": "172, Jalan Imbi, Pudu, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1611774,
+                    "lng": 101.7289882
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.162715280291502,
+                        "lng": 101.7302731802915
+                    },
+                    "southwest": {
+                        "lat": 3.160017319708498,
+                        "lng": 101.7275752197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "SuCasa Hotel Apartments",
+            "photos": [
+                {
+                    "height": 680,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/109075068996200932856\">SuCasa Hotel Apartments<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWp-JviEVTVeCruRRcWVltI_6E1wondMC3Dt4dqJ-nlIEPN4yrlMBECOw6QGgXUz_4Dstnk1CU9J-mk391G2s1MR-QqSpwLpBrMPUSBiqmhuZB4zeiMdSo6RJ-TS8NpwETu7Ia8KdCSQQfTwsogKYH2P_LzZ0-zbJXyt8ZzdavcQKd2m",
+                    "width": 1024
+                }
+            ],
+            "place_id": "ChIJ306pDsg3zDERtyFgX6doIwo",
+            "plus_code": {
+                "compound_code": "5P6H+FH Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM35P6H+FH"
+            },
+            "rating": 4,
+            "reference": "ChIJ306pDsg3zDERtyFgX6doIwo",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 372,
+            "vicinity": "222, Jalan Ampang, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1356908,
+                    "lng": 101.6866128
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.136848680291502,
+                        "lng": 101.6874904802915
+                    },
+                    "southwest": {
+                        "lat": 3.134150719708499,
+                        "lng": 101.6847925197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Le M\u00e9ridien Kuala Lumpur",
+            "photos": [
+                {
+                    "height": 320,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/114171862213178688113\">Le M\u00e9ridien Kuala Lumpur<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWoi3LvMWqXPdnDap2ternc6PKJcgNu3YvxJdF4eLzXeiWglYCLZChCA1WGSWpA59u9UOzXI5n7Dhgfo0FT6PHqbIHb9dU1K1ylMZ4z3VRRIj2LR1iDj9DjHxnp-VNGerABb3nyO6PMvv1nH1TWAQBDzAzx-BYQxfMZsriNv4rosrLHw",
+                    "width": 480
+                }
+            ],
+            "place_id": "ChIJI2Ho3cBJzDERaM_NcBRA1rc",
+            "plus_code": {
+                "compound_code": "4MPP+7J Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM34MPP+7J"
+            },
+            "rating": 4.5,
+            "reference": "ChIJI2Ho3cBJzDERaM_NcBRA1rc",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 5550,
+            "vicinity": "2, Jalan Stesen Sentral, Kuala Lumpur Sentral, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.142300699999999,
+                    "lng": 101.7098608
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.1435812,
+                        "lng": 101.7130824
+                    },
+                    "southwest": {
+                        "lat": 3.140654400000001,
+                        "lng": 101.708208
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Berjaya Times Square Hotel, Kuala Lumpur",
+            "photos": [
+                {
+                    "height": 2832,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/111871270616037117744\">Berjaya Times Square Hotel, Kuala Lumpur<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWoVGvyQnwpmXZv9qWq977KJhGLmraQDrPqphQbq4Zx2PbgkHmTErj2pVaZfjHZDaksunKWIo71iUt_O8JQ81gwp6UHObrITXBnrVWG_Y3rGw_DbPJv3-BdXQKhPT9tdgYofcEG7qtqsY3Dk_YM3qbcBj8JXHBo2vSRp6NMD-zVlh4X1",
+                    "width": 4256
+                }
+            ],
+            "place_id": "ChIJpX52hig2zDERNaUgY2g5AG8",
+            "plus_code": {
+                "compound_code": "4PR5+WW Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM34PR5+WW"
+            },
+            "rating": 4.3,
+            "reference": "ChIJpX52hig2zDERNaUgY2g5AG8",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 22408,
+            "vicinity": "1, Jalan Imbi, Bukit Bintang, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1041203,
+                    "lng": 101.6408005
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.105367180291502,
+                        "lng": 101.6421986302915
+                    },
+                    "southwest": {
+                        "lat": 3.102669219708498,
+                        "lng": 101.6395006697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Hotel Armada Petaling Jaya",
+            "photos": [
+                {
+                    "height": 828,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/116025027390771507031\">Hotel Armada Petaling Jaya<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpO4DwgDKadxiiBeUif-H6xAwtlTNpi3CtFQBaKT85gQAbEd5Fv4CmaBORjisYiKamnAtY46ptrxuC7wrcUa9QXP9pXo56wUARXTaxRa-KNjEgczl4WcBA-MEfypz9VemGqC36KFKSMrkC8alb9Xj7eacMxDMFgECXGLGgrSa6rEl3g",
+                    "width": 551
+                }
+            ],
+            "place_id": "ChIJEweKF91LzDERD9elwvDoH-8",
+            "plus_code": {
+                "compound_code": "4J3R+J8 Petaling Jaya, Selangor, Malaysia",
+                "global_code": "6PM34J3R+J8"
+            },
+            "rating": 4.1,
+            "reference": "ChIJEweKF91LzDERD9elwvDoH-8",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 3030,
+            "vicinity": "Lot 6, Lorong Utara C, Section 52, Petaling Jaya"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1327529,
+                    "lng": 101.6863487
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.134356930291502,
+                        "lng": 101.6875753302915
+                    },
+                    "southwest": {
+                        "lat": 3.131658969708498,
+                        "lng": 101.6848773697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Aloft Kuala Lumpur Sentral",
+            "photos": [
+                {
+                    "height": 320,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/111988318171749540024\">Aloft Kuala Lumpur Sentral<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpRo85_KgFA8kXhUaEHGOK93pTdgeiebPxiExZr3SO9KAaGkoL1K-vVKLMuNEk_KUuIJfvvyz6_Ot5iGH53Aqmo7WqJIgWiApl7Ltl9u-iDSktI03CKsuphrkgQGlFQOP2Oc7lFRNcVccrM4j1j0zdSQVbG9iYk-ouTlerGt9WvOaCQ",
+                    "width": 480
+                }
+            ],
+            "place_id": "ChIJEXebOcBJzDER3mZPhe8wdn0",
+            "plus_code": {
+                "compound_code": "4MMP+4G Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM34MMP+4G"
+            },
+            "rating": 4.4,
+            "reference": "ChIJEXebOcBJzDER3mZPhe8wdn0",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 5266,
+            "vicinity": "5, Jalan Stesen Sentral, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1536086,
+                    "lng": 101.7121614
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.155058030291502,
+                        "lng": 101.7132923302915
+                    },
+                    "southwest": {
+                        "lat": 3.152360069708498,
+                        "lng": 101.7105943697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Grand Hyatt Kuala Lumpur",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 2880,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/115618616455361719484\">Grand Hyatt Kuala Lumpur<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpwdxv0XfVxFshJf4006eYj_GHonGUYvc6WEDrIM5gtxQi15i6e_qyPtgHHV_VqakeXJ8gkFIQVCuvoM4j9n5nbU8kgxFZTRAPnpBsddHk4ZzLnBs45skjyWhAaXKGRZPN1E_hUbETA-xxxUcltIJ0IiaACZDyJZQhFmlhSExAulWQi",
+                    "width": 2304
+                }
+            ],
+            "place_id": "ChIJyT76Y9Q3zDER6Nu_yBZr9R0",
+            "plus_code": {
+                "compound_code": "5P36+CV Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM35P36+CV"
+            },
+            "rating": 4.6,
+            "reference": "ChIJyT76Y9Q3zDER6Nu_yBZr9R0",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 5913,
+            "vicinity": "12, Jalan Pinang, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.157079899999999,
+                    "lng": 101.7233358
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.158284330291502,
+                        "lng": 101.7244308302915
+                    },
+                    "southwest": {
+                        "lat": 3.155586369708498,
+                        "lng": 101.7217328697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "MiCasa All Suites Hotel",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 1061,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/107249546815769108408\">MiCasa All Suites Hotel<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWpb8T3jTS31g_cHH-fzcIAibvMCmYOCkzdZFLQ937Q7ywOBadOF69F7fAzbDbYQNVy9lVRm-iCorr9ep-QykYrTsutM8gX6_F0G66Uhqp7-eO47KTGaB4AFsFaYhFmzpVqmgJ1TvwOQJN7YeViyEeNQo34tOof-eZ9XPa6f0eIJECw6",
+                    "width": 2062
+                }
+            ],
+            "place_id": "ChIJ5V3Xs8w3zDERhGHTfkXB67Q",
+            "plus_code": {
+                "compound_code": "5P4F+R8 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM35P4F+R8"
+            },
+            "rating": 4.4,
+            "reference": "ChIJ5V3Xs8w3zDERhGHTfkXB67Q",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 1093,
+            "vicinity": "368B, Jalan Tun Razak, Taman U Thant, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1540827,
+                    "lng": 101.6982925
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.155433980291503,
+                        "lng": 101.6997021302915
+                    },
+                    "southwest": {
+                        "lat": 3.152736019708499,
+                        "lng": 101.6970041697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Silka Maytower",
+            "photos": [
+                {
+                    "height": 7559,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/112848380893879687146\">Silka Maytower<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWqd_Sf5SHl3DqTk4pAvfwlad-JO0tl89rNEbt8l_RKAT5VZkzvu31u1vqMmMup_rheZJtg0egMbRXqIB1hjP9AZjmXI3jet0SkjCXRFjd3IBhtGu-dI7SskCiSrY5rOuJPMyD3Vc2Xk8bg_AG6wrUI6-864j8ONtDKKrPlRGPfN2KON",
+                    "width": 4407
+                }
+            ],
+            "place_id": "ChIJaY7JVCxIzDERyFNEfX_nHo0",
+            "plus_code": {
+                "compound_code": "5M3X+J8 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM35M3X+J8"
+            },
+            "rating": 3.9,
+            "reference": "ChIJaY7JVCxIzDERyFNEfX_nHo0",
+            "scope": "GOOGLE",
+            "types": [
+                "restaurant",
+                "food",
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 2330,
+            "vicinity": "7, Jalan Munshi Abdullah, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1541,
+                    "lng": 101.6975
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.155499930291502,
+                        "lng": 101.6987411802915
+                    },
+                    "southwest": {
+                        "lat": 3.152801969708498,
+                        "lng": 101.6960432197085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Starpoints Hotel Kuala Lumpur",
+            "photos": [
+                {
+                    "height": 4000,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/101674986744538219844\">abdur razzaque bhuyan<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWr8ViRdmLsabEvhDbG-wuRQmJvEr3V6aXZWqgvnm7upFRZ8OzucMpDcCpaeZENkL1_4ozlyGundWsqf3FhtGYmSVvrcv5gQpdDCVdaCOyS_3wF_7j1ZET55X1hwl8aHFvNQSX6_EUA6_IvA6SQvtTVrTtZyRgYTxaDJKl49ayS9OpwR",
+                    "width": 6000
+                }
+            ],
+            "place_id": "ChIJ7cnQpy1IzDERa7ELmurjhPA",
+            "plus_code": {
+                "compound_code": "5M3W+JX Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM35M3W+JX"
+            },
+            "rating": 3.8,
+            "reference": "ChIJ7cnQpy1IzDERa7ELmurjhPA",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 1131,
+            "vicinity": "149, Jalan Masjid India, City Centre, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.147546,
+                    "lng": 101.711217
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.148884280291502,
+                        "lng": 101.7125145302915
+                    },
+                    "southwest": {
+                        "lat": 3.146186319708498,
+                        "lng": 101.7098165697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "Hotel Ambassador",
+            "photos": [
+                {
+                    "height": 2080,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/102498729160551909669\">Shahid Electronics<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWqGYJ2u2ph6YG5YgKLZLtVJIw384Nf27h_ZZXBcsynpeb7jYf9M63Xn7NAZ6AargnX46zQ54vhh69hqfDzmBWtlcY3bzgo5sD_RMIhSj8e8yKrMzOuHJYUWIGvBXX4Hk3F4bGGJE3t0tI-L9c7dZT9GkPrHdTyDRdl8U5-Zn2jUwofC",
+                    "width": 4160
+                }
+            ],
+            "place_id": "ChIJfeGvWCk2zDERKZ_E9VEMdwA",
+            "plus_code": {
+                "compound_code": "4PX6+2F Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM34PX6+2F"
+            },
+            "rating": 3.7,
+            "reference": "ChIJfeGvWCk2zDERKZ_E9VEMdwA",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 350,
+            "vicinity": "44, Jalan Sultan Ismail, Bukit Bintang, Kuala Lumpur"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 3.1477847,
+                    "lng": 101.7138854
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 3.149259730291502,
+                        "lng": 101.7152793302915
+                    },
+                    "southwest": {
+                        "lat": 3.146561769708498,
+                        "lng": 101.7125813697085
+                    }
+                }
+            },
+            "icon": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v1\/png_71\/lodging-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https:\/\/maps.gstatic.com\/mapfiles\/place_api\/icons\/v2\/hotel_pinlet",
+            "name": "JW Marriott Hotel Kuala Lumpur",
+            "photos": [
+                {
+                    "height": 320,
+                    "html_attributions": [
+                        "<a href=\"https:\/\/maps.google.com\/maps\/contrib\/104386426832391418841\">JW Marriott Hotel Kuala Lumpur<\/a>"
+                    ],
+                    "photo_reference": "AdDdOWrKePGmbGQBqSPX5xxafgV0inXVs6Z6FjcR_qlIwD7-nbgp3KDCwMpYrAJWEKqCNIW3_C_HK9tj7wDWFaq0to3JpOIztBXJOPjRj3VjXtcMu5Hil1LX5f8vH-hfkd6fDLqTF0tMNkdlSkmi9vvMOPPCKNv2rYM9jh7npFfTvvF9UOXb",
+                    "width": 480
+                }
+            ],
+            "place_id": "ChIJFzYGbyw2zDERy7QVkXjvHrY",
+            "plus_code": {
+                "compound_code": "4PX7+4H Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+                "global_code": "6PM34PX7+4H"
+            },
+            "rating": 4.5,
+            "reference": "ChIJFzYGbyw2zDERy7QVkXjvHrY",
+            "scope": "GOOGLE",
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 7732,
+            "vicinity": "183, Jalan Bukit Bintang, Kuala Lumpur"
+        }
+    ],
+    "status": "OK"
+}

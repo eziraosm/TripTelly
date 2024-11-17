@@ -19,8 +19,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verify the password
         if (password_verify($password, $user['userPassword'])) {
             $_SESSION['userID'] = $user['userID'];
-            // Redirect to a welcome page or user dashboard
-            header("Location: index.php");
+            if (isset($_SESSION['form_data'])) {
+                $form_data = $_SESSION['form_data'];
+                $_SESSION['max_budget'] = $form_data['max_budget'];
+                $_SESSION['destination'] = $form_data['destination_loc'];
+                // Redirect back to fn_searchTravel.php with the form data
+                header("Location: fn_searchTravel.php");
+                exit();
+            }else {
+                // Redirect to a welcome page or user dashboard
+                header("Location: index.php");
+            }
         } else {
             $_SESSION['errorMsg'] = "Invalid password. Please try again.";
             header("Location: signin.php");
