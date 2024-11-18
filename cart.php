@@ -159,7 +159,7 @@ if (isset($_SESSION['success_msg'])) {
                                 <div class="row g-0">
                                     <div class="col-lg-8">
                                         <div class="p-5">
-                                            <h1 class="fw-bold mb-0">Shopping Cart</h1>
+                                            <h1 class="fw-bold mb-0">Travel Cart</h1>
                                             <div class="travel-data-container mb-5 mt-3">
                                                 <?php if (!empty($cartData)) {
                                                     $firstRow = $cartData[0];

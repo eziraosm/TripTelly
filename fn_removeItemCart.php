@@ -36,9 +36,10 @@ $stmt->bind_param("ss", $itemID, $cartID);
 
 // Execute the query
 if ($stmt->execute()) {
+    $_SESSION["success_msg"] = ucfirst($itemType) . " item removed successfully.";
     header("Location: cart.php");
 } else {
-    echo "Error: " . $stmt->error;
-    exit();
+    $_SESSION["error_msg"] = $itemType . " item removed failed: " . $stmt->error;
+    header("Location: cart.php");
 }
 ?>

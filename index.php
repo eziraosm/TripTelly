@@ -2,14 +2,16 @@
 session_start();
 include 'dbconnect.php';
 
-// Store the userID in a temporary variable
-$tempUserID = $_SESSION['userID'];
+if (isset($_SESSION['userID'])) {
+	// Store the userID in a temporary variable
+	$tempUserID = $_SESSION['userID'];
 
-// Clear all session variables
-session_unset();
+	// Clear all session variables
+	session_unset();
 
-// Restore the userID
-$_SESSION['userID'] = $tempUserID;
+	// Restore the userID
+	$_SESSION['userID'] = $tempUserID;
+}
 
 // date for date picker
 $todayDate = date("d/m/Y");
