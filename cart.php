@@ -191,9 +191,11 @@ if (isset($_SESSION['success_msg'])) {
                                                     <div class="col-md-2">
                                                         <h7>RM<?php echo htmlspecialchars(number_format($row['hotelPrice'], 2)); ?></h7>
                                                     </div>
-                                                    <a href="fn_removeItemCart.php?type=hotel&id=<?php echo $row['hotelID']; ?>&cartID=<?php echo $cartID ?>">
-                                                        <i class='bx bx-x-circle' style='color:#dd2525'></i>
-                                                    </a>
+                                                    <div class="col-md-1">
+                                                        <a href="fn_removeItemCart.php?type=hotel&id=<?php echo $row['hotelID']; ?>&cartID=<?php echo $cartID ?>">
+                                                            <i class='bx bx-x-circle' style='color:#dd2525'></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                                 <hr>
                                             <?php }
@@ -221,9 +223,11 @@ if (isset($_SESSION['success_msg'])) {
                                                     <div class="col-md-2">
                                                         <h7>RM<?php echo htmlspecialchars(number_format($row['attPrice'], 2)); ?></h7>
                                                     </div>
-                                                    <a href="fn_removeItemCart.php?type=attraction&id=<?php echo $row['attID']; ?>&cartID=<?php echo $cartID ?>">
-                                                        <i class='bx bx-x-circle' style='color:#dd2525'></i>
-                                                    </a>
+                                                    <div class="col-md-1">
+                                                        <a href="fn_removeItemCart.php?type=attraction&id=<?php echo $row['attID']; ?>&cartID=<?php echo $cartID ?>">
+                                                            <i class='bx bx-x-circle' style='color:#dd2525'></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                                 <hr>
                                             <?php }
