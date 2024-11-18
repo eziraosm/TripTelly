@@ -11,19 +11,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $place_id = $_POST['place_id'];
 
     $form_data = $_SESSION['form_data'];
-    $from_location = $form_data['from_loc'];
-    $destination_location = $form_data['destination_loc'];
-    $departure_date = date('Y-m-d', strtotime($form_data['departure_date']));  // Convert date format to MySQL format
-    $return_date = date('Y-m-d', strtotime($form_data['return_date']));  // Convert date format to MySQL format
-    $member = $form_data['people_num'];  // Number of people in the cart
+    $from_location = isset($form_data['from_loc']) ? $form_data['from_loc'] : $form_data["fromLocation"];
+    $destination_location = isset($form_data['destination_loc']) ? $form_data['destination_loc'] : $form_data["destinationLocation"];
+    $ddate = isset($form_data['departure_date']) ? $form_data['departure_date'] : $form_data["departureDate"];
+    $departure_date = date('Y-m-d', strtotime($ddate));  // Convert date format to MySQL format
+    $rdate = isset($form_data['return_date']) ? $form_data['return_date'] : $form_data["returnDate"];
+    $return_date = date('Y-m-d', strtotime($rdate));  // Convert date format to MySQL format
+    $member = isset($form_data['people_num']) ? $form_data['people_num'] : $form_data["member"];
+    $max_budget = $form_data['max_budget'];
 
     $cartID = generateCartID();
 
-    $cartSql = "INSERT INTO cart (cartID, userID, fromLocation, destinationLocation, departureDate, returnDate, member)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $cartSql = "INSERT INTO cart (cartID, userID, fromLocation, destinationLocation, departureDate, returnDate, max_budget, member)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($cartSql);
-    $stmt->bind_param("ssssssi", $cartID, $_SESSION['userID'], $from_location, $destination_location, $departure_date, $return_date, $member);
+    $stmt->bind_param("ssssssdi", $cartID, $_SESSION['userID'], $from_location, $destination_location, $departure_date, $return_date, $max_budget, $member);
 
     if ($stmt->execute()) {
         $_SESSION['cart_success_msg'] = "Cart inserted successfully!";

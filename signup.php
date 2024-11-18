@@ -15,7 +15,10 @@ session_start(); // Start session to access session variables
     <h2>Registration</h2>
     <form action="fn_signup.php" method="POST">
       <div class="input-box">
-        <input type="text" name="name" placeholder="Enter your name" required>
+        <input type="text" name="username" placeholder="Enter your user name" required>
+      </div>
+      <div class="input-box">
+        <input type="text" name="fullname" placeholder="Enter your full name" required>
       </div>
       <div class="input-box">
         <input type="text" name="email" placeholder="Enter your email" required>

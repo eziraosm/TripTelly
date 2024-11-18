@@ -73,7 +73,7 @@ if (isset($_SESSION['success_msg'])) {
 	$toastClass = 'bg-danger';
 	unset($_SESSION['error_msg']);
 }
-
+$destination = $destination_location = isset($form_data['destination_loc']) ? $form_data['destination_loc'] : $form_data["destinationLocation"];
 ?>
 
 <!DOCTYPE html>
@@ -149,7 +149,7 @@ if (isset($_SESSION['success_msg'])) {
 
 		<div class="container">
 			<div class="title">
-				<h3>Attractions in <?php echo $form_data['destination_loc'] ?></h3>
+				<h3>Attractions in <?php echo $destination ?></h3>
 				<h5>Select places you would like to visit</h5>
 			</div>
 			<div class="hotel-table">

@@ -5,7 +5,8 @@ include 'fn_triptelly.php'; // Include the functions file
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize and fetch form data
-    $name = trim($_POST['name']);
+    $username = trim($_POST['username']);
+    $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $confirmPassword = trim($_POST['confirm_password']);
@@ -37,9 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert user data into the database
-    $insertUser = "INSERT INTO user (userID, userFname, userEmail, userPassword) VALUES (?, ?, ?, ?)";
+    $insertUser = "INSERT INTO user (userID, username, userFname, userEmail, userPassword) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insertUser);
-    $stmt->bind_param("ssss", $userID, $name, $email, $hashedPassword);
+    $stmt->bind_param("sssss", $userID, $username, $fullname, $email, $hashedPassword);
 
     if ($stmt->execute()) {
         $_SESSION['successMsg'] = "Registration successful! Please log in.";

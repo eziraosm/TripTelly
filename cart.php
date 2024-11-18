@@ -163,6 +163,7 @@ if (isset($_SESSION['success_msg'])) {
                                             <div class="travel-data-container mb-5 mt-3">
                                                 <?php if (!empty($cartData)) {
                                                     $firstRow = $cartData[0];
+                                                    $_SESSION['form_data'] = $cartData[0];
                                                     $cartID = $firstRow['cartID'];
                                                     ?>
                                                     <h5><?php echo $firstRow['fromLocation']; ?> <i
@@ -172,6 +173,7 @@ if (isset($_SESSION['success_msg'])) {
                                                             class='bx bx-right-arrow-alt'></i>
                                                         <?php echo $firstRow['returnDate']; ?></h6>
                                                     <h6><?php echo $firstRow['member']; ?> Person</h6>
+                                                    <h6>RM <?php echo $firstRow['max_budget']; ?> budgets</h6>
                                                 <?php } ?>
                                             </div>
 

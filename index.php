@@ -407,7 +407,6 @@ unset($_SESSION['form_data']);
 															<div class="col-sm-9">
 																<div class="travel-filter-container">
 																	<div class="travel-filter">
-																		<label for="start_budget">Max</label>
 																		<div class="money_input">
 																			<span>RM</span>
 																			<input type="number" name="max_budget"
