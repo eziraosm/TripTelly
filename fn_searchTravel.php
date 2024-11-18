@@ -5,6 +5,7 @@ include 'fn_triptelly.php';
 if (!isset($_SESSION['userID'])) {
     $_SESSION['errorMsg'] = "Login to search for travel";
     $_SESSION['form_data'] = $_POST;
+    $_SESSION['user_login'] = false;
     header("Location: signin.php");
     exit();
 }
@@ -87,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
                 'destination_loc' => $destination_loc,
                 'departure_date' => $departure_date,
                 'return_date' => $return_date,
+                'max_budget' => $max_budget,
                 'people_num' => $people_num
             ];
             

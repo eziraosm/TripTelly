@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["user_login"])) {
+    $_SESSION['user_login'] = true;
+}
+?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en" dir="ltr">
@@ -13,7 +20,6 @@
     <h2>Sign In</h2>
     <form action="fn_signin.php" method="POST">
         <?php
-        session_start(); // Start the session
         // Display success message if it exists
         if (isset($_SESSION['successMsg'])) {
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">'

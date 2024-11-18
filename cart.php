@@ -5,6 +5,26 @@ include 'dbconnect.php';
 if (isset($_SESSION['userID'])) {
     $userID = $_SESSION['userID'];
 
+    // Delete cart if it has no hotels or attractions
+    $checkCartQuery = "
+        SELECT COUNT(*) AS totalItems 
+        FROM (
+            SELECT hotelID AS itemID FROM cart_hotel WHERE cartID IN (SELECT cartID FROM cart WHERE userID = ?)
+            UNION ALL
+            SELECT attID AS itemID FROM cart_attractions WHERE cartID IN (SELECT cartID FROM cart WHERE userID = ?)
+        ) AS items";
+    $stmt = $conn->prepare($checkCartQuery);
+    $stmt->bind_param("ss", $userID, $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    if ($row['totalItems'] == 0) {
+        $deleteCartQuery = "DELETE FROM cart WHERE userID = ?";
+        $stmt = $conn->prepare($deleteCartQuery);
+        $stmt->bind_param("s", $userID);
+        $stmt->execute();
+    }
+
     // Fetch username
     $userDataQuery = "SELECT username FROM user WHERE userID = ?";
     $stmt = $conn->prepare($userDataQuery);
@@ -52,16 +72,17 @@ $toastMessage = '';
 $toastClass = '';
 
 if (isset($_SESSION['success_msg'])) {
-	$toastMessage = $_SESSION['success_msg'];
-	$toastClass = 'bg-success';
-	unset($_SESSION['success_msg']);
+    $toastMessage = $_SESSION['success_msg'];
+    $toastClass = 'bg-success';
+    unset($_SESSION['success_msg']);
 } elseif (isset($_SESSION['error_msg'])) {
-	$toastMessage = $_SESSION['error_msg'];
-	$toastClass = 'bg-danger';
-	unset($_SESSION['error_msg']);
+    $toastMessage = $_SESSION['error_msg'];
+    $toastClass = 'bg-danger';
+    unset($_SESSION['error_msg']);
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
