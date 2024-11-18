@@ -12,6 +12,7 @@ if (!isset($_SESSION['userID'])) {
 $userID = $_SESSION['userID'];
 $itemType = isset($_GET['type']) ? $_GET['type'] : '';
 $itemID = isset($_GET['id']) ? $_GET['id'] : '';
+$cartID = isset($_GET['cartID']) ? $_GET['cartID'] : '';
 
 if (empty($itemType) || empty($itemID)) {
     header("Location: cart.php");
@@ -20,9 +21,9 @@ if (empty($itemType) || empty($itemID)) {
 
 // SQL query based on item type (either 'hotel' or 'attraction')
 if ($itemType === 'hotel') {
-    $sql = "DELETE FROM cart_hotel WHERE hotelID = ? AND cartID = (SELECT cartID FROM cart WHERE userID = ? LIMIT 1)";
+    $sql = "DELETE FROM cart_hotel WHERE hotelID = ? AND cartID = ?";
 } elseif ($itemType === 'attraction') {
-    $sql = "DELETE FROM cart_attractions WHERE attID = ? AND cartID = (SELECT cartID FROM cart WHERE userID = ? LIMIT 1)";
+    $sql = "DELETE FROM cart_attractions WHERE attID = ? AND cartID = ?";
 } else {
     // Invalid item type
     header("Location: cart.php");
@@ -31,7 +32,7 @@ if ($itemType === 'hotel') {
 
 // Prepare and bind the SQL query
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $itemID, $userID);
+$stmt->bind_param("ss", $itemID, $cartID);
 
 // Execute the query
 if ($stmt->execute()) {

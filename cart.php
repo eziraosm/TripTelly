@@ -14,7 +14,7 @@ if (isset($_SESSION['userID'])) {
     $username = $result->num_rows > 0 ? $result->fetch_assoc()['username'] : 'Guest';
 
     // Fetch cart details (excluding hotels and attractions)
-    $cartQuery = "SELECT fromLocation, destinationLocation, departureDate, returnDate, member FROM cart WHERE userID = ?";
+    $cartQuery = "SELECT * FROM cart WHERE userID = ?";
     $stmt = $conn->prepare($cartQuery);
     $stmt->bind_param("s", $userID);
     $stmt->execute();
@@ -46,6 +46,7 @@ if (isset($_SESSION['userID'])) {
         $attData[] = $row;
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +101,7 @@ if (isset($_SESSION['userID'])) {
             </div>
         </div>
     </nav>
-
+    
     <main>
         <section class="h-100 h-custom">
             <div class="container py-5 h-100">
@@ -115,6 +116,7 @@ if (isset($_SESSION['userID'])) {
                                             <div class="travel-data-container mb-5 mt-3">
                                                 <?php if (!empty($cartData)) {
                                                     $firstRow = $cartData[0];
+                                                    $cartID = $firstRow['cartID'];
                                                     ?>
                                                     <h5><?php echo $firstRow['fromLocation']; ?> <i
                                                             class='bx bx-right-arrow-alt'></i>
@@ -142,7 +144,7 @@ if (isset($_SESSION['userID'])) {
                                                     <div class="col-md-2">
                                                         <h7>RM<?php echo htmlspecialchars(number_format($row['hotelPrice'], 2)); ?></h7>
                                                     </div>
-                                                    <a href="fn_removeItemCart.php?type=hotel&id=<?php echo $row['hotelID']; ?>">
+                                                    <a href="fn_removeItemCart.php?type=hotel&id=<?php echo $row['hotelID']; ?>&cartID=<?php echo $cartID ?>">
                                                         <i class='bx bx-x-circle' style='color:#dd2525'></i>
                                                     </a>
                                                 </div>
@@ -172,7 +174,7 @@ if (isset($_SESSION['userID'])) {
                                                     <div class="col-md-2">
                                                         <h7>RM<?php echo htmlspecialchars(number_format($row['attPrice'], 2)); ?></h7>
                                                     </div>
-                                                    <a href="fn_removeItemCart.php?type=attraction&id=<?php echo $row['attID']; ?>">
+                                                    <a href="fn_removeItemCart.php?type=attraction&id=<?php echo $row['attID']; ?>&cartID=<?php echo $cartID ?>">
                                                         <i class='bx bx-x-circle' style='color:#dd2525'></i>
                                                     </a>
                                                 </div>

@@ -351,7 +351,7 @@ unset($_SESSION['form_data']);
 
 												<div class="col-lg-2 col-md-1 col-sm-4">
 													<div class="single-tab-select-box">
-														<h2>members</h2>
+														<h2>person</h2>
 														<div class="travel-select-icon">
 															<select class="form-control" name="people_num" required>
 																<option value="">Select</option>
