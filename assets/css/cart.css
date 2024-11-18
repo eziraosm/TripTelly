@@ -20,3 +20,7 @@
     display: flex;
     justify-content: right;
 }
+
+body {
+	background-color: #00d8ff;
+}

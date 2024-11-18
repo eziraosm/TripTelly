@@ -47,6 +47,20 @@ if (isset($_SESSION['userID'])) {
     }
 }
 
+// Toast controller
+$toastMessage = '';
+$toastClass = '';
+
+if (isset($_SESSION['success_msg'])) {
+	$toastMessage = $_SESSION['success_msg'];
+	$toastClass = 'bg-success';
+	unset($_SESSION['success_msg']);
+} elseif (isset($_SESSION['error_msg'])) {
+	$toastMessage = $_SESSION['error_msg'];
+	$toastClass = 'bg-danger';
+	unset($_SESSION['error_msg']);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,19 +73,31 @@ if (isset($_SESSION['userID'])) {
     <title>Cart</title>
     <link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/cart.css">
 </head>
 
 <body>
+    <!-- toast container -->
+    <?php if (!empty($toastMessage)): ?>
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast <?php echo $toastClass; ?>" role="alert" aria-live="assertive"
+                aria-atomic="true" data-autohide="false">
+                <div class="toast-header">
+                    <strong class="me-auto">Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body" style="color: whitesmoke;">
+                    <?php echo htmlspecialchars($toastMessage); ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="logo">
             <a href="index.php">
@@ -218,6 +244,19 @@ if (isset($_SESSION['userID'])) {
             </div>
         </section>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var toastEl = document.getElementById('liveToast');
+			if (toastEl) {
+				var toast = new bootstrap.Toast(toastEl);
+				toast.show();
+			}
+		});
+	</script>
 </body>
 
 </html>

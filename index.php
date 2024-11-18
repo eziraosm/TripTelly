@@ -129,6 +129,9 @@ unset($_SESSION['form_data']);
 
 	<link rel="stylesheet" href="assets/css/custom.css">
 
+	
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 
@@ -173,6 +176,15 @@ unset($_SESSION['form_data']);
 									<li class="smooth-menu"><a href="#gallery">Destination</a></li>
 									<li class="smooth-menu"><a href="#testemonial">Reviews </a></li>
 									<li class="smooth-menu"><a href="#blog">blog</a></li>
+									<?php
+										if (isset($_SESSION['userID']) && isset($username)) {
+									?>
+									<li>
+										<a href="cart.php"><i class="bx bxs-cart"></i></a>
+									</li>
+									<?php
+									}
+									?>
 									<li>
 										<?php
 										if (isset($_SESSION['userID']) && isset($username)) {
