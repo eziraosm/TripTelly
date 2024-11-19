@@ -20,33 +20,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $member = isset($form_data['people_num']) ? $form_data['people_num'] : $form_data["member"];
     $max_budget = $form_data['max_budget'];
 
-    $cartID = generateCartID();
+    // Check if user already has an existing cart
+    $userID = $_SESSION['userID'];
+    $existingCartQuery = "SELECT cartID FROM cart WHERE userID = ?";
+    $stmt = $conn->prepare($existingCartQuery);
+    $stmt->bind_param("s", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $cartSql = "INSERT INTO cart (cartID, userID, fromLocation, destinationLocation, departureDate, returnDate, max_budget, member)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($cartSql);
-    $stmt->bind_param("ssssssdi", $cartID, $_SESSION['userID'], $from_location, $destination_location, $departure_date, $return_date, $max_budget, $member);
-
-    if ($stmt->execute()) {
-        $_SESSION['cart_success_msg'] = "Cart inserted successfully!";
-        $sql_hotel = "INSERT INTO cart_hotel (cartID, hotelID, hotelName, hotelLocation, hotelPrice)
-                  VALUES (?, ?, ?, ?, ?)";
-
-        $stmt_hotel = $conn->prepare($sql_hotel);
-        $stmt_hotel->bind_param("ssssd", $cartID, $place_id, $hotel_name, $hotel_address, $hotel_price);
-
-        if ($stmt_hotel->execute()) {
-            $_SESSION['current_cartID'] = $cartID;
-            $_SESSION['success_msg'] = "Hotel added to cart successfully!";
-            header("Location: searchAttractions.php");
-        } else {
-            $_SESSION['error_msg'] = "Error inserting hotel: " . $stmt_hotel->error;
-        }
+    if ($result->num_rows > 0) {
+        // Reuse existing cartID
+        $row = $result->fetch_assoc();
+        $cartID = $row['cartID'];
     } else {
-        $_SESSION['error_msg'] = "Error inserting cart: " . $stmt->error;
+        // No existing cart, create a new one
+        $cartID = generateCartID();
+        $cartSql = "INSERT INTO cart (cartID, userID, fromLocation, destinationLocation, departureDate, returnDate, max_budget, member)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($cartSql);
+        $stmt->bind_param("ssssssdi", $cartID, $userID, $from_location, $destination_location, $departure_date, $return_date, $max_budget, $member);
+        
+        if (!$stmt->execute()) {
+            $_SESSION['error_msg'] = "Error inserting cart: " . $stmt->error;
+            header("Location: errorPage.php");
+            exit;
+        }
     }
 
+    // Insert hotel into the cart
+    $sql_hotel = "INSERT INTO cart_hotel (cartID, hotelID, hotelName, hotelLocation, hotelPrice)
+                  VALUES (?, ?, ?, ?, ?)";
+    $stmt_hotel = $conn->prepare($sql_hotel);
+    $stmt_hotel->bind_param("ssssd", $cartID, $place_id, $hotel_name, $hotel_address, $hotel_price);
 
+    if ($stmt_hotel->execute()) {
+        $_SESSION['current_cartID'] = $cartID;
+        $_SESSION['success_msg'] = "Hotel added to cart successfully!";
+        header("Location: searchAttractions.php");
+    } else {
+        $_SESSION['error_msg'] = "Error inserting hotel: " . $stmt_hotel->error;
+        header("Location: errorPage.php");
+    }
 }
 ?>

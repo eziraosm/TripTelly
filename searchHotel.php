@@ -64,7 +64,13 @@ if (!isset($_SESSION['hotel_data'])) {
 $hotel_data = $_SESSION['hotel_data'];
 $form_data = $_SESSION['form_data'];
 $max_budget = isset($_SESSION['max_budget']) ? $_SESSION['max_budget'] : $form_data["max_budget"];
-$destination = isset($_SESSION['destination']) ? $_SESSION['destination'] : $form_data["destinationLocation"];
+$destination = isset($_SESSION['destination']) 
+    ? $_SESSION['destination'] 
+    : (isset($form_data["destinationLocation"]) 
+        ? $form_data["destinationLocation"] 
+        : (isset($form_data["destination_loc"]) 
+            ? $form_data["destination_loc"] 
+            : null));
 
 ?>
 

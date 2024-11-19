@@ -356,7 +356,7 @@ unset($_SESSION['form_data']);
 															<input type="text" name="departure_date"
 																class="form-control" data-toggle="datepicker"
 																min="<?php echo $today; ?>"
-																placeholder="<?php echo $todayDate ?>" required>
+																placeholder="<?php echo $todayDate ?>" autocomplete="off" required>
 														</div><!-- /.travel-check-icon -->
 													</div><!--/.single-tab-select-box-->
 												</div><!--/.col-->
@@ -367,7 +367,7 @@ unset($_SESSION['form_data']);
 														<div class="travel-check-icon">
 															<input type="text" name="return_date" class="form-control"
 																data-toggle="datepicker" min="<?php echo $today; ?>"
-																placeholder="<?php echo $returnDate ?>" required>
+																placeholder="<?php echo $returnDate ?>" autocomplete="off" required>
 														</div><!-- /.travel-check-icon -->
 													</div><!--/.single-tab-select-box-->
 												</div><!--/.col-->
