@@ -1,3 +1,7 @@
+body {
+	background-color: #00d8ff;
+}
+
 a {
 	text-decoration: none;
 }
@@ -69,11 +73,64 @@ a {
 }
 
 .btn-container {
-    width: 100%;
-    justify-content: end;
-    display: flex;
+	width: 100%;
+	justify-content: end;
+	display: flex;
 }
 
-body {
-	background-color: #00d8ff;
+.hotel-table {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* sticky budget card */
+.sticky-container {
+	position: sticky;
+	z-index: 1000;
+	top: 0;
+	width: 100%;
+	height: auto;
+	background: rgba(255, 0, 0, 0.5);
+	pointer-events: none;
+}
+
+.price-display {
+	position: absolute; 
+	top: 0; 
+	right: 0; 
+	pointer-events: auto; 
+	background: #F8FBFE; 
+	width: auto;
+	margin-top: 300px;
+	margin-right: 20px;
+	padding: 10px;
+	border-radius: 8px;
+}
+
+.current-display,
+.budget-display {
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	justify-content: space-between;
+	/* color: #000000; */
+}
+.price {
+	margin-left: 5px;
+}
+
+.over-budget {
+	position: absolute; 
+	top: 0; 
+	right: 0; 
+	pointer-events: auto; 
+	background: #232323; 
+	width: auto;
+	margin-top: 300px;
+	margin-right: 20px;
+	padding: 10px;
+	border-radius: 8px;
+	color: #dc3545;
 }

@@ -74,6 +74,13 @@ if (isset($_SESSION['success_msg'])) {
 	unset($_SESSION['error_msg']);
 }
 $destination = $destination_location = isset($form_data['destination_loc']) ? $form_data['destination_loc'] : $form_data["destinationLocation"];
+
+// change sticky container if over budget
+if (getTotalCartPrice() > $form_data['max_budget']) {
+	$stickyClass = "over-budget";
+} else {
+	$stickyClass = "price-display";
+}
 ?>
 
 <!DOCTYPE html>
@@ -125,11 +132,12 @@ $destination = $destination_location = isset($form_data['destination_loc']) ? $f
 				<button class="cart-btn position-relative">
 					<a href="cart.php"><i class="bx bxs-cart"></i></a>
 					<?php
-						if (isset($_SESSION['cartID'])) {
-					?>
-					<span class="position-absolute bottom-60 start-70 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
-					<?php
-						}
+					if (isset($_SESSION['cartID'])) {
+						?>
+						<span
+							class="position-absolute bottom-60 start-70 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+						<?php
+					}
 					?>
 				</button>
 				<button type="button" class="btn btn-secondary"
@@ -137,7 +145,16 @@ $destination = $destination_location = isset($form_data['destination_loc']) ? $f
 			</div>
 		</div>
 	</nav>
-
+	<div class="sticky-container">
+		<div class="<?php echo $stickyClass ?>">
+			<div class="current-display">
+				Current: <span class="price">RM <?php echo number_format(getTotalCartPrice(), 2) ?></span>
+			</div>
+			<div class="budget-display">
+				Budget: <span class="price"> RM <?php echo number_format($form_data['max_budget'], 2) ?></span>
+			</div>
+		</div>
+	</div>
 	<main>
 		<!-- toast container -->
 		<?php if (!empty($toastMessage)): ?>
@@ -162,7 +179,7 @@ $destination = $destination_location = isset($form_data['destination_loc']) ? $f
 				<h5>Select places you would like to visit</h5>
 			</div>
 			<div class="hotel-table">
-				<table class="table table-hover table-dark">
+				<table class="table table-hover table-dark" style="width:80%">
 					<thead>
 						<tr>
 							<th scope="col">No</th>

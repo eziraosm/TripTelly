@@ -65,15 +65,20 @@ if (!isset($_SESSION['hotel_data'])) {
 $hotel_data = $_SESSION['hotel_data'];
 $form_data = $_SESSION['form_data'];
 $max_budget = isset($_SESSION['max_budget']) ? $_SESSION['max_budget'] : $form_data["max_budget"];
-$destination = isset($_SESSION['destination']) 
-    ? $_SESSION['destination'] 
-    : (isset($form_data["destinationLocation"]) 
-        ? $form_data["destinationLocation"] 
-        : (isset($form_data["destination_loc"]) 
-            ? $form_data["destination_loc"] 
-            : null));
+$destination = isset($_SESSION['destination'])
+	? $_SESSION['destination']
+	: (isset($form_data["destinationLocation"])
+		? $form_data["destinationLocation"]
+		: (isset($form_data["destination_loc"])
+			? $form_data["destination_loc"]
+			: null));
 
-
+// change sticky container if over budget
+if (getTotalCartPrice() > $max_budget) {
+	$stickyClass = "over-budget";
+} else {
+	$stickyClass = "price-display";
+}
 ?>
 
 <!DOCTYPE html>
@@ -121,11 +126,12 @@ $destination = isset($_SESSION['destination'])
 				<button class="cart-btn position-relative">
 					<a href="cart.php"><i class="bx bxs-cart"></i></a>
 					<?php
-						if (isset($_SESSION['cartID'])) {
-					?>
-					<span class="position-absolute bottom-60 start-70 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
-					<?php
-						}
+					if (isset($_SESSION['cartID'])) {
+						?>
+						<span
+							class="position-absolute bottom-60 start-70 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+						<?php
+					}
 					?>
 				</button>
 				<button type="button" class="btn btn-secondary"
@@ -133,7 +139,16 @@ $destination = isset($_SESSION['destination'])
 			</div>
 		</div>
 	</nav>
-
+	<div class="sticky-container">
+		<div class="<?php echo $stickyClass ?>">
+			<div class="current-display">
+				Current: <span class="price">RM <?php echo number_format(getTotalCartPrice(), 2) ?></span>
+			</div>
+			<div class="budget-display">
+				Budget: <span class="price"> RM <?php echo number_format($max_budget, 2)  ?></span>
+			</div>
+		</div>
+	</div>
 	<main>
 		<div class="container">
 			<div class="title">
@@ -141,7 +156,7 @@ $destination = isset($_SESSION['destination'])
 				<h5>Select accommodations within your budget</h5>
 			</div>
 			<div class="hotel-table">
-				<table class="table table-hover table-dark">
+				<table class="table table-hover table-dark" style="width: 80%;">
 					<thead>
 						<tr>
 							<th scope="col">No</th>
@@ -172,14 +187,14 @@ $destination = isset($_SESSION['destination'])
 										<input type='hidden' name='hotel_price' value='" . number_format($hotel['price'], 2) . "'>
 										<input type='hidden' name='place_id' value='" . htmlspecialchars($hotel['place_id']) . "'>";
 
-												// Disable all buttons if the user has booked a hotel
-												if ($hasBookedHotel) {
-													echo "<button type='button' class='btn btn-secondary' disabled title='You can only book one hotel'>Booked</button>";
-												} else {
-													echo "<button type='submit' class='btn btn-success'>Book</button>";
-												}
+							// Disable all buttons if the user has booked a hotel
+							if ($hasBookedHotel) {
+								echo "<button type='button' class='btn btn-secondary' disabled title='You can only book one hotel'>Booked</button>";
+							} else {
+								echo "<button type='submit' class='btn btn-success'>Book</button>";
+							}
 
-												echo "</form>
+							echo "</form>
 								</td>";
 							echo "</tr>";
 
@@ -209,6 +224,7 @@ $destination = isset($_SESSION['destination'])
 			</div>
 		</div>
 	</main>
+
 </body>
 
 </html>

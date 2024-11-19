@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt_hotel->bind_param("ssssd", $cartID, $place_id, $hotel_name, $hotel_address, $hotel_price);
 
     if ($stmt_hotel->execute()) {
-        $_SESSION['current_cartID'] = $cartID;
+        $_SESSION['cartID'] = $cartID;
         $_SESSION['success_msg'] = "Hotel added to cart successfully!";
         header("Location: searchAttractions.php");
     } else {
