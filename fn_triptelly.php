@@ -34,4 +34,5 @@ function generateAttractionPrice($maxAttractionBudget)
 	// Otherwise, return a regular price between 3 and 100
 	return rand(3, min(100, $attraction_budget));
 }
+
 ?>

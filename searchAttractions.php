@@ -112,16 +112,25 @@ $destination = $destination_location = isset($form_data['destination_loc']) ? $f
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<!-- <li class="nav-item active">
-					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Link</a>
-				</li> -->
+				<ul class="navbar-nav mr-auto" style="margin-left:10px">
+					<li class="nav-item">
+						<a class="nav-link" href="searchHotel.php">Hotels <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="searchAttractions.php">Attractions</a>
+					</li>
+				</ul>
 			</ul>
 			<div class="action-btn">
-				<button class="cart-btn">
+				<button class="cart-btn position-relative">
 					<a href="cart.php"><i class="bx bxs-cart"></i></a>
+					<?php
+						if (isset($_SESSION['cartID'])) {
+					?>
+					<span class="position-absolute bottom-60 start-70 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+					<?php
+						}
+					?>
 				</button>
 				<button type="button" class="btn btn-secondary"
 					onclick="window.location.href='fn_signout.php'"><?php echo htmlspecialchars($username) ?></button>

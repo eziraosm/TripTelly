@@ -33,6 +33,7 @@ if (isset($_SESSION['userID'])) {
 	$userCarts = [];
 	while ($row = $result->fetch_assoc()) {
 		$userCarts[] = $row['cartID'];
+		$_SESSION['cartID'] = $row['cartID'];
 	}
 
 	// Check if any hotel is already booked
@@ -72,6 +73,7 @@ $destination = isset($_SESSION['destination'])
             ? $form_data["destination_loc"] 
             : null));
 
+
 ?>
 
 <!DOCTYPE html>
@@ -86,12 +88,8 @@ $destination = isset($_SESSION['destination'])
 	<title>Hotel Result</title>
 	<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png" />
 	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
@@ -111,17 +109,24 @@ $destination = isset($_SESSION['destination'])
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<!-- <li class="nav-item active">
-					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+			<ul class="navbar-nav mr-auto" style="margin-left:10px">
+				<li class="nav-item active">
+					<a class="nav-link" href="searchHotel.php">Hotels <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Link</a>
-				</li> -->
+					<a class="nav-link" href="searchAttractions.php">Attractions</a>
+				</li>
 			</ul>
 			<div class="action-btn">
-				<button class="cart-btn">
+				<button class="cart-btn position-relative">
 					<a href="cart.php"><i class="bx bxs-cart"></i></a>
+					<?php
+						if (isset($_SESSION['cartID'])) {
+					?>
+					<span class="position-absolute bottom-60 start-70 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+					<?php
+						}
+					?>
 				</button>
 				<button type="button" class="btn btn-secondary"
 					onclick="window.location.href='fn_signout.php'"><?php echo htmlspecialchars($username) ?></button>

@@ -73,3 +73,7 @@ a {
     justify-content: end;
     display: flex;
 }
+
+body {
+	background-color: #00d8ff;
+}

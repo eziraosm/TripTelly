@@ -23,6 +23,7 @@ if (isset($_SESSION['userID'])) {
         $stmt = $conn->prepare($deleteCartQuery);
         $stmt->bind_param("s", $userID);
         $stmt->execute();
+        unset($_SESSION['cartID']);
     }
 
     // Fetch username
@@ -131,14 +132,14 @@ if (isset($_SESSION['success_msg'])) {
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <!-- <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li> -->
-            </ul>
+            <ul class="navbar-nav mr-auto" style="margin-left:10px">
+				<li class="nav-item ">
+					<a class="nav-link" href="searchHotel.php">Hotels</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="searchAttractions.php">Attractions</a>
+				</li>
+			</ul>
             <div class="action-btn">
                 <button class="cart-btn">
                     <a href="cart.php"><i class="bx bxs-cart"></i></a>
