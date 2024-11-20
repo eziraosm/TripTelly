@@ -30,13 +30,27 @@ body {
 }
 
 .normal-budget-container {
-	background: rgba(128, 128, 128, 0.338);
+	background-color: rgba(128, 128, 128, 0.338);
 	border-radius: 0 14px 14px 0;
 	color: rgb(31, 31, 31);
 }
 
 .over-budget-container {
-	background: rgba(198, 14, 14, 0.753);
+	background-color: rgba(198, 14, 14, 0.753);
 	border-radius: 0 14px 14px 0;
-	color: rgb(31, 31, 31);
+	color: rgb(255, 255, 255);
+}
+
+.budget-container {
+    transition: background-color 1s ease; /* Smooth transition */
+}
+
+.warning {
+	font-size: 14px !important;
+	text-align: justify;
+	padding-left: 20px;
+}
+
+.icon-danger {
+	font-size: 50px;
 }

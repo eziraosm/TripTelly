@@ -167,13 +167,21 @@ if (isset($_SESSION['success_msg'])) {
                                                     $firstRow = $cartData[0];
                                                     $_SESSION['form_data'] = $cartData[0];
                                                     $cartID = $firstRow['cartID'];
+
+                                                    // Calculate travel duration
+                                                    $departureDate = $firstRow['departureDate'];
+                                                    $returnDate = $firstRow['returnDate'];
+                                                    $departure = new DateTime($departureDate);
+                                                    $return = new DateTime($returnDate);
+                                                    $interval = $departure->diff($return);
+                                                    $days = $interval->days;
                                                     ?>
                                                     <h5><?php echo $firstRow['fromLocation']; ?> <i
                                                             class='bx bx-right-arrow-alt'></i>
                                                         <?php echo $firstRow['destinationLocation']; ?></h5>
-                                                    <h6><?php echo $firstRow['departureDate']; ?> <i
+                                                    <h6><?php echo $departureDate; ?> <i
                                                             class='bx bx-right-arrow-alt'></i>
-                                                        <?php echo $firstRow['returnDate']; ?></h6>
+                                                        <?php echo $returnDate; ?> (<?php echo $days ?> days)</h6>
                                                     <h6><?php echo $firstRow['member']; ?> Person</h6>
                                                     <h6>RM <?php echo $firstRow['max_budget']; ?> budgets</h6>
                                                 <?php } ?>
@@ -255,11 +263,11 @@ if (isset($_SESSION['success_msg'])) {
                                             $containerClass = 'normal-budget-container';
                                         }
                                      ?>
-                                    <div class="col-lg-4 bg-body-tertiary <?php echo $containerClass ?>">
+                                    <div class="col-lg-4 bg-body-tertiary budget-container <?php echo $containerClass ?>">
                                         <div class="p-5 ">
                                             <h3 class="fw-bold">Summary</h3>
                                             <hr>
-                                            <h6>Maximum Budge:</h6>
+                                            <h6>Maximum Budget:</h6>
                                             <div class="total">RM <?php echo $max_budget ?></div>
                                             <hr>
                                             <h5>Hotels Total: </h5>
@@ -270,10 +278,28 @@ if (isset($_SESSION['success_msg'])) {
                                             <div class="total">
                                                 <span>RM<?php echo number_format($attractionTotal, 2); ?></span>
                                             </div>
+                                            <hr>
                                             <h5>Grand Total: </h5>
                                             <div class="total">
                                                 <h6>RM<?php echo number_format($grandTotal, 2); ?></h6>
                                             </div>
+                                            <?php
+                                                if ($grandTotal > $max_budget) {
+                                                    ?>
+                                            <hr>
+                                            <div class="card bg-warning mb-3">
+                                                <div class="card-body d-flex justify-content-between">
+                                                    <div class="icon-danger text-danger">
+                                                        <i class='bx bxs-error'></i>
+                                                    </div>
+                                                    <div class="text-danger warning">
+                                                        WARNING: You are exceeding your maximum budget. You can proceed if you wish to continue.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    <?php
+                                                }
+                                            ?>
                                             <button class="btn btn-dark btn-block btn-lg">Checkout</button>
                                         </div>
                                     </div>
@@ -289,15 +315,6 @@ if (isset($_SESSION['success_msg'])) {
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
 
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			var toastEl = document.getElementById('liveToast');
-			if (toastEl) {
-				var toast = new bootstrap.Toast(toastEl);
-				toast.show();
-			}
-		});
-	</script>
 </body>
 
 </html>
