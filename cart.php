@@ -43,8 +43,8 @@ if (isset($_SESSION['userID'])) {
     $cartData = [];
     while ($row = $cartResult->fetch_assoc()) {
         $cartData[] = $row;
+        $max_budget = $row['max_budget'];
     }
-
     // Fetch hotel data
     $hotelQuery = "SELECT hotelID, hotelName, hotelLocation, hotelPrice, cartID FROM cart_hotel WHERE cartID IN (SELECT cartID FROM cart WHERE userID = ?)";
     $stmt = $conn->prepare($hotelQuery);
@@ -82,7 +82,7 @@ if (isset($_SESSION['success_msg'])) {
     unset($_SESSION['error_msg']);
 }
 
-$max_budget =  isset($firstRow['max_budget']) ? $firstRow['max_budget'] : "0.00"
+
 ?>
 
 <!DOCTYPE html>
@@ -246,12 +246,21 @@ $max_budget =  isset($firstRow['max_budget']) ? $firstRow['max_budget'] : "0.00"
                                     </div>
 
                                     <!-- Summary Section -->
-                                    <div class="col-lg-4 bg-body-tertiary summary-container">
-                                        <div class="p-5">
+                                     <?php
+                                        // compare maxbudget and grand total
+                                        $grandTotal = $hotelTotal + $attractionTotal;
+                                        if ($grandTotal > $max_budget) {
+                                            $containerClass = 'over-budget-container';
+                                        } else {
+                                            $containerClass = 'normal-budget-container';
+                                        }
+                                     ?>
+                                    <div class="col-lg-4 bg-body-tertiary <?php echo $containerClass ?>">
+                                        <div class="p-5 ">
                                             <h3 class="fw-bold">Summary</h3>
                                             <hr>
                                             <h6>Maximum Budge:</h6>
-                                            <div class="total"><?php echo "RM " . $max_budget ?></div>
+                                            <div class="total">RM <?php echo $max_budget ?></div>
                                             <hr>
                                             <h5>Hotels Total: </h5>
                                             <div class="total">
@@ -263,7 +272,7 @@ $max_budget =  isset($firstRow['max_budget']) ? $firstRow['max_budget'] : "0.00"
                                             </div>
                                             <h5>Grand Total: </h5>
                                             <div class="total">
-                                                <h6>RM<?php echo number_format($hotelTotal + $attractionTotal, 2); ?></h6>
+                                                <h6>RM<?php echo number_format($grandTotal, 2); ?></h6>
                                             </div>
                                             <button class="btn btn-dark btn-block btn-lg">Checkout</button>
                                         </div>
