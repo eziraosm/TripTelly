@@ -24,6 +24,8 @@ if (isset($_SESSION['userID'])) {
         $stmt->bind_param("s", $userID);
         $stmt->execute();
         unset($_SESSION['cartID']);
+        $_SESSION["cart_empty"] = true;
+        $max_budget = "0.00";
     }
 
     // Fetch username
@@ -82,7 +84,6 @@ if (isset($_SESSION['success_msg'])) {
     unset($_SESSION['error_msg']);
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -135,10 +136,10 @@ if (isset($_SESSION['success_msg'])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="margin-left:10px">
 				<li class="nav-item ">
-					<a class="nav-link" href="searchHotel.php">Hotels</a>
+					<a class="nav-link" href="fn_searchTravel.php">Hotels</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="searchAttractions.php">Attractions</a>
+					<a class="nav-link" href="fn_searchTravel.php">Attractions</a>
 				</li>
 			</ul>
             <div class="action-btn">
@@ -214,7 +215,7 @@ if (isset($_SESSION['success_msg'])) {
                                             if (!$hasHotelItems) { ?>
                                                 <div class="row">
                                                     <div class="col-12 text-center">
-                                                        <a href="searchHotel.php" class="btn btn-primary">Search Hotels</a>
+                                                        <a href="fn_searchTravel.php" class="btn btn-primary">Search Hotels</a>
                                                     </div>
                                                 </div>
                                             <?php } ?>

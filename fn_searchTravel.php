@@ -201,4 +201,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
     }
 }
 
+if ($_SESSION['cart_empty']) {
+    unset( $_SESSION['cart_empty'] );
+    header('index.php');
+}
+
 ?>
