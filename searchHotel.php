@@ -20,6 +20,16 @@ if (isset($_SESSION['userID'])) {
 	}
 }
 
+// Handle AJAX request to set error message in the session
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    if (isset($data['set_error_msg']) && $data['set_error_msg']) {
+        $_SESSION['error_msg'] = 'You can only book one hotel.  Please delete hotel from cart if you would like to change hotel.';
+        echo json_encode(['status' => 'success']);
+        exit();
+    }
+}
+
 if (isset($_SESSION['userID'])) {
 	$userID = $_SESSION['userID'];
 
@@ -78,6 +88,20 @@ if (getTotalCartPrice() > $max_budget) {
 	$stickyClass = "over-budget";
 } else {
 	$stickyClass = "price-display";
+}
+
+// Toast controller
+$toastMessage = '';
+$toastClass = '';
+
+if (isset($_SESSION['success_msg'])) {
+	$toastMessage = $_SESSION['success_msg'];
+	$toastClass = 'bg-success';
+	unset($_SESSION['success_msg']);
+} elseif (isset($_SESSION['error_msg'])) {
+	$toastMessage = $_SESSION['error_msg'];
+	$toastClass = 'bg-danger';
+	unset($_SESSION['error_msg']);
 }
 ?>
 
@@ -150,6 +174,22 @@ if (getTotalCartPrice() > $max_budget) {
 		</div>
 	</div>
 	<main>
+
+		<!-- toast container -->
+		<?php if (!empty($toastMessage)): ?>
+			<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+				<div id="liveToast" class="toast <?php echo $toastClass; ?>" role="alert" aria-live="assertive"
+					aria-atomic="true" data-autohide="false">
+					<div class="toast-header">
+						<strong class="me-auto">Notification</strong>
+						<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+					</div>
+					<div class="toast-body" style="color: whitesmoke;">
+						<?php echo htmlspecialchars($toastMessage); ?>
+					</div>
+				</div>
+			</div>
+		<?php endif; ?>
 		<div class="container">
 			<div class="title">
 				<h3>Hotels in <?php echo $destination ?></h3>
@@ -189,7 +229,7 @@ if (getTotalCartPrice() > $max_budget) {
 
 							// Disable all buttons if the user has booked a hotel
 							if ($hasBookedHotel) {
-								echo "<button type='button' class='btn btn-secondary' disabled title='You can only book one hotel'>Booked</button>";
+								echo "<button type='button' class='btn btn-secondary booked-btn' title='You can only book one hotel'>Booked</button>";
 							} else {
 								echo "<button type='submit' class='btn btn-success'>Book</button>";
 							}
@@ -224,6 +264,43 @@ if (getTotalCartPrice() > $max_budget) {
 			</div>
 		</div>
 	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				// Handle "Booked" button click
+				document.querySelectorAll('.booked-btn').forEach(button => {
+					button.addEventListener('click', () => {
+						// Send an AJAX request to update the session error message
+						fetch(window.location.href, {
+							method: 'POST',
+							body: JSON.stringify({ set_error_msg: true }),
+							headers: {
+								'Content-Type': 'application/json'
+							}
+						})
+						.then(response => response.json())
+						.then(data => {
+							if (data.status === 'success') {
+								// Reload the page to show the toast message
+								location.reload();
+							}
+						})
+						.catch(error => console.error('Error:', error));
+					});
+				});
+
+				// Show toast message if available
+				var toastEl = document.getElementById('liveToast');
+				if (toastEl) {
+					var toast = new bootstrap.Toast(toastEl);
+					toast.show();
+				}
+			});
+		</script>
 
 </body>
 
