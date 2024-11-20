@@ -82,6 +82,7 @@ if (isset($_SESSION['success_msg'])) {
     unset($_SESSION['error_msg']);
 }
 
+$max_budget =  isset($firstRow['max_budget']) ? $firstRow['max_budget'] : "0.00"
 ?>
 
 <!DOCTYPE html>
@@ -248,6 +249,9 @@ if (isset($_SESSION['success_msg'])) {
                                     <div class="col-lg-4 bg-body-tertiary summary-container">
                                         <div class="p-5">
                                             <h3 class="fw-bold">Summary</h3>
+                                            <hr>
+                                            <h6>Maximum Budge:</h6>
+                                            <div class="total"><?php echo "RM " . $max_budget ?></div>
                                             <hr>
                                             <h5>Hotels Total: </h5>
                                             <div class="total">

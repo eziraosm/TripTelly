@@ -50,12 +50,14 @@ function getTotalCartPrice()
 
     // SQL query to calculate the total price for hotels and attractions for the current user
     $sql = "
-        SELECT SUM(h.hotelPrice) AS totalHotelPrice, SUM(a.attPrice) AS totalAttractionPrice
-        FROM cart c
-        LEFT JOIN cart_hotel h ON c.cartID = h.cartID
-        LEFT JOIN cart_attractions a ON c.cartID = a.cartID
-        WHERE c.userID = '$userID'
-    ";
+    SELECT 
+        (SELECT SUM(h.hotelPrice) 
+         FROM cart_hotel h 
+         WHERE h.cartID IN (SELECT cartID FROM cart WHERE userID = '$userID')) AS totalHotelPrice,
+        (SELECT SUM(a.attPrice) 
+         FROM cart_attractions a 
+         WHERE a.cartID IN (SELECT cartID FROM cart WHERE userID = '$userID')) AS totalAttractionPrice
+";
 
     // Execute the query
     $result = mysqli_query($conn, $sql);
