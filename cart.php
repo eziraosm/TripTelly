@@ -54,8 +54,8 @@ if (isset($_SESSION['userID'])) {
             "people_num" => $row["member"],
             "max_budget" => $row["max_budget"]
         );
-        $_SESSION['form_data_cart'] = $form_data;
     }
+    $_SESSION['form_data_cart'] = $form_data;
     
     // Fetch hotel data
     $hotelQuery = "SELECT hotelID, hotelName, hotelLocation, hotelPrice, cartID FROM cart_hotel WHERE cartID IN (SELECT cartID FROM cart WHERE userID = ?)";
