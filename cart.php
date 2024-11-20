@@ -46,7 +46,17 @@ if (isset($_SESSION['userID'])) {
     while ($row = $cartResult->fetch_assoc()) {
         $cartData[] = $row;
         $max_budget = $row['max_budget'];
+        $form_data = array(
+            "from_loc" => $row["fromLocation"],
+            "destination_loc" => $row["destinationLocation"],
+            "departure_date" => $row["departureDate"],
+            "return_date" => $row["returnDate"],
+            "people_num" => $row["member"],
+            "max_budget" => $row["max_budget"]
+        );
+        $_SESSION['form_data_cart'] = $form_data;
     }
+    
     // Fetch hotel data
     $hotelQuery = "SELECT hotelID, hotelName, hotelLocation, hotelPrice, cartID FROM cart_hotel WHERE cartID IN (SELECT cartID FROM cart WHERE userID = ?)";
     $stmt = $conn->prepare($hotelQuery);
@@ -69,7 +79,6 @@ if (isset($_SESSION['userID'])) {
         $attData[] = $row;
     }
 }
-
 // Toast controller
 $toastMessage = '';
 $toastClass = '';
@@ -82,6 +91,13 @@ if (isset($_SESSION['success_msg'])) {
     $toastMessage = $_SESSION['error_msg'];
     $toastClass = 'bg-danger';
     unset($_SESSION['error_msg']);
+}
+
+if ($_SESSION['form_data_cart'] == null) {
+    $searchTravelorIndex = 'index.php';
+} else {
+    $_SESSION['from_cart'] = true;
+    $searchTravelorIndex = 'fn_searchTravel.php';
 }
 
 ?>
@@ -136,10 +152,10 @@ if (isset($_SESSION['success_msg'])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="margin-left:10px">
 				<li class="nav-item ">
-					<a class="nav-link" href="fn_searchTravel.php">Hotels</a>
+					<a class="nav-link" href="<?php echo $searchTravelorIndex ?>">Hotels</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="fn_searchTravel.php">Attractions</a>
+					<a class="nav-link" href="<?php echo $searchTravelorIndex ?>">Attractions</a>
 				</li>
 			</ul>
             <div class="action-btn">

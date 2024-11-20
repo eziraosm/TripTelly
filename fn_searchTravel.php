@@ -11,6 +11,10 @@ if (!isset($_SESSION['userID'])) {
     exit();
 }
 
+if (isset($_SESSION['cart_empty'])) {
+    unset( $_SESSION['cart_empty'] );
+    header('index.php');
+}
 
 $userID = $_SESSION['userID']; // Assuming userID is stored in the session
 
@@ -44,39 +48,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 // Check if a cart exists for the current user
-$cartsql = "SELECT cartID FROM cart WHERE userID = ?";
-$stmt = $conn->prepare($cartsql);
-$stmt->bind_param("s", $userID);
-$stmt->execute();
-$result = $stmt->get_result();
+if (!isset($_SESSION['from_cart'])){
+    unset($_SESSION['from_cart']);
+    $cartsql = "SELECT cartID FROM cart WHERE userID = ?";
+    $stmt = $conn->prepare($cartsql);
+    $stmt->bind_param("s", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
-    // If cart exists, send a JavaScript prompt to the user
-    echo "<script>
-        if (confirm('You already have items in your cart. Do you want to delete them?')) {
-            // If user agrees to delete the cart
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '', true); // Send request to the same PHP file
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
-                if (xhr.status === 200 && xhr.responseText.trim() === 'success') {
-                    alert('Your cart has been cleared.');
-                    location.reload(); // Reload to proceed with the current request
-                } else {
-                    alert('Error occurred while deleting the cart: ' + xhr.responseText);
-                }
-            };
-            xhr.send('action=delete_cart'); // Send POST request with action parameter
-        } else {
-            // If user declines, redirect to cart page
-            window.location.href = 'cart.php';
-        }
-    </script>";
-    exit();
+    if ($result->num_rows > 0) {
+        // If cart exists, send a JavaScript prompt to the user
+        echo "<script>
+            if (confirm('You already have items in your cart. Do you want to delete them?')) {
+                // If user agrees to delete the cart
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '', true); // Send request to the same PHP file
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    if (xhr.status === 200 && xhr.responseText.trim() === 'success') {
+                        alert('Your cart has been cleared.');
+                        location.reload(); // Reload to proceed with the current request
+                    } else {
+                        alert('Error occurred while deleting the cart: ' + xhr.responseText);
+                    }
+                };
+                xhr.send('action=delete_cart'); // Send POST request with action parameter
+            } else {
+                // If user declines, redirect to cart page
+                window.location.href = 'cart.php';
+            }
+        </script>";
+        exit();
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
-    $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : $_POST;
+    
+    if (isset($_SESSION['form_data_cart'])) {
+        $form_data = $_SESSION['form_data_cart'];
+    }else {
+        if (isset($_SESSION['form_data'])) {
+            $form_data = $_SESSION['form_data'];
+        } elseif (isset($_POST)) {
+            $form_data = $_POST;
+        } 
+    }
 
     // Validate input fields
     $from_loc = $form_data['from_loc'] ?? null;
@@ -85,14 +101,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
     $return_date = $form_data['return_date'] ?? null;
     $people_num = $form_data['people_num'] ?? null;
     $max_budget = $form_data['max_budget'] ?? null;
-    $_SESSION['form_data'] = $_POST;
     // Check for missing fields
     if (empty($from_loc) || empty($destination_loc) || empty($departure_date) || empty($people_num) || empty($max_budget)) {
         $_SESSION['errorMsg'] = "Please fill in all the required fields.";
         header("Location: index.php");
         exit();
     }
-
+    $_SESSION['form_data'] = $_POST;
     // Google Places API key
     $apiKey = 'AIzaSyBpHdMS0pMIrrjewOeEpo5z-ykG0FMYbiQ';
 
@@ -201,9 +216,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
     }
 }
 
-if ($_SESSION['cart_empty']) {
-    unset( $_SESSION['cart_empty'] );
-    header('index.php');
-}
+
 
 ?>
