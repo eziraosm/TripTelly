@@ -206,6 +206,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
             }
 
             // Redirect to searchResult.php
+            if ($_GET['toAttraction'] == true) {
+                header("Location: searchAttractions.php");
+                exit;
+            }
             header("Location: searchHotel.php");
             exit();
         } else {
@@ -215,7 +219,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
         }
     }
 }
-
 
 
 ?>

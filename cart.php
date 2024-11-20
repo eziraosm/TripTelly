@@ -155,7 +155,7 @@ if ($_SESSION['form_data_cart'] == null) {
 					<a class="nav-link" href="<?php echo $searchTravelorIndex ?>">Hotels</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo $searchTravelorIndex ?>">Attractions</a>
+					<a class="nav-link" href="<?php echo $searchTravelorIndex ?>?toAttraction=true">Attractions</a>
 				</li>
 			</ul>
             <div class="action-btn">
