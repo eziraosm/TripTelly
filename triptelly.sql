@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2024 at 12:10 PM
+-- Generation Time: Nov 23, 2024 at 03:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `triptelly`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `adminID` varchar(255) NOT NULL,
+  `adminname` varchar(255) NOT NULL,
+  `adminFname` varchar(255) NOT NULL,
+  `adminEmail` varchar(255) NOT NULL,
+  `adminPassword` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -43,9 +57,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cartID`, `userID`, `fromLocation`, `destinationLocation`, `departureDate`, `returnDate`, `member`, `max_budget`) VALUES
-('7VDmfLDYtkE', '69e6a1311ecaca54', 'kedah', 'putrajaya', '2024-11-20', '2024-11-23', 1, 500.00),
-('AfW0kIq6PJh', '69e6a1311ecaca54', 'kedah', 'putrajaya', '2024-11-20', '2024-11-23', 1, 500.00),
-('yyQ69MOD1Jg', '69e6a1311ecaca54', 'kedah', 'putrajaya', '2024-11-20', '2024-11-23', 1, 500.00);
+('l5JPqy3rJ9j', '69e6a1311ecaca54', 'kedah', 'perak', '2024-11-21', '2024-11-23', 1, 500.00);
 
 -- --------------------------------------------------------
 
@@ -67,9 +79,10 @@ CREATE TABLE `cart_attractions` (
 --
 
 INSERT INTO `cart_attractions` (`cartAttID`, `cartID`, `attID`, `attName`, `attLocation`, `attPrice`) VALUES
-(1, '7VDmfLDYtkE', 'ChIJ2yat5MVJzDERUIHFb1rkGGw', 'Planetarium Negara', '53, Jalan Perdana, Kuala Lumpur', 31.00),
-(2, '7VDmfLDYtkE', 'ChIJJSAtCNNJzDERETbGF9iz7CI', 'Muzium Telekom', 'Jalan Raja Chulan, Kuala Lumpur', 11.00),
-(3, '7VDmfLDYtkE', 'ChIJn7ct6mxIzDERAfOvaaTX5DM', 'National Art Gallery', 'Lembaga Pembangunan Seni Visual Negara, 2, Jalan Temerloh, off, Jalan Tun Razak, Kuala Lumpur', 48.00);
+(17, 'l5JPqy3rJ9j', 'ChIJZ4-lbwO9yjERN913Ga5gI-Y', 'Muzium Diraja Kuala Kangsar', 'Istana Lama Bukit Chandan, Perak, Kuala Kangsar', 3.00),
+(18, 'l5JPqy3rJ9j', 'ChIJ7ZsMJ4atyjERivUghzb_TYE', 'Matang Museum', 'Kampung Pekan Matang, Matang', 92.00),
+(19, 'l5JPqy3rJ9j', 'ChIJyTplPviuyjERVvnvFM5JNp4', '5D Art Paradise Taiping', '25, Jalan Maharajalela, Taiping', 58.00),
+(20, 'l5JPqy3rJ9j', 'ChIJRXTNZwi9yjERv6RpqHfW_SQ', 'Galeri Sultan Azlan Shah', 'Jalan Istana, Bukit Chandan, Kuala Kangsar', 111.00);
 
 -- --------------------------------------------------------
 
@@ -91,7 +104,7 @@ CREATE TABLE `cart_hotel` (
 --
 
 INSERT INTO `cart_hotel` (`cartHotelID`, `cartID`, `hotelID`, `hotelName`, `hotelLocation`, `hotelPrice`) VALUES
-(3, 'AfW0kIq6PJh', 'ChIJJ2V7SClPzDER779w0YaYOXU', 'Royale Chulan Damansara', '2A, Jalan PJU 7/3, Mutiara Damansara, Petaling Jaya', 102.00);
+(10, 'l5JPqy3rJ9j', 'ChIJb3e2nqryyjER2Q6ex7ccnh4', 'The Banjaran Hotsprings Retreat', '1, Persiaran Lagoon, Sunway 3, Ipoh', 100.00);
 
 -- --------------------------------------------------------
 
@@ -155,13 +168,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart_attractions`
 --
 ALTER TABLE `cart_attractions`
-  MODIFY `cartAttID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cartAttID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `cart_hotel`
 --
 ALTER TABLE `cart_hotel`
-  MODIFY `cartHotelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cartHotelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
