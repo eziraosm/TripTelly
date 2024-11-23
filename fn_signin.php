@@ -34,11 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: index.php");
                 }
             } else {
-                $_SESSION['errorMsg'] = "Invalid password. Please try again.";
+                $_SESSION['errorMsg'] = "Invalid email or password. Please try again.";
                 header("Location: signin.php");
             }
         } else {
-            $_SESSION['errorMsg'] = "No account found with that email.";
+            $_SESSION['errorMsg'] = "No account found.";
             header("Location: signin.php");
         }
 
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
         $conn->close();
         exit();
-    }elseif ($_POST['isAdmin'] == 'Yes' || isset($_POST['isAdmin'])) {
+    } elseif ($_POST['isAdmin'] == 'Yes' || isset($_POST['isAdmin'])) {
         // Check if user exists
         $checkUser = "SELECT * FROM admin WHERE adminEmail = ?";
         $stmt = $conn->prepare($checkUser);
@@ -58,24 +58,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = $result->fetch_assoc();
             // Verify the password
             if (password_verify($password, $user['adminPassword'])) {
-                $_SESSION['userID'] = $user['userID'];
-                if (isset($_SESSION['form_data'])) {
-                    $form_data = $_SESSION['form_data'];
-                    $_SESSION['max_budget'] = $form_data['max_budget'];
-                    $_SESSION['destination'] = $form_data['destination_loc'];
-                    // Redirect back to fn_searchTravel.php with the form data
-                    header("Location: index.php");
-                    exit();
-                } else {
-                    // Redirect to a welcome page or user dashboard
-                    header("Location: index.php");
-                }
+                $_SESSION['adminID'] = $user['adminID'];
+                header("Location: admin/index.php");
+                exit();
             } else {
-                $_SESSION['errorMsg'] = "Invalid password. Please try again.";
+                $_SESSION['errorMsg'] = "Invalid email or password. Please try again.";
                 header("Location: signin.php");
             }
         } else {
-            $_SESSION['errorMsg'] = "No account found with that email.";
+            $_SESSION['errorMsg'] = "No account found.";
             header("Location: signin.php");
         }
 

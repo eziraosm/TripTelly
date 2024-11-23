@@ -1,10 +1,3 @@
-<?php
-session_start();
-
-if (!isset($_SESSION["user_login"])) {
-    $_SESSION['user_login'] = true;
-}
-?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en" dir="ltr">
