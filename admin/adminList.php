@@ -12,6 +12,7 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
 // datatable admin 
 $allAdmin = fetchAllAdminData();
+
 ?>
 <html lang="en">
 
@@ -32,7 +33,15 @@ $allAdmin = fetchAllAdminData();
                 <?php
                 // for testing purpose. comment when not use
                 // var_dump($toastMessage)
-                include "view_toaster.php";
+                if (isset($_GET['deleteAdminID'])) {
+                    $delAdminData = fetchCurrentAdminData($_GET['deleteAdminID']);
+                    $_SESSION['delete_msg'] = $delAdminData['adminName'] . " admin will be deleted.";
+                    $_SESSION['deleteAdminID'] = $_GET['deleteAdminID'];
+                    include "view_alertToaster.php";
+                }
+                if (isset($_SESSION['success_msg']) || isset($_SESSION['error_msg'])) {
+                    include "view_toaster.php";
+                }
                 ?>
 
                 <div class="container-fluid px-4">
@@ -84,7 +93,15 @@ $allAdmin = fetchAllAdminData();
                                                 <div class="action-btn w-100 d-flex justify-content-evenly">
                                                     <a href="adminEdit.php?editAdminID=<?php echo $data['adminID'] ?>"
                                                         class="btn btn-info">Edit</a>
-                                                    <a href="fn_adminDelete.php" class="btn btn-danger">Delete</a>
+                                                        <?php
+                                                            $disableDelete = false;
+                                                            if ($data['adminID'] == $_SESSION['adminID']) {
+                                                                $disableDelete = true;
+                                                            }
+                                                        ?>
+                                                    <button class="btn btn-danger" <?php echo $disableDelete ? 'disabled' : ''; ?>
+                                                        onclick="window.location.href='adminList.php?deleteAdminID=<?php echo $data['adminID'] ?>'">Delete</button>
+
                                                 </div>
                                             </td>
                                         </tr>
