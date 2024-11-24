@@ -7,8 +7,10 @@ if (!isset($_SESSION["adminID"])) {
     header("../index.php");
 }
 
-$adminData = fetchAdminData($_SESSION['adminID']);
+$adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
+// datatable admin 
+$allAdmin = fetchAllAdminData();
 ?>
 <html lang="en">
 
@@ -34,6 +36,10 @@ $adminData = fetchAdminData($_SESSION['adminID']);
         </div>
         <div id="layoutSidenav_content">
             <main>
+                <?php
+                    // for testing purpose. comment when not use
+                    // var_dump($adminData)
+                ?>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Admin</h1>
                     <ol class="breadcrumb mb-4">
@@ -71,18 +77,24 @@ $adminData = fetchAdminData($_SESSION['adminID']);
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>
-                                            <div class="action-btn w-100 d-flex justify-content-evenly">
-                                                <a href="adminEdit.php" class="btn btn-info">Edit</a>
-                                                <a href="fn_adminDelete.php" class="btn btn-danger">Delete</a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    foreach ($allAdmin as $data) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $data['adminID'] ?></td>
+                                            <td><?php echo $data['adminFname'] ?></td>
+                                            <td><?php echo $data['adminName'] ?></td>
+                                            <td><?php echo $data['adminEmail'] ?></td>
+                                            <td>
+                                                <div class="action-btn w-100 d-flex justify-content-evenly">
+                                                    <a href="adminEdit.php" class="btn btn-info">Edit</a>
+                                                    <a href="fn_adminDelete.php" class="btn btn-danger">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

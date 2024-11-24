@@ -7,7 +7,7 @@ if (!isset($_SESSION["adminID"])) {
     header("../index.php");
 }
 
-$adminData = fetchAdminData($_SESSION['adminID']);
+$adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
 ?>
 <html lang="en">
