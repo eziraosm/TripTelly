@@ -46,7 +46,7 @@ if (isset($_GET['editAdminID'])) {
                     </ol>
                     <div class="card mb-4 ">
                         <div class="card-header">
-                            <h4>Admin Update Form</h4>
+                            <h4>Update Admin <?php echo $editAdminData['adminName'] ?> Account </h4>
                         </div>
                         <div class="card-body">
                             <form action="fn_adminEdit.php" method="POST">
@@ -54,40 +54,40 @@ if (isset($_GET['editAdminID'])) {
                                 <div class="mb-3">
                                     <label for="adminName" class="form-label">Short Name</label>
                                     <input type="text" name="adminName" id="adminName" class="form-control"
-                                        placeholder="Enter short name" required autocomplete="off" 
+                                        placeholder="Enter short name"  autocomplete="off" 
                                         value="<?php echo $editAdminData['adminName'] ?>" />
                                 </div>
                                 <!-- Full Name -->
                                 <div class="mb-3">
                                     <label for="adminFName" class="form-label">Full Name</label>
                                     <input type="text" name="adminFName" id="adminFName" class="form-control"
-                                        placeholder="Enter full name" required autocomplete="off"
+                                        placeholder="Enter full name"  autocomplete="off"
                                         value="<?php echo $editAdminData['adminFname'] ?>" />
                                 </div>
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="adminEmail" class="form-label">Email</label>
                                     <input type="email" name="adminEmail" id="adminEmail" class="form-control"
-                                        placeholder="Enter email address" required autocomplete="off"
+                                        placeholder="Enter email address"  autocomplete="off"
                                         value="<?php echo $editAdminData['adminEmail'] ?>" />
                                 </div>
                                 <!-- Password -->
                                 <div class="mb-3">
                                     <label for="adminPassword" class="form-label">Password</label>
                                     <input type="password" name="adminPassword" id="adminPassword" class="form-control"
-                                        placeholder="Enter password" required autocomplete="off"
-                                        value="<?php echo $editAdminData['adminPassword'] ?>" />
+                                        placeholder="Enter password"  autocomplete="off" />
                                 </div>
                                 <!-- Confirm Password -->
                                 <div class="mb-4">
                                     <label for="confirmPassword" class="form-label">Confirm Password</label>
                                     <input type="password" name="confirmPassword" id="confirmPassword"
-                                        class="form-control" placeholder="Confirm your password" required
-                                        autocomplete="off" value="<?php echo $editAdminData['adminPassword'] ?>" />
+                                        class="form-control" placeholder="Confirm your password" 
+                                        autocomplete="off" />
                                 </div>
+                                <input type="text" name="adminID" value="<?php echo $editAdminID ?>" hidden/>
                                 <!-- Submit Button -->
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success">Register</button>
+                                    <button type="submit" class="btn btn-success">Update</button>
                                     <button type="reset" class="btn btn-secondary">Reset</button>
                                 </div>
                             </form>
