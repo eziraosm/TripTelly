@@ -69,7 +69,7 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Admin
             </a>
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="customerList.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Customer
             </a>

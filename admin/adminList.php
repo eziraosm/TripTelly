@@ -82,7 +82,8 @@ $allAdmin = fetchAllAdminData();
                                             <td><?php echo $data['adminEmail'] ?></td>
                                             <td>
                                                 <div class="action-btn w-100 d-flex justify-content-evenly">
-                                                    <a href="adminEdit.php" class="btn btn-info">Edit</a>
+                                                    <a href="adminEdit.php?editAdminID=<?php echo $data['adminID'] ?>"
+                                                        class="btn btn-info">Edit</a>
                                                     <a href="fn_adminDelete.php" class="btn btn-danger">Delete</a>
                                                 </div>
                                             </td>
@@ -107,6 +108,7 @@ $allAdmin = fetchAllAdminData();
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <script src="js/scripts.js"></script>
+
 
 </body>
 

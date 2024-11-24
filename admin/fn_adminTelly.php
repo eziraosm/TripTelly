@@ -46,5 +46,4 @@ function fetchAllAdminData()
     return $data;
 }
 
-
 ?>
