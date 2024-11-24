@@ -8,7 +8,6 @@ if (!isset($_SESSION["adminID"])) {
 }
 
 $adminData = fetchCurrentAdminData($_SESSION['adminID']);
-
 ?>
 <html lang="en">
 
