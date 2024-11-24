@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (isset($_SESSION["isAdmin"])) {
+    $isAdmin = $_SESSION['isAdmin'];
+    unset($_SESSION['isAdmin']);
+} else {
+    $isAdmin = "";
+}
+?>
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en" dir="ltr">
@@ -17,7 +27,7 @@
             <div class="top-container">
                 <h2>Sign In</h2>
                 <div class="checkbox-wrapper-35">
-                    <input value="Yes" name="isAdmin" id="switch" type="checkbox" class="switch">
+                    <input value="Yes" name="isAdmin" id="switch" type="checkbox" class="switch" <?php echo $isAdmin ?> >
                     <label for="switch">
                         <span class="switch-x-text">Log in as </span>
                         <span class="switch-x-toggletext">

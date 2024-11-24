@@ -63,16 +63,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             } else {
                 $_SESSION['errorMsg'] = "Invalid email or password. Please try again.";
+                $_SESSION['isAdmin'] = "checked";
                 header("Location: signin.php");
             }
         } else {
             $_SESSION['errorMsg'] = "No account found.";
+            $_SESSION['isAdmin'] = "checked";
             header("Location: signin.php");
         }
 
         // Close the statement and connection
         $stmt->close();
         $conn->close();
+
         exit();
     }
 }
