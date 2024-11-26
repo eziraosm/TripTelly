@@ -6,9 +6,9 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Dashboard
             </a>
-            <div class="sb-sidenav-menu-heading">Interface</div>
+            <div class="sb-sidenav-menu-heading" style="display:none">Interface</div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-                aria-expanded="false" aria-controls="collapseLayouts">
+                aria-expanded="false" aria-controls="collapseLayouts"  style="display:none">
                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                 Layouts
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -20,12 +20,12 @@
                 </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-                aria-expanded="false" aria-controls="collapsePages">
+                aria-expanded="false" aria-controls="collapsePages" style="display:none">
                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                 Pages
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
-            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion" style="display:none">
                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth"
                         aria-expanded="false" aria-controls="pagesCollapseAuth">
@@ -55,12 +55,12 @@
                     </div>
                 </nav>
             </div>
-            <div class="sb-sidenav-menu-heading">Addons</div>
-            <a class="nav-link" href="charts.html">
+            <div class="sb-sidenav-menu-heading" style="display:none">Addons</div>
+            <a class="nav-link" href="charts.html" style="display:none">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Charts
             </a>
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="tables.html" style="display:none">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Tables
             </a>
@@ -72,6 +72,15 @@
             <a class="nav-link" href="customerList.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Customer
+            </a>
+            <div class="sb-sidenav-menu-heading">Product</div>
+            <a class="nav-link" href="">
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-hotel"></i></div>
+                Hotel
+            </a>
+            <a class="nav-link" href="" >
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-map-pin"></i></div>
+                Attraction
             </a>
         </div>
     </div>
