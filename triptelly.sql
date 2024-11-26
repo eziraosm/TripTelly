@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 03:48 PM
+-- Generation Time: Nov 26, 2024 at 03:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,6 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`adminID`, `adminName`, `adminFname`, `adminEmail`, `adminPassword`) VALUES
+('187f865e92c96233', 'Erfa', 'Epa', 'erfa@gmail.com', '$2y$10$JeaHwp4rpKyE71gTjKWGSOCaMQsMRjWILjFUyTC2PCaB3jCtS4LyC'),
 ('524c84117063255f', 'Tiger Bray', 'Carol Huber', 'xonyfakaja@mailinator.com', '$2y$10$kSNjZolbgIUEUeO5lgEp5uPY7nwmnZPDzGkgRi.lcXUM346xpn/P6'),
 ('6a6400c0f678e99e', 'Ian Key', 'Yael Cooke', 'lemoba@mailinator.com', '$2y$10$0W7aql/I3iQLeQWpsISOe.UKK64cUVO3gv0hH.7ChRMqEU3H/mtOG'),
 ('6a7e4e764408f52f', 'Sam', 'Usamah', 'usamahsamah@gmail.com', '$2y$10$2G7pE40XTea/awPyeY5ztOKL6/EDrg8qaX0eyKWhkxwN5kEXHG8Yq'),
@@ -150,6 +151,7 @@ INSERT INTO `user` (`userID`, `username`, `userFname`, `userEmail`, `userPasswor
 ('6c0f1834877c342c', 'bometewe', 'Caleb Rowland', 'bevowo@mailinator.com', '$2y$10$xzTY9zoBjr3SLlGcSyHZrOdEyoj9x5udtJMFJ8TX4sm0evpP5ulOi'),
 ('8c515ad5bc828c08', 'Sam', 'UsamahThani', 'usamah@gmail.com', '$2y$10$JJudpbh3gtNiL0tcBKI5D.HMzndUW1e7PltoK/J8vjB3.VfUlFfmS'),
 ('b419549b1ea2e9e0', 'vyqureqa', 'Camille Morgan', 'xycidaheh@mailinator.com', '$2y$10$xPkZMbUdHwetXD7rglJ8jOehbWdJGEDfr6sZV84.7LTQ0UaiErKue'),
+('cf8170e907a85071', 'Erfa', 'Erfa Customer', 'erfa@gmail.com', '$2y$10$Hwx/7FnI/1V9/9ZFzLZdaO4aPaf7Ap8imjKiU5Lxdt/ybxYtDpDza'),
 ('f103f3b68ee23036', 'qubovyr', 'Hector Ross', 'bevek@mailinator.com', '$2y$10$A5woI/fo6.ox61HWnTI2ru9O2hVhtDgy3sprO8sRJrqJdxD4Mo8JS');
 
 --
