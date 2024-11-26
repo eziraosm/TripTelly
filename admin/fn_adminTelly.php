@@ -46,4 +46,50 @@ function fetchAllAdminData()
     return $data;
 }
 
+function fetchCurrentCustomerData($customerID)
+{
+    global $conn;
+
+    $customerDataQuery = "SELECT * FROM user WHERE userID = ?";
+    $stmt = $conn->prepare(query: $customerDataQuery);
+    $stmt->bind_param("s", $customerID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $customerData = $result->fetch_assoc();
+        return $customerData;
+    } else {
+        return null;
+    }
+}
+
+function fetchAllCustomerData()
+{
+    global $conn;
+
+    // Query to fetch all admin data
+    $adminSQL = "SELECT * FROM user";
+
+    // Execute the query
+    $result = mysqli_query($conn, $adminSQL);
+
+    // Check if the query was successful
+    if (!$result) {
+        echo "Error: " . mysqli_error($conn);
+        return [];
+    }
+
+    // Fetch all rows as an associative array
+    $data = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+
+    // Free the result set
+    mysqli_free_result($result);
+
+    return $data;
+}
+
 ?>
