@@ -8,9 +8,13 @@ if (!isset($_SESSION["adminID"])) {
     header("../index.php");
 }
 
+if (isset($_SESSION['deleteAdminID'])) {
+    unset($_SESSION['deleteAdminID']);
+}
+
 $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
-// datatable admin 
+// data table admin 
 $allAdmin = fetchAllAdminData();
 
 ?>
