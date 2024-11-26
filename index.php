@@ -272,13 +272,6 @@ unset($_SESSION['form_data']);
 										hotels
 									</a>
 								</li>
-
-								<li role="presentation">
-									<a href="#flights" aria-controls="flights" role="tab" data-toggle="tab">
-										<i class="fa fa-bus"></i>
-										bus
-									</a>
-								</li>
 							</ul>
 
 							<!-- Tab panes -->
@@ -445,7 +438,7 @@ unset($_SESSION['form_data']);
 	<!--travel-box end-->
 
 	<!--service start-->
-	<section id="service" class="service">
+	<section id="service" class="service" style="display: none">
 		<div class="container">
 
 			<div class="service-counter text-center">
@@ -529,7 +522,7 @@ unset($_SESSION['form_data']);
 											<a href="#">
 												Kelantan
 											</a>
-											<p><span>20 tours</span><span>15 places</span></p>
+											<!-- <p><span>20 tours</span><span>15 places</span></p> -->
 										</div><!-- /.item-title -->
 									</div><!-- /.filtr-item -->
 								</div><!-- /.col -->
@@ -541,7 +534,7 @@ unset($_SESSION['form_data']);
 											<a href="#">
 												Kuala Lumpur
 											</a>
-											<p><span>12 tours</span><span>9 places</span></p>
+											<!-- <p><span>12 tours</span><span>9 places</span></p> -->
 										</div> <!-- /.item-title-->
 									</div><!-- /.filtr-item -->
 								</div><!-- /.col -->
@@ -553,7 +546,7 @@ unset($_SESSION['form_data']);
 											<a href="#">
 												Perak
 											</a>
-											<p><span>25 tours</span><span>10 places</span></p>
+											<!-- <p><span>25 tours</span><span>10 places</span></p> -->
 										</div><!-- /.item-title -->
 									</div><!-- /.filtr-item -->
 								</div><!-- /.col -->
@@ -565,7 +558,7 @@ unset($_SESSION['form_data']);
 											<a href="#">
 												Penang
 											</a>
-											<p><span>18 tours</span><span>9 places</span></p>
+											<!-- <p><span>18 tours</span><span>9 places</span></p> -->
 										</div> <!-- /.item-title-->
 									</div><!-- /.filtr-item -->
 								</div><!-- /.col -->
@@ -577,7 +570,7 @@ unset($_SESSION['form_data']);
 											<a href="#">
 												Melaka
 											</a>
-											<p><span>14 tours</span><span>12 places</span></p>
+											<!-- <p><span>14 tours</span><span>12 places</span></p> -->
 										</div> <!-- /.item-title-->
 									</div><!-- /.filtr-item -->
 								</div><!-- /.col -->
@@ -589,7 +582,7 @@ unset($_SESSION['form_data']);
 											<a href="#">
 												Terengganu
 											</a>
-											<p><span>14 tours</span><span>6 places</span></p>
+											<!-- <p><span>14 tours</span><span>6 places</span></p> -->
 										</div> <!-- /.item-title-->
 									</div><!-- /.filtr-item -->
 								</div><!-- /.col -->
@@ -675,13 +668,13 @@ unset($_SESSION['form_data']);
 
 										<div class="caption">
 											<div class="blog-txt">
-												<h3>
+												<h4>
 													<a href="<?php echo $article['url']; ?>">
-														<?php echo $article['title']; ?>
+														<?php echo substr($article['title'], 0, 100) . "..."; ?>
 													</a>
-												</h3>
+												</h4>
 												<p>
-													<?php echo substr($article['content'], 0, 150) . "..."; ?>
+													<?php echo substr($article['content'], 0, 100) . "..."; ?>
 												</p>
 												<a href="<?php echo $article['url']; ?>">Read More</a>
 											</div><!--/.blog-txt-->
@@ -708,12 +701,12 @@ unset($_SESSION['form_data']);
 
 			<hr>
 			<div class="foot-icons ">
-				<ul class="footer-social-links list-inline list-unstyled">
+				<ul class="footer-social-links list-inline list-unstyled" style="display:none">
 					<li><a href="#" target="_blank" class="foot-icon-bg-1"><i class="fa fa-facebook"></i></a></li>
 					<li><a href="#" target="_blank" class="foot-icon-bg-2"><i class="fa fa-twitter"></i></a></li>
 					<li><a href="#" target="_blank" class="foot-icon-bg-3"><i class="fa fa-instagram"></i></a></li>
 				</ul>
-				<p>&copy; 2017 <a href="https://www.themesine.com">ThemeSINE</a>. All Right Reserved</p>
+				<p>&copy; 2024 <a href="#">TripTelly</a>. All Right Reserved</p>
 
 			</div><!--/.foot-icons-->
 			<div id="scroll-Top">
