@@ -3,6 +3,14 @@ if (isset($_SESSION['delete_msg'])) {
     $delete_msg = $_SESSION['delete_msg'];
     unset($_SESSION['delete_msg']);
 }
+
+if (isset($_SESSION['deleteAdminID'])) {
+    $deleteID = $_SESSION['deleteAdminID'];
+    $fnDeletePage = "fn_accountDelete.php?deleteAdminID=";
+} elseif (isset($_SESSION['deleteCustomerID'])) {
+    $deleteID = $_SESSION['deleteCustomerID'];
+    $fnDeletePage = "fn_accountDelete.php?deleteCustomerID=";
+}
 ?>
 
 <!-- toast container -->
@@ -12,7 +20,7 @@ if (isset($_SESSION['delete_msg'])) {
             <div class="toast-body text-white">
                 <?php echo htmlspecialchars($delete_msg); ?>
                 <div class="mt-2 pt-2 border-top">
-                    <a href="fn_adminDelete.php?deleteAdminID=<?php echo $_SESSION['deleteAdminID'] ?>"
+                    <a href="<?php echo $fnDeletePage . $deleteID ?>"
                         class="btn btn-warning btn-sm">Delete</a>
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast"
                         onclick="removeGetURL()">Close</button>
@@ -44,9 +52,9 @@ if (isset($_SESSION['delete_msg'])) {
     });
 
     function removeGetURL() {
-        // Remove the 'deleteAdminID' from the URL
+        // Create a new URL object and clear all query parameters
         const url = new URL(window.location.href);
-        url.searchParams.delete('deleteAdminID');
+        url.search = ''; // Clear the query string
         window.history.replaceState(null, '', url.toString());
     }
 </script>
