@@ -8,6 +8,10 @@ if (!isset($_SESSION["adminID"])) {
     header("../index.php");
 }
 
+if (isset($_SESSION['deleteCustomerID'])) {
+    unset($_SESSION['deleteCustomerID']);
+}
+
 $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
 // datatable customer 
@@ -37,8 +41,7 @@ $allCustomer = fetchAllCustomerData();
                     $delCustomerData = fetchCurrentCustomerData($_GET['deleteCustomerID']);
                     $_SESSION['delete_msg'] = $delCustomerData['username'] . " customer will be deleted.";
                     $_SESSION['deleteCustomerID'] = $_GET['deleteCustomerID'];
-                    // include "view_alertToaster.php";
-                    // todo ejah toaster pahni
+                    include "view_alertToaster.php";
                 }
                 if (isset($_SESSION['success_msg']) || isset($_SESSION['error_msg'])) {
                     include "view_toaster.php";

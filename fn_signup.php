@@ -26,8 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $_SESSION['errorMsg'] = "Email already registered.";
-        header("Location: signup.php");
+        if (!isset($_SESSION['fromAdmin'])) {
+            $_SESSION['errorMsg'] = "Email already registered.";
+            header("Location: signup.php");
+        } else {
+            $_SESSION['error_msg'] = "Email already registered.";
+            header("Location: admin/customerRegister.php");
+        }
         exit();
     } 
 
@@ -43,11 +48,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssss", $userID, $username, $fullname, $email, $hashedPassword);
 
     if ($stmt->execute()) {
-        $_SESSION['successMsg'] = "Registration successful! Please log in.";
-        header("Location: signin.php"); // Redirect to the sign-in page
+        if (!isset($_SESSION['fromAdmin'])) {
+            $_SESSION['successMsg'] = "Registration successful! Please log in.";
+            header("Location: signin.php"); // Redirect to the sign-in page
+        } else {
+            $_SESSION['success_msg'] = "Registration successful! Please log in.";
+            header("Location: admin/customerList.php");
+        }
     } else {
-        $_SESSION['errorMsg'] = "Registration failed. Please try again.";
-        header("Location: signup.php");
+        if (!isset($_SESSION['fromAdmin'])) {
+            $_SESSION['errorMsg'] = "Registration failed. Please try again.";
+            header("Location: signup.php");
+        } else {
+            $_SESSION['error_msg'] = "Registration failed. Please try again.";
+            header("Location: admin/customerRegister.php");
+        }
     }
 
     // Close the statement and connection
