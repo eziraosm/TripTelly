@@ -317,7 +317,7 @@ if ($_SESSION['form_data_cart'] == null) {
                                                     <?php
                                                 }
                                             ?>
-                                            <button class="btn btn-dark btn-block btn-lg">Checkout</button>
+                                            <a href="" class="btn btn-dark btn-block btn-lg">Check Out</a>
                                         </div>
                                     </div>
                                 </div>
