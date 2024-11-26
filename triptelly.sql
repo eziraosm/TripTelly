@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2024 at 03:22 PM
+-- Generation Time: Nov 24, 2024 at 02:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,11 +29,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `adminID` varchar(255) NOT NULL,
-  `adminname` varchar(255) NOT NULL,
+  `adminName` varchar(255) NOT NULL,
   `adminFname` varchar(255) NOT NULL,
   `adminEmail` varchar(255) NOT NULL,
   `adminPassword` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`adminID`, `adminName`, `adminFname`, `adminEmail`, `adminPassword`) VALUES
+('63179dccd075b80c', 'Brynn', 'Basil Burch', 'joti@mailinator.com', '$2y$10$0DTnY0FUH2aOrWg5U6yGeueTt/vdnvhBrDNjecVoepvFHey4uv7bC'),
+('d0b20fe56edf66f6', 'Ramona Wyatt', 'Kaseem Henderson', 'wazy@mailinator.com', '$2y$10$ThEkFhC7BFrv/dIqqdnZPun.gjG2Q77ZasiXG2P7dTTMwnhunGp1m'),
+('fas0-f', 'Sam', 'Usamah Thani', 'usamahsamah@gmail.com', '$2y$10$wvSWCJvKpcP8iLvOkqHPT.gD4XAnEpKeAmiLBrHnoWqfzmDd3M2.G');
 
 -- --------------------------------------------------------
 
@@ -79,10 +88,11 @@ CREATE TABLE `cart_attractions` (
 --
 
 INSERT INTO `cart_attractions` (`cartAttID`, `cartID`, `attID`, `attName`, `attLocation`, `attPrice`) VALUES
-(17, 'l5JPqy3rJ9j', 'ChIJZ4-lbwO9yjERN913Ga5gI-Y', 'Muzium Diraja Kuala Kangsar', 'Istana Lama Bukit Chandan, Perak, Kuala Kangsar', 3.00),
 (18, 'l5JPqy3rJ9j', 'ChIJ7ZsMJ4atyjERivUghzb_TYE', 'Matang Museum', 'Kampung Pekan Matang, Matang', 92.00),
 (19, 'l5JPqy3rJ9j', 'ChIJyTplPviuyjERVvnvFM5JNp4', '5D Art Paradise Taiping', '25, Jalan Maharajalela, Taiping', 58.00),
-(20, 'l5JPqy3rJ9j', 'ChIJRXTNZwi9yjERv6RpqHfW_SQ', 'Galeri Sultan Azlan Shah', 'Jalan Istana, Bukit Chandan, Kuala Kangsar', 111.00);
+(20, 'l5JPqy3rJ9j', 'ChIJRXTNZwi9yjERv6RpqHfW_SQ', 'Galeri Sultan Azlan Shah', 'Jalan Istana, Bukit Chandan, Kuala Kangsar', 111.00),
+(21, 'l5JPqy3rJ9j', 'ChIJgaROuH3syjERv8PsY2-k-go', '22 Hale Street Heritage Gallery', '22, Jalan Tun Sambanthan, Ipoh', 147.00),
+(22, 'l5JPqy3rJ9j', 'ChIJWyheJuNntTERMmFrMJWf5xU', 'Lenggong Archaeological Museum', 'Jabatan Warisan Negara Zon Tengah, Kota Tampan, Lenggong', 34.00);
 
 -- --------------------------------------------------------
 
@@ -104,7 +114,7 @@ CREATE TABLE `cart_hotel` (
 --
 
 INSERT INTO `cart_hotel` (`cartHotelID`, `cartID`, `hotelID`, `hotelName`, `hotelLocation`, `hotelPrice`) VALUES
-(10, 'l5JPqy3rJ9j', 'ChIJb3e2nqryyjER2Q6ex7ccnh4', 'The Banjaran Hotsprings Retreat', '1, Persiaran Lagoon, Sunway 3, Ipoh', 100.00);
+(11, 'l5JPqy3rJ9j', 'ChIJ7Z19qqnyyjERjI16PdKY99M', 'Sunway Lost World Hotel', '1, Persiaran Lagun Sunway, Sunway City, Ipoh', 125.00);
 
 -- --------------------------------------------------------
 
@@ -131,6 +141,12 @@ INSERT INTO `user` (`userID`, `username`, `userFname`, `userEmail`, `userPasswor
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`adminID`);
 
 --
 -- Indexes for table `cart`
@@ -168,13 +184,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart_attractions`
 --
 ALTER TABLE `cart_attractions`
-  MODIFY `cartAttID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `cartAttID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `cart_hotel`
 --
 ALTER TABLE `cart_hotel`
-  MODIFY `cartHotelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cartHotelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
