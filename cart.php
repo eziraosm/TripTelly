@@ -354,7 +354,7 @@ if (!isset($_SESSION['form_data_cart'])) {
         }
     });
 
-</script>
+</script>   
 
 </body>
 

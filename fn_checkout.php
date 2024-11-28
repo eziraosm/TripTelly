@@ -108,7 +108,7 @@ if (isset($_GET['cartID'])) {
     // Execute the query
     if ($paymentStmt->execute()) {
         emptyAllCartData($cartID);
-        $_SESSION['success_msg'] = "Payment successful. Cart emptied. Thank you for purchasing.";
+        $_SESSION['success_msg'] = "Payment successful.\n Thank you for purchasing.";
         header("Location: cart.php");
         $paymentStmt->close();
         $conn->close();
