@@ -1,7 +1,6 @@
 <?php
 session_start();
 include 'dbconnect.php';
-
 if (isset($_SESSION['userID'])) {
     $userID = $_SESSION['userID'];
 
@@ -43,6 +42,7 @@ if (isset($_SESSION['userID'])) {
     $stmt->execute();
     $cartResult = $stmt->get_result();
     $cartData = [];
+    $currentCartID = null;
     while ($row = $cartResult->fetch_assoc()) {
         $cartData[] = $row;
         $max_budget = $row['max_budget'];
@@ -54,8 +54,11 @@ if (isset($_SESSION['userID'])) {
             "people_num" => $row["member"],
             "max_budget" => $row["max_budget"]
         );
+        $currentCartID = $row['cartID'];
     }
-    $_SESSION['form_data_cart'] = $form_data;
+    if (isset($form_data)) {
+        $_SESSION['form_data_cart'] = $form_data;
+    }
     
     // Fetch hotel data
     $hotelQuery = "SELECT hotelID, hotelName, hotelLocation, hotelPrice, cartID FROM cart_hotel WHERE cartID IN (SELECT cartID FROM cart WHERE userID = ?)";
@@ -78,6 +81,8 @@ if (isset($_SESSION['userID'])) {
     while ($row = $attResult->fetch_assoc()) {
         $attData[] = $row;
     }
+} else {
+    header("Location: signin.php");
 }
 // Toast controller
 $toastMessage = '';
@@ -93,7 +98,7 @@ if (isset($_SESSION['success_msg'])) {
     unset($_SESSION['error_msg']);
 }
 
-if ($_SESSION['form_data_cart'] == null) {
+if (!isset($_SESSION['form_data_cart'])) {
     $searchTravelorIndex = 'index.php';
 } else {
     $_SESSION['from_cart'] = true;
@@ -115,9 +120,10 @@ if ($_SESSION['form_data_cart'] == null) {
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+        
     <link rel="stylesheet" href="assets/css/cart.css">
 </head>
 
@@ -274,6 +280,7 @@ if ($_SESSION['form_data_cart'] == null) {
                                      <?php
                                         // compare maxbudget and grand total
                                         $grandTotal = $hotelTotal + $attractionTotal;
+                                        $_SESSION['totalPrice'] = $grandTotal;
                                         if ($grandTotal > $max_budget) {
                                             $containerClass = 'over-budget-container';
                                         } else {
@@ -317,7 +324,7 @@ if ($_SESSION['form_data_cart'] == null) {
                                                     <?php
                                                 }
                                             ?>
-                                            <a href="" class="btn btn-dark btn-block btn-lg">Check Out</a>
+                                            <a href="fn_checkout.php?cartID=<?php echo $currentCartID ?>" class="btn btn-dark btn-block btn-lg">Check Out</a>
                                         </div>
                                     </div>
                                 </div>
@@ -331,6 +338,23 @@ if ($_SESSION['form_data_cart'] == null) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var toastEl = document.getElementById('liveToast');
+        if (toastEl) {
+            // Create a Bootstrap Toast instance
+            var toast = new bootstrap.Toast(toastEl, {
+                animation: true, // Enable fade animations
+                autohide: true,  // Automatically hide after a delay
+            });
+
+            // Show the toast
+            toast.show();
+        }
+    });
+
+</script>
 
 </body>
 
