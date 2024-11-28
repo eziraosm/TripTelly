@@ -200,13 +200,38 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart_attractions`
 --
 ALTER TABLE `cart_attractions`
-  MODIFY `cartAttID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `cartAttID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `cart_hotel`
 --
 ALTER TABLE `cart_hotel`
-  MODIFY `cartHotelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `cartHotelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+COMMIT;
+
+CREATE TABLE `payment` (
+  `paymentID` int NOT NULL AUTO_INCREMENT,
+  `cartID` varchar(50) DEFAULT NULL,
+  `userID` varchar(225) DEFAULT NULL,
+  `hotelData` json DEFAULT NULL,
+  `placeData` json DEFAULT NULL,
+  `totalPrice` double(10,2) DEFAULT NULL,
+  `fromLocation` varchar(225) DEFAULT NULL,
+  `destinationLocation` varchar(225) DEFAULT NULL,
+  `departureDate` date DEFAULT NULL,
+  `returnDate` date DEFAULT NULL,
+  `person` decimal(10,0) DEFAULT NULL,
+  `max_budget` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`paymentID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`paymentID`, `cartID`, `userID`, `hotelData`, `placeData`, `totalPrice`, `fromLocation`, `destinationLocation`, `departureDate`, `returnDate`, `person`, `max_budget`) VALUES
+(12, '3-KVVoxCo81', '69e6a1311ecaca54', '{"cartID": "3-KVVoxCo81", "hotelID": "ChIJJ2V7SClPzDER779w0YaYOXU", "hotelName": "Royale Chulan Damansara", "hotelPrice": "103.00", "cartHotelID": 19, "hotelLocation": "2A, Jalan PJU 7/3, Mutiara Damansara, Petaling Jaya"}', '[{"attID": "ChIJvy1SAMZPzDERS6HN5ms9Xwo", "cartID": "3-KVVoxCo81", "attName": "Shawnalyzer Studio", "attPrice": "61.00", "cartAttID": 56, "attLocation": "15, Jalan Zuhrah U5/151, Taman Subang Murni, Shah Alam"}, {"attID": "ChIJJSAtCNNJzDERETbGF9iz7CI", "cartID": "3-KVVoxCo81", "attName": "Muzium Telekom", "attPrice": "79.00", "cartAttID": 57, "attLocation": "Jalan Raja Chulan, Kuala Lumpur"}, {"attID": "ChIJx2_KuMZJzDERboiFiS2RDyU", "cartID": "3-KVVoxCo81", "attName": "Muzium Etnologi Dunia Melayu", "attPrice": "79.00", "cartAttID": 58, "attLocation": "Jalan Damansara, Kuala Lumpur"}, {"attID": "ChIJwZUFgFs2zDERvM72M2ukZ1U", "cartID": "3-KVVoxCo81", "attName": "Art House Gallery Museum of Ethnic Arts", "attPrice": "78.00", "cartAttID": 59, "attLocation": "Lot 3.04 & 3.05, Level 2, Annexe Building, Central Market, 10,, Jalan Hang Kasturi, Kuala Lumpur"}, {"attID": "ChIJLTz0ccxJzDER0lOupg5YSmc", "cartID": "3-KVVoxCo81", "attName": "Galeri Ketua Polis Negara", "attPrice": "59.00", "cartAttID": 61, "attLocation": "Jalan Bukit Aman, Tasik Perdana, Kuala Lumpur"}, {"attID": "ChIJn7ct6mxIzDERAfOvaaTX5DM", "cartID": "3-KVVoxCo81", "attName": "National Art Gallery", "attPrice": "48.00", "cartAttID": 62, "attLocation": "Lembaga Pembangunan Seni Visual Negara, 2, Jalan Temerloh, off, Jalan Tun Razak, Kuala Lumpur"}]', 507.00, 'kelantan', 'kuala lumpur', '2024-11-29', '2024-12-02', 1, 605.00);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
