@@ -10,8 +10,6 @@ if(!isset($_GET['cartID'])  || $_GET['cartID'] == null || $_GET['cartID'] == '')
 
 $totalPrice = '';
 
-
-
 if (isset($_GET['cartID'])) {
     $cartID = $_GET['cartID'];
     $userID = $_SESSION['userID'];
@@ -80,10 +78,12 @@ if (isset($_GET['cartID'])) {
     $returnDate = date('Y-m-d', strtotime($cartRow['returnDate']));
     $person = $cartRow['member'];
     $max_budget = $cartRow['max_budget'];
+    $paymentDate = date("Y-m-d H:i:s");
+
 
     // Prepare the SQL query to insert data into the payment table
-    $paymentSQL = "INSERT INTO payment (cartID, userID, hotelData, placeData, totalPrice, fromLocation, destinationLocation, departureDate, returnDate, person, max_budget) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $paymentSQL = "INSERT INTO payment (cartID, userID, hotelData, placeData, totalPrice, fromLocation, destinationLocation, departureDate, returnDate, person, max_budget, paymentDate) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $paymentStmt = $conn->prepare($paymentSQL);
 
@@ -91,7 +91,7 @@ if (isset($_GET['cartID'])) {
     if ($paymentStmt) {
     // Bind parameters to the SQL query
     $paymentStmt->bind_param(
-    "ssssdssssdd",
+    "ssssdssssdds",
     $cartID,
     $userID,
     $hotelJson,
@@ -102,7 +102,8 @@ if (isset($_GET['cartID'])) {
     $departDate,
     $returnDate,
     $person,
-    $max_budget
+    $max_budget,
+    $paymentDate
     );
 
     // Execute the query
