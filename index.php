@@ -12,6 +12,13 @@ if (isset($_SESSION['userID'])) {
 	// Restore the userID
 	$_SESSION['userID'] = $tempUserID;
 }
+$userID = $_SESSION['userID'];
+// user engagement count
+$eventType = isset($_SESSION['userID']) ? "login" : "visit";
+$sql = "INSERT INTO user_engagement (event_type, userId) VALUES (?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $eventType, $userID);
+$stmt->execute();
 
 // date for date picker
 $todayDate = date("d/m/Y");
@@ -140,8 +147,8 @@ unset($_SESSION['form_data']);
 
 	<link rel="stylesheet" href="assets/css/custom.css">
 
-	
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -188,12 +195,12 @@ unset($_SESSION['form_data']);
 									<li class="smooth-menu"><a href="#testemonial">Reviews </a></li>
 									<li class="smooth-menu"><a href="#blog">blog</a></li>
 									<?php
-										if (isset($_SESSION['userID']) && isset($username)) {
-									?>
-									<li>
-										<a href="cart.php"><i class="bx bxs-cart"></i></a>
-									</li>
-									<?php
+									if (isset($_SESSION['userID']) && isset($username)) {
+										?>
+										<li>
+											<a href="cart.php"><i class="bx bxs-cart"></i></a>
+										</li>
+										<?php
 									}
 									?>
 									<li>
@@ -349,7 +356,8 @@ unset($_SESSION['form_data']);
 															<input type="text" name="departure_date"
 																class="form-control" data-toggle="datepicker"
 																min="<?php echo $today; ?>"
-																placeholder="<?php echo $todayDate ?>" autocomplete="off" required>
+																placeholder="<?php echo $todayDate ?>"
+																autocomplete="off" required>
 														</div><!-- /.travel-check-icon -->
 													</div><!--/.single-tab-select-box-->
 												</div><!--/.col-->
@@ -360,7 +368,8 @@ unset($_SESSION['form_data']);
 														<div class="travel-check-icon">
 															<input type="text" name="return_date" class="form-control"
 																data-toggle="datepicker" min="<?php echo $today; ?>"
-																placeholder="<?php echo $returnDate ?>" autocomplete="off" required>
+																placeholder="<?php echo $returnDate ?>"
+																autocomplete="off" required>
 														</div><!-- /.travel-check-icon -->
 													</div><!--/.single-tab-select-box-->
 												</div><!--/.col-->
@@ -660,7 +669,8 @@ unset($_SESSION['form_data']);
 								<div class="col-sm-4 col-md-4">
 									<div class="thumbnail">
 										<h2>Trending News
-											<span><?php echo date("d F Y", strtotime($article['publishedAt'])); ?></span></h2>
+											<span><?php echo date("d F Y", strtotime($article['publishedAt'])); ?></span>
+										</h2>
 										<div class="thumbnail-img">
 											<img src="<?php echo $article['urlToImage']; ?>" alt="blog-img">
 											<div class="thumbnail-img-overlay"></div><!--/.thumbnail-img-overlay-->
