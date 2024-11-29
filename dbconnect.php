@@ -13,8 +13,8 @@
 
 <?php
     $hostname = "usamahthani.com";
-    $user = "usamahthani_host";
-    $password = ";bp0oFyD&vr3";
+    $user = "usamahthani_customer";
+    $password = "e6x)MY(mWvLU";
     $database = "usamahthani_triptelly";
 
     $conn = mysqli_connect($hostname, $user, $password, $database) OR DIE ("Connection failed!");

@@ -72,7 +72,7 @@ if (isset($data['status']) && $data['status'] === 'ok') {
 if (isset($_SESSION['userID'])) {
 
 	$userID = $_SESSION['userID'];
-	$userDataQuery = "SELECT * FROM USER WHERE userID = ?";
+	$userDataQuery = "SELECT * FROM user WHERE userID = ?";
 	$stmt = $conn->prepare(query: $userDataQuery);
 	$stmt->bind_param("s", $userID);
 	$stmt->execute();
