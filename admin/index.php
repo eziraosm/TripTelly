@@ -41,7 +41,7 @@ $allCartBook = fetchCartAndBook();
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body"><?php echo countTotalVisitor() ?> Users</div>
+                                <div class="card-body" id="visitorCount">Loading...</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <span class="small text-white stretched-link">Total User Visits</span>
                                     <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
@@ -50,7 +50,7 @@ $allCartBook = fetchCartAndBook();
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-warning text-white mb-4">
-                                <div class="card-body"><?php echo fetchMostPopularLocation() ?></div>
+                                <div class="card-body" id="popularLocation">Loading...</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <span class="small text-white stretched-link">Top Destination</span>
                                     <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
@@ -59,7 +59,7 @@ $allCartBook = fetchCartAndBook();
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
-                                <div class="card-body">RM <?php echo countTotalSaleOfWeek() ?></div>
+                                <div class="card-body" id="salesCount">Loading...</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <span class="small text-white stretched-link">Total Sales This Week</span>
                                     <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
@@ -68,7 +68,7 @@ $allCartBook = fetchCartAndBook();
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-danger text-white mb-4">
-                                <div class="card-body"><?php echo countTotalBooked() ?> Trips</div>
+                                <div class="card-body" id="bookingCount">Loading...</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <span class="small text-white stretched-link">Total Bookings</span>
                                     <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
@@ -112,7 +112,7 @@ $allCartBook = fetchCartAndBook();
                                         <th>Departure Date</th>
                                         <th>Return Date</th>
                                         <th>Persons</th>
-                                        <th>Total Cost</th>
+                                        <th>Total Cost (RM)</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -125,7 +125,7 @@ $allCartBook = fetchCartAndBook();
                                         <th>Departure Date</th>
                                         <th>Return Date</th>
                                         <th>Persons</th>
-                                        <th>Total Cost</th>
+                                        <th>Total Cost (RM)</th>
                                         <th>Status</th>
                                     </tr>
                                 </tfoot>
@@ -137,8 +137,8 @@ $allCartBook = fetchCartAndBook();
                                     <tr>
                                         <td><?php echo $counter ?></td>
                                         <td><?php echo $data['userName'] ?></td>
-                                        <td><?php echo ucfirst($data['fromLocation'])  ?></td>
-                                        <td><?php echo ucfirst($data['destinationLocation']) ?></td>
+                                        <td><?php echo ucwords($data['fromLocation'])  ?></td>
+                                        <td><?php echo ucwords($data['destinationLocation']) ?></td>
                                         <td><?php echo $data['departureDate'] ?></td>
                                         <td><?php echo $data['returnDate'] ?></td>
                                         <td><?php echo $data['person'] ?></td>
@@ -169,6 +169,6 @@ $allCartBook = fetchCartAndBook();
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
+    <script src="js/ajax-dashboardBox.js"></script>
 </body>
-
 </html>
