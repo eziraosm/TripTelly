@@ -12,12 +12,11 @@ if (isset($_SESSION['userID'])) {
 	// Restore the userID
 	$_SESSION['userID'] = $tempUserID;
 }
-$userID = $_SESSION['userID'];
 // user engagement count
 $eventType = isset($_SESSION['userID']) ? "login" : "visit";
 $sql = "INSERT INTO user_engagement (event_type, userId) VALUES (?, ?)";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ss", $eventType, $userID);
+$stmt->bind_param("ss", $eventType, $_SESSION['userID']);
 $stmt->execute();
 
 // date for date picker
