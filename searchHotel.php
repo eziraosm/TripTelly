@@ -22,12 +22,12 @@ if (isset($_SESSION['userID'])) {
 
 // Handle AJAX request to set error message in the session
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    if (isset($data['set_error_msg']) && $data['set_error_msg']) {
-        $_SESSION['error_msg'] = 'You can only book one hotel.  Please delete hotel from cart if you would like to change hotel.';
-        echo json_encode(['status' => 'success']);
-        exit();
-    }
+	$data = json_decode(file_get_contents('php://input'), true);
+	if (isset($data['set_error_msg']) && $data['set_error_msg']) {
+		$_SESSION['error_msg'] = 'You can only book one hotel.  Please delete hotel from cart if you would like to change hotel.';
+		echo json_encode(['status' => 'success']);
+		exit();
+	}
 }
 
 if (isset($_SESSION['userID'])) {
@@ -169,7 +169,7 @@ if (isset($_SESSION['success_msg'])) {
 				Current: <span class="price">RM <?php echo number_format(getTotalCartPrice(), 2) ?></span>
 			</div>
 			<div class="budget-display">
-				Budget: <span class="price"> RM <?php echo number_format($max_budget, 2)  ?></span>
+				Budget: <span class="price"> RM <?php echo number_format($max_budget, 2) ?></span>
 			</div>
 		</div>
 	</div>
@@ -196,58 +196,62 @@ if (isset($_SESSION['success_msg'])) {
 				<h5>Select accommodations within your budget</h5>
 			</div>
 			<div class="hotel-table">
-				<table class="table table-hover table-dark" style="width: 80%;">
-					<thead>
-						<tr>
-							<th scope="col">No</th>
-							<th scope="col">Hotel Name</th>
-							<th scope="col">Location</th>
-							<th scope="col">Ratings</th>
-							<th scope="col">Price</th>
-							<th scope="col">Map</th>
-							<th scope="col">Action</th>
-						</tr>
-					</thead>
-					<tbody>
+				<div class="container my-4">
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 justify-content-center">
 						<?php
-						$count = 1;
-						foreach ($hotel_data as $hotel) {
-							echo "<tr>";
-							echo "<td scope='row'>{$count}</td>";
-							echo "<td>" . htmlspecialchars($hotel['name']) . "</td>";
-							echo "<td>" . htmlspecialchars($hotel['address']) . "</td>";
-							echo "<td>" . htmlspecialchars($hotel['rating'] ?? 'N/A') . "</td>";
-							echo "<td>RM " . number_format($hotel['price'], 2) . "</td>";
-							echo "<td><a href='https://www.google.com/maps/search/?api=1&query=" . urlencode($hotel['name']) . "' target='_blank'><button class='btn btn-primary'>GMap</button></a></td>";
-							echo "<td>
-										<form action='fn_bookHotel.php' method='post'>
-										<input type='hidden' name='hotel_name' value='" . htmlspecialchars($hotel['name']) . "'>
-										<input type='hidden' name='hotel_address' value='" . htmlspecialchars($hotel['address']) . "'>
-										<input type='hidden' name='hotel_rating' value='" . htmlspecialchars($hotel['rating'] ?? 'N/A') . "'>
-										<input type='hidden' name='hotel_price' value='" . number_format($hotel['price'], 2) . "'>
-										<input type='hidden' name='place_id' value='" . htmlspecialchars($hotel['place_id']) . "'>";
-
-							// Disable all buttons if the user has booked a hotel
-							if ($hasBookedHotel) {
-								echo "<button type='button' class='btn btn-secondary booked-btn' title='You can only book one hotel'>Booked</button>";
-							} else {
-								echo "<button type='submit' class='btn btn-success'>Book</button>";
-							}
-
-							echo "</form>
-								</td>";
-							echo "</tr>";
-
-							$count++;
-							if ($count > 10)
-								break; // Limit to 10 hotels
-						}
-						if ($count == 1) {
-							echo "<tr><td colspan='8'>No hotels found within your budget.</td></tr>";
+						foreach ($hotel_data as $key => $hotel) {
+							?>
+							<div class="col">
+								<div class="card h-100 d-flex flex-column">
+									<img src="<?php echo htmlspecialchars($hotel['photo_url']); ?>"
+										class="card-img-top img-fluid object-fit-cover" style="height: 200px;"
+										alt="Hotel Image">
+									<div class="card-body d-flex flex-column">
+										<h6 class="card-title"><?php echo $hotel["name"] ?></h6>
+										<p class="card-text"><?php echo htmlspecialchars($hotel['address']); ?></p>
+										<div
+											class="price-rating w-100 d-flex justify-content-between align-items-center mt-auto">
+											<p>RM <?php echo htmlspecialchars($hotel['price']); ?></p>
+											<p>
+												<?php echo htmlspecialchars($hotel['rating']); ?>
+												<i class='bx bxs-star'></i>
+											</p>
+										</div>
+										<form action='fn_bookHotel.php' method='post' class="mt-auto">
+											<input type='hidden' name='hotel_name'
+												value='<?php echo htmlspecialchars($hotel['name']) ?>'>
+											<input type='hidden' name='hotel_address'
+												value='<?php echo htmlspecialchars($hotel['address']) ?>'>
+											<input type='hidden' name='hotel_rating'
+												value='<?php echo htmlspecialchars($hotel['rating'] ?? 'N/A') ?>'>
+											<input type='hidden' name='hotel_price'
+												value='<?php echo number_format($hotel['price'], 2) ?>'>
+											<input type='hidden' name='place_id'
+												value='<?php echo htmlspecialchars($hotel['place_id']) ?>'>
+											<div class="w-100 d-flex justify-content-between">
+												<?php
+												if ($hasBookedHotel) {
+													echo "<button type='button' class='btn btn-secondary booked-btn'
+                            							title='You can only book one hotel'>Booked</button>"
+													;
+												} else {
+													echo "<button type='submit' class='btn btn-success'>Book</button>";
+												}
+												?>
+												<a class='btn btn-primary' href="">Detail</a>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<?php
 						}
 						?>
-					</tbody>
-				</table>
+					</div>
+
+				</div>
+
+
 			</div>
 			<div class="btn-container">
 				<button class="cssbuttons-io-button" onclick="window.location.href='searchAttractions.php'">
@@ -269,19 +273,19 @@ if (isset($_SESSION['success_msg'])) {
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
 
-		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-				// Handle "Booked" button click
-				document.querySelectorAll('.booked-btn').forEach(button => {
-					button.addEventListener('click', () => {
-						// Send an AJAX request to update the session error message
-						fetch(window.location.href, {
-							method: 'POST',
-							body: JSON.stringify({ set_error_msg: true }),
-							headers: {
-								'Content-Type': 'application/json'
-							}
-						})
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			// Handle "Booked" button click
+			document.querySelectorAll('.booked-btn').forEach(button => {
+				button.addEventListener('click', () => {
+					// Send an AJAX request to update the session error message
+					fetch(window.location.href, {
+						method: 'POST',
+						body: JSON.stringify({ set_error_msg: true }),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
 						.then(response => response.json())
 						.then(data => {
 							if (data.status === 'success') {
@@ -290,17 +294,17 @@ if (isset($_SESSION['success_msg'])) {
 							}
 						})
 						.catch(error => console.error('Error:', error));
-					});
 				});
-
-				// Show toast message if available
-				var toastEl = document.getElementById('liveToast');
-				if (toastEl) {
-					var toast = new bootstrap.Toast(toastEl);
-					toast.show();
-				}
 			});
-		</script>
+
+			// Show toast message if available
+			var toastEl = document.getElementById('liveToast');
+			if (toastEl) {
+				var toast = new bootstrap.Toast(toastEl);
+				toast.show();
+			}
+		});
+	</script>
 
 </body>
 

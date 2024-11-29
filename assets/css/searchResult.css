@@ -103,7 +103,7 @@ a {
 	pointer-events: auto; 
 	background: #F8FBFE; 
 	width: auto;
-	margin-top: 300px;
+	margin-top: 650px;
 	margin-right: 20px;
 	padding: 10px;
 	border-radius: 8px;
@@ -133,4 +133,9 @@ a {
 	padding: 10px;
 	border-radius: 8px;
 	color: #dc3545;
+}
+
+
+.card-text {
+	font-size: 12px;
 }

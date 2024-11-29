@@ -183,6 +183,7 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 					<thead>
 						<tr>
 							<th scope="col">No</th>
+							<th scope="col">Place Image</th>
 							<th scope="col">Place Name</th>
 							<th scope="col">Location</th>
 							<th scope="col">Ratings</th>
@@ -199,6 +200,7 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 
 							echo "<tr>";
 							echo "<td scope='row'>{$count}</td>";
+							echo "<td scope='row'><img src=". htmlspecialchars($poi['photo_url']) ."></img></td>";
 							echo "<td>" . htmlspecialchars($poi['name']) . "</td>";
 							echo "<td>" . htmlspecialchars($poi['address']) . "</td>";
 							echo "<td>" . htmlspecialchars($poi['rating'] ?? 'N/A') . "</td>";

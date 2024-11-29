@@ -12,7 +12,7 @@ if (!isset($_SESSION['userID'])) {
 }
 
 if (isset($_SESSION['cart_empty'])) {
-    unset( $_SESSION['cart_empty'] );
+    unset($_SESSION['cart_empty']);
     header('index.php');
 }
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 // Check if a cart exists for the current user
-if (!isset($_SESSION['from_cart'])){
+if (!isset($_SESSION['from_cart'])) {
     unset($_SESSION['from_cart']);
     $cartsql = "SELECT cartID FROM cart WHERE userID = ?";
     $stmt = $conn->prepare($cartsql);
@@ -83,15 +83,15 @@ if (!isset($_SESSION['from_cart'])){
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
-    
+
     if (isset($_SESSION['form_data_cart'])) {
         $form_data = $_SESSION['form_data_cart'];
-    }else {
+    } else {
         if (isset($_SESSION['form_data'])) {
             $form_data = $_SESSION['form_data'];
         } elseif (isset($_POST)) {
             $form_data = $_POST;
-        } 
+        }
     }
 
     // Validate input fields
@@ -147,7 +147,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
             // Initialize an array to store hotel details
             $hotels = [];
 
+
             foreach ($placesData['results'] as $place) {
+                $photoUrl = null; // Default to null if no photos are available
+                if (!empty($place['photos'][0]['photo_reference'])) {
+                    $photoReference = $place['photos'][0]['photo_reference'];
+                    $photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoReference&key=$apiKey";
+                }
                 $hotels[] = [
                     'name' => $place['name'],
                     'place_id' => $place['place_id'],
@@ -155,6 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
                     'rating' => $place['rating'] ?? 'N/A',
                     'price' => generateHotelPrice($max_budget),
                     'user_ratings_total' => $place['user_ratings_total'] ?? 0,
+                    'photo_url' => $photoUrl
                 ];
             }
 
@@ -187,6 +194,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
             if (!empty($attractionPlacesData['results'])) {
                 $attractions = [];
                 foreach ($attractionPlacesData['results'] as $place) {
+                    $photoUrl = null; // Default to null if no photos are available
+                    if (!empty($place['photos'][0]['photo_reference'])) {
+                        $photoReference = $place['photos'][0]['photo_reference'];
+                        $photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoReference&key=$apiKey";
+                    }
+
                     $attractions[] = [
                         'name' => $place['name'],
                         'place_id' => $place['place_id'],
@@ -194,11 +207,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_SESSION['form_data'])) {
                         'rating' => $place['rating'] ?? 'N/A',
                         'price' => generateAttractionPrice($max_budget),
                         'user_ratings_total' => $place['user_ratings_total'] ?? 0,
+                        'photo_url' => $photoUrl // Add the photo URL to the array
                     ];
                 }
 
                 shuffle($attractions); // Randomize attractions order
                 $_SESSION['attraction_data'] = $attractions;
+
             } else {
                 $_SESSION['errorMsg'] = "No tourist attractions found near the specified location.";
                 header("Location: searchForm.php");
