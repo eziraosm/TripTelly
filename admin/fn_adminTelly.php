@@ -181,5 +181,54 @@ function countTotalBooked() {
     }
 }
 
+function fetchCartAndBook() {
+    global $conn;
+
+    // SQL query to combine cart and payment data
+    $query = "
+        SELECT 
+            CONVERT(userID USING utf8mb4) AS userID, 
+            NULL AS totalPrice, 
+            CONVERT(fromLocation USING utf8mb4) AS fromLocation, 
+            CONVERT(destinationLocation USING utf8mb4) AS destinationLocation, 
+            departureDate, 
+            returnDate, 
+            member AS person, 
+            'Incomplete' AS status
+        FROM 
+            cart
+        UNION
+        SELECT 
+            CONVERT(userID USING utf8mb4) AS userID, 
+            totalPrice, 
+            CONVERT(fromLocation USING utf8mb4) AS fromLocation, 
+            CONVERT(destinationLocation USING utf8mb4) AS destinationLocation, 
+            departureDate, 
+            returnDate, 
+            person, 
+            'Completed' AS status
+        FROM 
+            payment;
+    ";
+
+    // Execute the query
+    $result = $conn->query($query);
+
+    if (!$result) {
+        die("Error fetching data: " . $conn->error);
+    }
+
+    // Fetch and return data
+    $data = [];
+    while ($row = $result->fetch_assoc()) {
+        $user = fetchCurrentCustomerData($row['userID']);
+        $userName = $user['username'];
+        $row['userName'] = $userName;
+        $data[] = $row;
+    }
+
+    return $data;
+}
+
 
 ?>
