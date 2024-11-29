@@ -41,7 +41,7 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
                                 <div class="card-body"><?php echo countTotalVisitor() ?> Users</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <span class="small text-white stretched-link">Total User Visits</span>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
                                 <div class="card-body"><?php echo fetchMostPopularLocation() ?></div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <span class="small text-white stretched-link">Top Destination</span>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
                                 <div class="card-body">RM <?php echo countTotalSaleOfWeek() ?></div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <span class="small text-white stretched-link">Total Sales This Week</span>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
                                 <div class="card-body"><?php echo countTotalBooked() ?> Trips</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <span class="small text-white stretched-link">Total Bookings</span>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
                                 </div>
                             </div>
                         </div>

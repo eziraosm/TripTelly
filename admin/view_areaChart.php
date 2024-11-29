@@ -77,7 +77,7 @@ $data_area_json = json_encode(array_values($data_area));
                         ticks: {
                             min: 0,
                             max: Math.max(...<?php echo $data_area_json; ?>),  // Dynamic y-axis max value based on data
-                            maxTicksLimit: 5,
+                            maxTicksLimit: Math.max(...<?php echo $data_area_json; ?>) + 1,
                             callback: function (value, index, values) {
                                 return Math.round(value);
                             }

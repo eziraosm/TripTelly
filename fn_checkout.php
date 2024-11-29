@@ -82,8 +82,8 @@ if (isset($_GET['cartID'])) {
 
 
     // Prepare the SQL query to insert data into the payment table
-    $paymentSQL = "INSERT INTO payment (cartID, userID, hotelData, placeData, totalPrice, fromLocation, destinationLocation, departureDate, returnDate, person, max_budget, paymentDate) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $paymentSQL = "INSERT INTO payment (cartID, userID, hotelData, placeData, totalPrice, fromLocation, destinationLocation, departureDate, returnDate, person, max_budget) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $paymentStmt = $conn->prepare($paymentSQL);
 
@@ -91,7 +91,7 @@ if (isset($_GET['cartID'])) {
     if ($paymentStmt) {
     // Bind parameters to the SQL query
     $paymentStmt->bind_param(
-    "ssssdssssdds",
+    "ssssdssssdd",
     $cartID,
     $userID,
     $hotelJson,
@@ -102,8 +102,7 @@ if (isset($_GET['cartID'])) {
     $departDate,
     $returnDate,
     $person,
-    $max_budget,
-    $paymentDate
+    $max_budget
     );
 
     // Execute the query
