@@ -179,60 +179,60 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 				<h5>Select places you would like to visit</h5>
 			</div>
 			<div class="hotel-table">
-				<table class="table table-hover table-dark" style="width:80%">
-					<thead>
-						<tr>
-							<th scope="col">No</th>
-							<th scope="col">Place Image</th>
-							<th scope="col">Place Name</th>
-							<th scope="col">Location</th>
-							<th scope="col">Ratings</th>
-							<th scope="col">Price</th>
-							<th scope="col">Map</th>
-							<th scope="col">Action</th>
-						</tr>
-					</thead>
-					<tbody>
+				<div class="container my-4">
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 justify-content-center">
 						<?php
-						$count = 1;
-						foreach ($attraction_data as $poi) {
+						foreach ($attraction_data as $key => $poi) {
 							$isBooked = in_array($poi['place_id'], $bookedAttractions);
-
-							echo "<tr>";
-							echo "<td scope='row'>{$count}</td>";
-							echo "<td scope='row'><img src=". htmlspecialchars($poi['photo_url']) ."></img></td>";
-							echo "<td>" . htmlspecialchars($poi['name']) . "</td>";
-							echo "<td>" . htmlspecialchars($poi['address']) . "</td>";
-							echo "<td>" . htmlspecialchars($poi['rating'] ?? 'N/A') . "</td>";
-							echo "<td>RM " . number_format($poi['price'], 2) . "</td>";
-							echo "<td><a href='https://www.google.com/maps/search/?api=1&query=" . urlencode($poi['name']) . "' target='_blank'><button class='btn btn-primary'>GMap</button></a></td>";
-							echo "<td>
-                <form action='fn_bookAttractions.php' method='post'>
-                    <input type='hidden' name='place_name' value='" . htmlspecialchars($poi['name']) . "'>
-                    <input type='hidden' name='place_address' value='" . htmlspecialchars($poi['address']) . "'>
-                    <input type='hidden' name='place_rating' value='" . htmlspecialchars($poi['rating'] ?? 'N/A') . "'>
-                    <input type='hidden' name='place_price' value='" . number_format($poi['price'], 2) . "'>
-                    <input type='hidden' name='place_id' value='" . htmlspecialchars($poi['place_id']) . "'>";
-
-							if ($isBooked) {
-								echo "<button type='button' class='btn btn-secondary' disabled title='Already in cart'>Booked</button>";
-							} else {
-								echo "<button type='submit' class='btn btn-success' style='width:100%'>Book</button>";
-							}
-
-							echo "</form>
-              </td>";
-							echo "</tr>";
-
-							$count++;
-						}
-						if ($count == 1) {
-							echo "<tr><td colspan='8'>No attractions found.</td></tr>";
+							$photoURL = isset($poi['photo_url']) ? htmlspecialchars($poi['photo_url']) : "https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg";
+							?>
+							<div class="col">
+								<div class="card h-100 d-flex flex-column">
+									<img src="<?php echo $photoURL; ?>"
+										class="card-img-top img-fluid object-fit-cover" style="height: 200px;"
+										alt="Hotel Image">
+									<div class="card-body d-flex flex-column">
+										<h6 class="card-title"><?php echo $poi["name"] ?></h6>
+										<p class="card-text"><?php echo htmlspecialchars($poi['address']); ?></p>
+										<div
+											class="price-rating w-100 d-flex justify-content-between align-items-center mt-auto">
+											<p>RM <?php echo htmlspecialchars($poi['price']); ?></p>
+											<p>
+												<?php echo htmlspecialchars($poi['rating']); ?>
+												<i class='bx bxs-star'></i>
+											</p>
+										</div>
+										<form action='fn_bookAttractions.php' method='post' class="mt-auto">
+											<input type='hidden' name='hotel_name'
+												value='<?php echo htmlspecialchars($poi['name']) ?>'>
+											<input type='hidden' name='hotel_address'
+												value='<?php echo htmlspecialchars($poi['address']) ?>'>
+											<input type='hidden' name='hotel_rating'
+												value='<?php echo htmlspecialchars($poi['rating'] ?? 'N/A') ?>'>
+											<input type='hidden' name='hotel_price'
+												value='<?php echo number_format($poi['price'], 2) ?>'>
+											<input type='hidden' name='place_id'
+												value='<?php echo htmlspecialchars($poi['place_id']) ?>'>
+											<div class="w-100 d-flex justify-content-between">
+												<?php
+												if ($isBooked) {
+													echo "<button type='button' class='btn btn-secondary' disabled title='Already in cart'>Booked</button>";
+												} else {
+													echo "<button type='submit' class='btn btn-success'>Book</button>";
+												}
+												?>
+												<a class='btn btn-primary' href="placeDetail.php?placeID=<?php echo $poi['place_id'] ?>">Detail</a>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<?php
 						}
 						?>
-					</tbody>
+					</div>
 
-				</table>
+				</div>
 			</div>
 			<div class="btn-container">
 				<button class="cssbuttons-io-button" onclick="window.location.href='cart.php'">

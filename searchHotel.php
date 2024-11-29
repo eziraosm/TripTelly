@@ -250,8 +250,6 @@ if (isset($_SESSION['success_msg'])) {
 					</div>
 
 				</div>
-
-
 			</div>
 			<div class="btn-container">
 				<button class="cssbuttons-io-button" onclick="window.location.href='searchAttractions.php'">
