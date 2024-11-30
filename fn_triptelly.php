@@ -75,4 +75,47 @@ function getTotalCartPrice()
 
     return $totalPrice;
 }
+
+function fetchPlaceDetail($placeID)
+{
+    // Your Google API Key
+    $apiKey = 'AIzaSyBpHdMS0pMIrrjewOeEpo5z-ykG0FMYbiQ';
+
+    // Google Places Details API endpoint
+    $url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" . urlencode($placeID) . "&key=" . $apiKey;
+
+    // Initialize cURL
+    $ch = curl_init();
+
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Execute the request
+    $response = curl_exec($ch);
+
+    // Check for errors
+    if (curl_errno($ch)) {
+        echo 'cURL Error: ' . curl_error($ch);
+        curl_close($ch);
+        return null;
+    }
+
+    // Close the cURL session
+    curl_close($ch);
+
+    // Decode the JSON response
+    $placeDetails = json_decode($response, true);
+
+    // Check if the request was successful
+    if (isset($placeDetails['status']) && $placeDetails['status'] === 'OK') {
+        return $placeDetails['result'];
+    } else {
+        // Log error for debugging
+        if (isset($placeDetails['status'])) {
+            echo 'Error: ' . $placeDetails['status'];
+        }
+        return null;
+    }
+}
 ?>
