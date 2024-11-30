@@ -203,13 +203,13 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 											</p>
 										</div>
 										<form action='fn_bookAttractions.php' method='post' class="mt-auto">
-											<input type='hidden' name='hotel_name'
+											<input type='hidden' name='place_name'
 												value='<?php echo htmlspecialchars($poi['name']) ?>'>
-											<input type='hidden' name='hotel_address'
+											<input type='hidden' name='place_address'
 												value='<?php echo htmlspecialchars($poi['address']) ?>'>
-											<input type='hidden' name='hotel_rating'
+											<input type='hidden' name='place_rating'
 												value='<?php echo htmlspecialchars($poi['rating'] ?? 'N/A') ?>'>
-											<input type='hidden' name='hotel_price'
+											<input type='hidden' name='place_price'
 												value='<?php echo number_format($poi['price'], 2) ?>'>
 											<input type='hidden' name='place_id'
 												value='<?php echo htmlspecialchars($poi['place_id']) ?>'>
