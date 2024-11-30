@@ -20,37 +20,6 @@ if (isset($_SESSION['userID'])) {
 	}
 }
 
-if (isset($_SESSION['userID'])) {
-	$userID = $_SESSION['userID'];
-
-	// Fetch current cartID
-	$cartQuery = "SELECT cartID FROM cart WHERE userID = ?";
-	$stmt = $conn->prepare($cartQuery);
-	$stmt->bind_param("s", $userID);
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	$cartID = null;
-	if ($result->num_rows > 0) {
-		$row = $result->fetch_assoc();
-		$cartID = $row['cartID'];
-	}
-
-	// Fetch attractions already in the cart
-	$bookedAttractions = [];
-	if ($cartID) {
-		$bookedQuery = "SELECT attID FROM cart_attractions WHERE cartID = ?";
-		$stmt = $conn->prepare($bookedQuery);
-		$stmt->bind_param("s", $cartID);
-		$stmt->execute();
-		$result = $stmt->get_result();
-
-		while ($row = $result->fetch_assoc()) {
-			$bookedAttractions[] = $row['attID'];
-		}
-	}
-}
-
 // Check if attraction data exists in the session
 if (!isset($_SESSION['attraction_data'])) {
 	echo "No search results found.";
@@ -75,12 +44,9 @@ if (isset($_SESSION['success_msg'])) {
 }
 $destination = $destination_location = isset($form_data['destination_loc']) ? $form_data['destination_loc'] : $form_data["destinationLocation"];
 
-// change sticky container if over budget
-if (getTotalCartPrice() > $form_data['max_budget']) {
-	$stickyClass = "over-budget";
-} else {
-	$stickyClass = "price-display";
-}
+
+$placeID = isset($_GET['placeID']) ? $_GET['placeID'] : null;
+$placeData = fetchPlaceDetail($placeID);
 ?>
 
 <!DOCTYPE html>
@@ -123,7 +89,7 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 					<li class="nav-item">
 						<a class="nav-link" href="searchHotel.php">Hotels <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item active">
+					<li class="nav-item">
 						<a class="nav-link" href="searchAttractions.php">Attractions</a>
 					</li>
 				</ul>
@@ -145,16 +111,6 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 			</div>
 		</div>
 	</nav>
-	<div class="sticky-container">
-		<div class="<?php echo $stickyClass ?>">
-			<div class="current-display">
-				Current: <span class="price">RM <?php echo number_format(getTotalCartPrice(), 2) ?></span>
-			</div>
-			<div class="budget-display">
-				Budget: <span class="price"> RM <?php echo number_format($form_data['max_budget'], 2) ?></span>
-			</div>
-		</div>
-	</div>
 	<main>
 		<!-- toast container -->
 		<?php if (!empty($toastMessage)): ?>
@@ -170,84 +126,20 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 					</div>
 				</div>
 			</div>
-		<?php endif; ?>
+		<?php endif;
+        // var_dump(json_encode($placeData));
+        ?>
 
 
-		<div class="container">
-			<div class="title">
+		<div class="detail-container p-5 w-100 ">
+			<div class="detail-title">
 				<h3>Attractions in <?php echo $destination ?></h3>
 				<h5>Select places you would like to visit</h5>
 			</div>
 			<div class="hotel-table">
-				<div class="container my-4">
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 justify-content-center">
-						<?php
-						foreach ($attraction_data as $key => $poi) {
-							$isBooked = in_array($poi['place_id'], $bookedAttractions);
-							$photoURL = isset($poi['photo_url']) ? htmlspecialchars($poi['photo_url']) : "https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg";
-							?>
-							<div class="col">
-								<div class="card h-100 d-flex flex-column">
-									<img src="<?php echo $photoURL; ?>"
-										class="card-img-top img-fluid object-fit-cover" style="height: 200px;"
-										alt="Hotel Image">
-									<div class="card-body d-flex flex-column">
-										<h6 class="card-title"><?php echo $poi["name"] ?></h6>
-										<p class="card-text"><?php echo htmlspecialchars($poi['address']); ?></p>
-										<div
-											class="price-rating w-100 d-flex justify-content-between align-items-center mt-auto">
-											<p>RM <?php echo htmlspecialchars($poi['price']); ?></p>
-											<p>
-												<?php echo htmlspecialchars($poi['rating']); ?>
-												<i class='bx bxs-star'></i>
-											</p>
-										</div>
-										<form action='fn_bookAttractions.php' method='post' class="mt-auto">
-											<input type='hidden' name='place_name'
-												value='<?php echo htmlspecialchars($poi['name']) ?>'>
-											<input type='hidden' name='place_address'
-												value='<?php echo htmlspecialchars($poi['address']) ?>'>
-											<input type='hidden' name='place_rating'
-												value='<?php echo htmlspecialchars($poi['rating'] ?? 'N/A') ?>'>
-											<input type='hidden' name='place_price'
-												value='<?php echo number_format($poi['price'], 2) ?>'>
-											<input type='hidden' name='place_id'
-												value='<?php echo htmlspecialchars($poi['place_id']) ?>'>
-											<div class="w-100 d-flex justify-content-between">
-												<?php
-												if ($isBooked) {
-													echo "<button type='button' class='btn btn-secondary' disabled title='Already in cart'>Booked</button>";
-												} else {
-													echo "<button type='submit' class='btn btn-success'>Book</button>";
-												}
-												?>
-												<a class='btn btn-primary' href="placeDetail.php?placeID=<?php echo $poi['place_id'] ?>">Detail</a>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-							<?php
-						}
-						?>
-					</div>
-
-				</div>
+				
 			</div>
-			<div class="btn-container">
-				<button class="cssbuttons-io-button" onclick="window.location.href='cart.php'">
-					Go to cart
-					<div class="icon">
-						<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24"
-							fill="currentColor">
-							<path d="M0 0h24v24H0z" fill="none"></path>
-							<path
-								d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM7.82 14l.93-2h6.34l.93 2H20V6H6.31l-.95-2H2v2h2.31l3.6 7.59-1.35 2.44C6.02 17.37 6.48 18 7.11 18h12v-2H7.82z" />
-						</svg>
-					</div>
-				</button>
-
-			</div>
+			
 		</div>
 	</main>
 
