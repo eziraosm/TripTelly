@@ -1,0 +1,170 @@
+.detail-content {
+	background-color: #c3c3c3;
+	border-radius: 14px;
+	padding: 50px;
+	width: 100%;
+	align-items: center;
+}
+
+.place-data {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+/* img part */
+.img-container {
+	width: 40%;
+}
+
+.main-img {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.main-img img {
+	width: 500px;
+	height: 500px;
+	object-fit: cover;
+	object-position: center;
+}
+
+.sub-img {
+	display: flex;
+	justify-content: center;
+}
+
+.sub-img img {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	object-position: center;
+	margin: 10px;
+}
+
+.info-container {
+	width: 100%;
+}
+
+iframe {
+	height: 50%;
+	width: 100%;
+	border: #000000 1px solid;
+	border-radius: 14px;
+}
+
+.review-card {
+	border: 0;
+	border-radius: 14px;
+	background-color: #76767659;
+}
+
+.user-icon {
+	margin-right: 5px;
+}
+
+.review-form {
+	width: 100%;
+}
+
+.review-text {
+	width: 100%;
+	min-height: 15vh;
+	border-radius: 14px;
+	padding: 10px;
+	line-height: normal;
+	padding-top: 10px;
+	box-sizing: border-box;
+}
+
+/* From Uiverse.io by adamgiebl */
+.ui-btn {
+	font-family: inherit;
+	font-size: 20px;
+	background: royalblue;
+	color: white;
+	padding: 0.7em 1em;
+	padding-left: 0.9em;
+	display: flex;
+	align-items: center;
+	border: none;
+	border-radius: 16px;
+	overflow: hidden;
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+.ui-btn span {
+	display: block;
+	margin-left: 0.3em;
+	transition: all 0.3s ease-in-out;
+}
+
+.ui-btn svg {
+	display: block;
+	transform-origin: center center;
+	transition: transform 0.3s ease-in-out;
+}
+
+.ui-btn:hover .svg-wrapper {
+	animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.ui-btn:hover svg {
+	transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+.ui-btn:hover span {
+	transform: translateX(5em);
+}
+
+.ui-btn:active {
+	transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+	from {
+		transform: translateY(0.1em);
+	}
+
+	to {
+		transform: translateY(-0.1em);
+	}
+}
+
+/* From Uiverse.io by amikambs */ 
+.rating:not(:checked) > input {
+    position: absolute;
+    appearance: none;
+  }
+  
+  .rating:not(:checked) > label {
+    float: right;
+    cursor: pointer;
+    font-size: 30px;
+    fill: #666;
+  }
+  
+  .rating:not(:checked) > label > svg {
+    fill: #666; /* Set default color for SVG */
+    transition: fill 0.3s ease; /* Add a transition effect */
+  }
+  
+  .rating > input:checked + label:hover,
+  .rating > input:checked + label:hover ~ label,
+  .rating > input:checked ~ label:hover,
+  .rating > input:checked ~ label:hover ~ label,
+  .rating > label:hover ~ input:checked ~ label {
+    fill: #e58e09;
+  }
+  
+  .rating:not(:checked) > label:hover,
+  .rating:not(:checked) > label:hover ~ label {
+    fill: #ff9e0b;
+  }
+  
+  .rating > input:checked ~ label > svg {
+    fill: #ffa723; /* Set color for selected stars */
+  }
+  

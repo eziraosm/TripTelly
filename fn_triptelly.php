@@ -109,12 +109,93 @@ function fetchPlaceDetail($placeID)
 
     // Check if the request was successful
     if (isset($placeDetails['status']) && $placeDetails['status'] === 'OK') {
-        return $placeDetails['result'];
+        $result = $placeDetails['result'];
+
+        // Fetch local reviews from the database
+        $localReviews = fetchLocalReviews($placeID);
+
+        // Merge local reviews with Google reviews
+        if (isset($result['reviews'])) {
+            $result['reviews'] = array_merge($result['reviews'], $localReviews);
+        } else {
+            $result['reviews'] = $localReviews;
+        }
+
+        return $result;
     } else {
         // Log error for debugging
         if (isset($placeDetails['status'])) {
             echo 'Error: ' . $placeDetails['status'];
         }
+        return null;
+    }
+}
+
+function fetchLocalReviews($placeID)
+{
+    // Database connection (use your database connection details)
+    global $conn;
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Query to fetch local reviews
+    $sql = "SELECT userID, reviewText, reviewRating FROM review WHERE placeID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $placeID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $reviews = [];
+    while ($row = $result->fetch_assoc()) {
+        $author = fetchUserData($row['userID']);
+        $author_name = $author['username'];
+        $reviews[] = [
+            'author_name' => $author_name, // Map userID to author_name
+            'text' => $row['reviewText'],
+            'rating' => $row['reviewRating']
+        ];
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $reviews;
+}
+
+
+function fetchUserData($userID) {
+    global $conn;
+
+    $userSQL = "SELECT * FROM user WHERE userID = ?";
+    $stmt = $conn->prepare($userSQL);
+
+    if ($stmt) {
+        // Bind the parameter to the prepared statement
+        $stmt->bind_param("i", $userID);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->get_result();
+
+        // Check if user data is found
+        if ($result->num_rows > 0) {
+            // Fetch associative array
+            $userData = $result->fetch_assoc();
+
+            // Return user data
+            return $userData;
+        } else {
+            // Return null if no data is found
+            return null;
+        }
+
+    } else {
+        // Handle SQL preparation error
         return null;
     }
 }

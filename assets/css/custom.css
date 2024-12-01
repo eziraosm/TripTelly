@@ -126,3 +126,17 @@ iframe {
 .user-icon {
 	margin-right: 5px;
 }
+
+.review-form {
+	width: 100%;
+}
+
+.review-text {
+	width: 100%;
+	min-height: 15vh;
+	border-radius: 14px;
+	padding: 10px;
+	line-height: normal;
+	padding-top: 10px;
+	box-sizing: border-box;
+}
