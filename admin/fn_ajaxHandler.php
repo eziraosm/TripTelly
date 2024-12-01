@@ -7,19 +7,39 @@ include 'dbconnect.php';
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'getTotalVisitors':
-            echo countTotalVisitor(); // Fetch total visitors
+            $result = countTotalVisitor();
+            if ($result === false) {
+                echo 'Error fetching visitor count';
+            } else {
+                echo $result;
+            }
             break;
         
         case 'getTotalSales':
-            echo countTotalSaleOfWeek(); // Fetch total sales in the last week
+            $result = countTotalSaleOfWeek();
+            if ($result === false) {
+                echo 'Error fetching sales data';
+            } else {
+                echo $result;
+            }
             break;
         
         case 'getMostPopularLocation':
-            echo fetchMostPopularLocation(); // Fetch the most popular location
+            $result = fetchMostPopularLocation();
+            if ($result === false) {
+                echo 'Error fetching location data';
+            } else {
+                echo $result;
+            }
             break;
         
         case 'getTotalBookings':
-            echo countTotalBooked(); // Fetch total bookings
+            $result = countTotalBooked();
+            if ($result === false) {
+                echo 'Error fetching booking data';
+            } else {
+                echo $result;
+            }
             break;
         
         default:
@@ -27,5 +47,7 @@ if (isset($_GET['action'])) {
             break;
     }
     exit; // End script after the response
+} else {
+    echo 'No action specified';
 }
 ?>
