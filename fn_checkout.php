@@ -2,7 +2,7 @@
 session_start();
 require "dbconnect.php";
 
-if(!isset($_GET['cartID'])  || $_GET['cartID'] == null || $_GET['cartID'] == '') {
+if (!isset($_GET['cartID']) || $_GET['cartID'] == null || $_GET['cartID'] == '') {
     $_SESSION['error_msg'] = "Cart is empty";
     header("Location: cart.php");
     exit;
@@ -23,7 +23,7 @@ if (isset($_GET['cartID'])) {
         $cartStmt->execute();
         $cartResult = $cartStmt->get_result();
         $cartRow = $cartResult->fetch_assoc();
-        
+
     } else {
         $_SESSION['error_msg'] = "Error in statement preparation: " . $conn->error;
         header("Location: cart.php");
@@ -36,7 +36,7 @@ if (isset($_GET['cartID'])) {
     if ($hotelStmt) {
         $hotelStmt->bind_param('s', $cartID);
         $hotelStmt->execute();
-        $hotelResult = $hotelStmt->get_result();    
+        $hotelResult = $hotelStmt->get_result();
         $hotelRow = $hotelResult->fetch_assoc();
     } else {
         $_SESSION['error_msg'] = "Error in statement preparation: " . $conn->error;
@@ -50,7 +50,7 @@ if (isset($_GET['cartID'])) {
     if ($attStmt) {
         $attStmt->bind_param('s', $cartID);
         $attStmt->execute();
-        $attResult = $attStmt->get_result();    
+        $attResult = $attStmt->get_result();
         $attArray = [];
         while ($attRow = $attResult->fetch_assoc()) {
             $attArray[] = $attRow;
@@ -82,60 +82,62 @@ if (isset($_GET['cartID'])) {
 
 
     // Prepare the SQL query to insert data into the payment table
-    $paymentSQL = "INSERT INTO payment (cartID, userID, hotelData, placeData, totalPrice, fromLocation, destinationLocation, departureDate, returnDate, person, max_budget) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $paymentSQL = "INSERT INTO payment (cartID, userID, hotelData, placeData, totalPrice, fromLocation, destinationLocation, departureDate, returnDate, person, max_budget, paymentDate) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $paymentStmt = $conn->prepare($paymentSQL);
 
     // Check if the statement was successfully prepared
     if ($paymentStmt) {
-    // Bind parameters to the SQL query
-    $paymentStmt->bind_param(
-    "ssssdssssdd",
-    $cartID,
-    $userID,
-    $hotelJson,
-    $attJson,
-    $totalPrice,
-    $fromLocation,
-    $destLocation,
-    $departDate,
-    $returnDate,
-    $person,
-    $max_budget
-    );
+        // Bind parameters to the SQL query
+        $paymentStmt->bind_param(
+            "ssssdssssdd",
+            $cartID,
+            $userID,
+            $hotelJson,
+            $attJson,
+            $totalPrice,
+            $fromLocation,
+            $destLocation,
+            $departDate,
+            $returnDate,
+            $person,
+            $max_budget,
+            $paymentDate
+        );
 
-    // Execute the query
-    if ($paymentStmt->execute()) {
-        emptyAllCartData($cartID);
-        $_SESSION['success_msg'] = "Payment successful.\n Thank you for purchasing.";
-        header("Location: cart.php");
-        $paymentStmt->close();
-        $conn->close();
-        exit();
+        // Execute the query
+        if ($paymentStmt->execute()) {
+            emptyAllCartData($cartID);
+            $_SESSION['success_msg'] = "Payment successful.\n Thank you for purchasing.";
+            header("Location: cart.php");
+            $paymentStmt->close();
+            $conn->close();
+            exit();
+        } else {
+            $_SESSION['error_msg'] = "Error executing payment: " . $paymentStmt->error;
+            header("Location: cart.php");
+            $paymentStmt->close();
+            $conn->close();
+            exit;
+        }
+
+
+        // Close the statement
     } else {
-        $_SESSION['error_msg'] = "Error executing payment: " . $paymentStmt->error;
+        $_SESSION['error_msg'] = "Error preparing payment statement: " . $conn->error;
         header("Location: cart.php");
         $paymentStmt->close();
         $conn->close();
         exit;
     }
-    
 
-    // Close the statement
-} else {
-    $_SESSION['error_msg'] = "Error preparing payment statement: " . $conn->error;
-    header("Location: cart.php");
-    $paymentStmt->close();
-    $conn->close();  
-    exit; 
-}
 
-   
 
 }
 
-function emptyAllCartData($cartID) {
+function emptyAllCartData($cartID)
+{
     global $conn;
 
     // Delete from the cart table
