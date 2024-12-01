@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 03:55 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Dec 01, 2024 at 06:43 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `adminID` varchar(255) NOT NULL,
-  `adminName` varchar(255) NOT NULL,
-  `adminFname` varchar(255) NOT NULL,
-  `adminEmail` varchar(255) NOT NULL,
-  `adminPassword` varchar(255) NOT NULL
+  `adminID` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `adminName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `adminFname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `adminEmail` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `adminPassword` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -57,14 +57,14 @@ INSERT INTO `admin` (`adminID`, `adminName`, `adminFname`, `adminEmail`, `adminP
 --
 
 CREATE TABLE `cart` (
-  `cartID` varchar(11) NOT NULL,
-  `userID` varchar(225) NOT NULL,
-  `fromLocation` varchar(255) NOT NULL,
-  `destinationLocation` varchar(255) NOT NULL,
+  `cartID` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `userID` varchar(225) COLLATE utf8mb4_general_ci NOT NULL,
+  `fromLocation` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `destinationLocation` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `departureDate` date NOT NULL,
   `returnDate` date NOT NULL,
-  `member` int(11) NOT NULL,
-  `max_budget` decimal(10,2) NOT NULL DEFAULT 0.00
+  `member` int NOT NULL,
+  `max_budget` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cartID`, `userID`, `fromLocation`, `destinationLocation`, `departureDate`, `returnDate`, `member`, `max_budget`) VALUES
-('l5JPqy3rJ9j', '69e6a1311ecaca54', 'kedah', 'perak', '2024-11-21', '2024-11-23', 1, 500.00);
+('WMFLz0ZGQmx', '69e6a1311ecaca54', 'kedah', 'perak', '2024-11-21', '2024-11-23', 1, '500.00');
 
 -- --------------------------------------------------------
 
@@ -81,12 +81,12 @@ INSERT INTO `cart` (`cartID`, `userID`, `fromLocation`, `destinationLocation`, `
 --
 
 CREATE TABLE `cart_attractions` (
-  `cartAttID` int(11) NOT NULL,
-  `cartID` varchar(11) NOT NULL,
-  `attID` varchar(225) NOT NULL COMMENT 'google places id',
-  `attName` varchar(255) NOT NULL,
-  `attLocation` varchar(255) NOT NULL,
-  `attPrice` decimal(10,2) NOT NULL DEFAULT 0.00
+  `cartAttID` int NOT NULL,
+  `cartID` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `attID` varchar(225) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'google places id',
+  `attName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `attLocation` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `attPrice` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -94,11 +94,9 @@ CREATE TABLE `cart_attractions` (
 --
 
 INSERT INTO `cart_attractions` (`cartAttID`, `cartID`, `attID`, `attName`, `attLocation`, `attPrice`) VALUES
-(18, 'l5JPqy3rJ9j', 'ChIJ7ZsMJ4atyjERivUghzb_TYE', 'Matang Museum', 'Kampung Pekan Matang, Matang', 92.00),
-(19, 'l5JPqy3rJ9j', 'ChIJyTplPviuyjERVvnvFM5JNp4', '5D Art Paradise Taiping', '25, Jalan Maharajalela, Taiping', 58.00),
-(20, 'l5JPqy3rJ9j', 'ChIJRXTNZwi9yjERv6RpqHfW_SQ', 'Galeri Sultan Azlan Shah', 'Jalan Istana, Bukit Chandan, Kuala Kangsar', 111.00),
-(21, 'l5JPqy3rJ9j', 'ChIJgaROuH3syjERv8PsY2-k-go', '22 Hale Street Heritage Gallery', '22, Jalan Tun Sambanthan, Ipoh', 147.00),
-(22, 'l5JPqy3rJ9j', 'ChIJWyheJuNntTERMmFrMJWf5xU', 'Lenggong Archaeological Museum', 'Jabatan Warisan Negara Zon Tengah, Kota Tampan, Lenggong', 34.00);
+(23, 'WMFLz0ZGQmx', 'ChIJmxnqQILoyjERHBAJ7MAr7j8', 'Rumah Kediaman Almarhum Sultan Azlan Shah', 'No.37, Jalan Aman, Batu Gajah', '42.00'),
+(24, 'WMFLz0ZGQmx', 'ChIJCyLxs5G8yjER8gxIqIg2N7k', 'Bandar Diraja Kuala Kangsar Monumen, ( Kuala Kangsar, Perak )', '156, Jalan Taiping, Kampung Talang Masjid, Kuala Kangsar', '153.00'),
+(25, 'WMFLz0ZGQmx', 'ChIJ4arAFpWvyjERw67wE4yoCYk', 'Laman Budaya Taiping', '105, Jalan Ong Saik, Taiping', '84.00');
 
 -- --------------------------------------------------------
 
@@ -107,11 +105,11 @@ INSERT INTO `cart_attractions` (`cartAttID`, `cartID`, `attID`, `attName`, `attL
 --
 
 CREATE TABLE `cart_hotel` (
-  `cartHotelID` int(11) NOT NULL,
-  `cartID` varchar(11) NOT NULL,
-  `hotelID` varchar(255) NOT NULL COMMENT 'google places ID',
-  `hotelName` varchar(255) NOT NULL,
-  `hotelLocation` varchar(255) NOT NULL,
+  `cartHotelID` int NOT NULL,
+  `cartID` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `hotelID` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'google places ID',
+  `hotelName` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `hotelLocation` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `hotelPrice` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -120,7 +118,36 @@ CREATE TABLE `cart_hotel` (
 --
 
 INSERT INTO `cart_hotel` (`cartHotelID`, `cartID`, `hotelID`, `hotelName`, `hotelLocation`, `hotelPrice`) VALUES
-(11, 'l5JPqy3rJ9j', 'ChIJ7Z19qqnyyjERjI16PdKY99M', 'Sunway Lost World Hotel', '1, Persiaran Lagun Sunway, Sunway City, Ipoh', 125.00);
+(12, 'WMFLz0ZGQmx', 'ChIJyRwDyliuyjERc3IxrjHs5KM', 'Legend Inn hotel', '2, Jalan Long Jaafar, Taiping', '115.00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `paymentID` int NOT NULL,
+  `cartID` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `userID` varchar(225) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `hotelData` json DEFAULT NULL,
+  `placeData` json DEFAULT NULL,
+  `totalPrice` double(10,2) DEFAULT NULL,
+  `fromLocation` varchar(225) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `destinationLocation` varchar(225) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `departureDate` date DEFAULT NULL,
+  `returnDate` date DEFAULT NULL,
+  `person` decimal(10,0) DEFAULT NULL,
+  `max_budget` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`paymentID`, `cartID`, `userID`, `hotelData`, `placeData`, `totalPrice`, `fromLocation`, `destinationLocation`, `departureDate`, `returnDate`, `person`, `max_budget`) VALUES
+(12, '3-KVVoxCo81', '69e6a1311ecaca54', '{\"cartID\": \"3-KVVoxCo81\", \"hotelID\": \"ChIJJ2V7SClPzDER779w0YaYOXU\", \"hotelName\": \"Royale Chulan Damansara\", \"hotelPrice\": \"103.00\", \"cartHotelID\": 19, \"hotelLocation\": \"2A, Jalan PJU 7/3, Mutiara Damansara, Petaling Jaya\"}', '[{\"attID\": \"ChIJvy1SAMZPzDERS6HN5ms9Xwo\", \"cartID\": \"3-KVVoxCo81\", \"attName\": \"Shawnalyzer Studio\", \"attPrice\": \"61.00\", \"cartAttID\": 56, \"attLocation\": \"15, Jalan Zuhrah U5/151, Taman Subang Murni, Shah Alam\"}, {\"attID\": \"ChIJJSAtCNNJzDERETbGF9iz7CI\", \"cartID\": \"3-KVVoxCo81\", \"attName\": \"Muzium Telekom\", \"attPrice\": \"79.00\", \"cartAttID\": 57, \"attLocation\": \"Jalan Raja Chulan, Kuala Lumpur\"}, {\"attID\": \"ChIJx2_KuMZJzDERboiFiS2RDyU\", \"cartID\": \"3-KVVoxCo81\", \"attName\": \"Muzium Etnologi Dunia Melayu\", \"attPrice\": \"79.00\", \"cartAttID\": 58, \"attLocation\": \"Jalan Damansara, Kuala Lumpur\"}, {\"attID\": \"ChIJwZUFgFs2zDERvM72M2ukZ1U\", \"cartID\": \"3-KVVoxCo81\", \"attName\": \"Art House Gallery Museum of Ethnic Arts\", \"attPrice\": \"78.00\", \"cartAttID\": 59, \"attLocation\": \"Lot 3.04 & 3.05, Level 2, Annexe Building, Central Market, 10,, Jalan Hang Kasturi, Kuala Lumpur\"}, {\"attID\": \"ChIJLTz0ccxJzDER0lOupg5YSmc\", \"cartID\": \"3-KVVoxCo81\", \"attName\": \"Galeri Ketua Polis Negara\", \"attPrice\": \"59.00\", \"cartAttID\": 61, \"attLocation\": \"Jalan Bukit Aman, Tasik Perdana, Kuala Lumpur\"}, {\"attID\": \"ChIJn7ct6mxIzDERAfOvaaTX5DM\", \"cartID\": \"3-KVVoxCo81\", \"attName\": \"National Art Gallery\", \"attPrice\": \"48.00\", \"cartAttID\": 62, \"attLocation\": \"Lembaga Pembangunan Seni Visual Negara, 2, Jalan Temerloh, off, Jalan Tun Razak, Kuala Lumpur\"}]', 507.00, 'kelantan', 'kuala lumpur', '2024-11-29', '2024-12-02', '1', '605.00'),
+(13, 'l5JPqy3rJ9j', '69e6a1311ecaca54', '{\"cartID\": \"l5JPqy3rJ9j\", \"hotelID\": \"ChIJ7Z19qqnyyjERjI16PdKY99M\", \"hotelName\": \"Sunway Lost World Hotel\", \"hotelPrice\": \"125.00\", \"cartHotelID\": 11, \"hotelLocation\": \"1, Persiaran Lagun Sunway, Sunway City, Ipoh\"}', '[{\"attID\": \"ChIJ7ZsMJ4atyjERivUghzb_TYE\", \"cartID\": \"l5JPqy3rJ9j\", \"attName\": \"Matang Museum\", \"attPrice\": \"92.00\", \"cartAttID\": 18, \"attLocation\": \"Kampung Pekan Matang, Matang\"}, {\"attID\": \"ChIJyTplPviuyjERVvnvFM5JNp4\", \"cartID\": \"l5JPqy3rJ9j\", \"attName\": \"5D Art Paradise Taiping\", \"attPrice\": \"58.00\", \"cartAttID\": 19, \"attLocation\": \"25, Jalan Maharajalela, Taiping\"}, {\"attID\": \"ChIJRXTNZwi9yjERv6RpqHfW_SQ\", \"cartID\": \"l5JPqy3rJ9j\", \"attName\": \"Galeri Sultan Azlan Shah\", \"attPrice\": \"111.00\", \"cartAttID\": 20, \"attLocation\": \"Jalan Istana, Bukit Chandan, Kuala Kangsar\"}, {\"attID\": \"ChIJgaROuH3syjERv8PsY2-k-go\", \"cartID\": \"l5JPqy3rJ9j\", \"attName\": \"22 Hale Street Heritage Gallery\", \"attPrice\": \"147.00\", \"cartAttID\": 21, \"attLocation\": \"22, Jalan Tun Sambanthan, Ipoh\"}, {\"attID\": \"ChIJWyheJuNntTERMmFrMJWf5xU\", \"cartID\": \"l5JPqy3rJ9j\", \"attName\": \"Lenggong Archaeological Museum\", \"attPrice\": \"34.00\", \"cartAttID\": 22, \"attLocation\": \"Jabatan Warisan Negara Zon Tengah, Kota Tampan, Lenggong\"}]', 567.00, 'kedah', 'perak', '2024-11-21', '2024-11-23', '1', '500.00');
 
 -- --------------------------------------------------------
 
@@ -129,11 +156,11 @@ INSERT INTO `cart_hotel` (`cartHotelID`, `cartID`, `hotelID`, `hotelName`, `hote
 --
 
 CREATE TABLE `user` (
-  `userID` varchar(225) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `userFname` varchar(255) NOT NULL,
-  `userEmail` varchar(255) NOT NULL,
-  `userPassword` varchar(255) NOT NULL
+  `userID` varchar(225) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `userFname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `userEmail` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `userPassword` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -153,6 +180,31 @@ INSERT INTO `user` (`userID`, `username`, `userFname`, `userEmail`, `userPasswor
 ('b419549b1ea2e9e0', 'vyqureqa', 'Camille Morgan', 'xycidaheh@mailinator.com', '$2y$10$xPkZMbUdHwetXD7rglJ8jOehbWdJGEDfr6sZV84.7LTQ0UaiErKue'),
 ('cf8170e907a85071', 'Erfa', 'Erfa Customer', 'erfa@gmail.com', '$2y$10$Hwx/7FnI/1V9/9ZFzLZdaO4aPaf7Ap8imjKiU5Lxdt/ybxYtDpDza'),
 ('f103f3b68ee23036', 'qubovyr', 'Hector Ross', 'bevek@mailinator.com', '$2y$10$A5woI/fo6.ox61HWnTI2ru9O2hVhtDgy3sprO8sRJrqJdxD4Mo8JS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_engagement`
+--
+
+CREATE TABLE `user_engagement` (
+  `id` int NOT NULL,
+  `event_type` enum('visit','login') NOT NULL,
+  `userId` varchar(255) DEFAULT NULL,
+  `event_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `user_engagement`
+--
+
+INSERT INTO `user_engagement` (`id`, `event_type`, `userId`, `event_time`) VALUES
+(1, 'visit', NULL, '2024-11-30 13:55:18'),
+(2, 'login', '69e6a1311ecaca54', '2024-11-30 13:58:06'),
+(3, 'visit', NULL, '2024-11-30 14:08:43'),
+(4, 'login', '69e6a1311ecaca54', '2024-11-30 14:08:49'),
+(5, 'visit', NULL, '2024-11-30 14:11:36'),
+(6, 'login', '69e6a1311ecaca54', '2024-11-30 14:11:46');
 
 --
 -- Indexes for dumped tables
@@ -186,11 +238,23 @@ ALTER TABLE `cart_hotel`
   ADD KEY `cartID` (`cartID`);
 
 --
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`paymentID`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`),
   ADD UNIQUE KEY `userEmail` (`userEmail`);
+
+--
+-- Indexes for table `user_engagement`
+--
+ALTER TABLE `user_engagement`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -200,45 +264,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart_attractions`
 --
 ALTER TABLE `cart_attractions`
-  MODIFY `cartAttID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `cartAttID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `cart_hotel`
 --
 ALTER TABLE `cart_hotel`
-  MODIFY `cartHotelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-COMMIT;
-
-CREATE TABLE `payment` (
-  `paymentID` int NOT NULL AUTO_INCREMENT,
-  `cartID` varchar(50) DEFAULT NULL,
-  `userID` varchar(225) DEFAULT NULL,
-  `hotelData` json DEFAULT NULL,
-  `placeData` json DEFAULT NULL,
-  `totalPrice` double(10,2) DEFAULT NULL,
-  `fromLocation` varchar(225) DEFAULT NULL,
-  `destinationLocation` varchar(225) DEFAULT NULL,
-  `departureDate` date DEFAULT NULL,
-  `returnDate` date DEFAULT NULL,
-  `person` decimal(10,0) DEFAULT NULL,
-  `max_budget` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`paymentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  MODIFY `cartHotelID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- Dumping data for table `payment`
+-- AUTO_INCREMENT for table `payment`
 --
+ALTER TABLE `payment`
+  MODIFY `paymentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
-INSERT INTO `payment` (`paymentID`, `cartID`, `userID`, `hotelData`, `placeData`, `totalPrice`, `fromLocation`, `destinationLocation`, `departureDate`, `returnDate`, `person`, `max_budget`) VALUES
-(12, '3-KVVoxCo81', '69e6a1311ecaca54', '{"cartID": "3-KVVoxCo81", "hotelID": "ChIJJ2V7SClPzDER779w0YaYOXU", "hotelName": "Royale Chulan Damansara", "hotelPrice": "103.00", "cartHotelID": 19, "hotelLocation": "2A, Jalan PJU 7/3, Mutiara Damansara, Petaling Jaya"}', '[{"attID": "ChIJvy1SAMZPzDERS6HN5ms9Xwo", "cartID": "3-KVVoxCo81", "attName": "Shawnalyzer Studio", "attPrice": "61.00", "cartAttID": 56, "attLocation": "15, Jalan Zuhrah U5/151, Taman Subang Murni, Shah Alam"}, {"attID": "ChIJJSAtCNNJzDERETbGF9iz7CI", "cartID": "3-KVVoxCo81", "attName": "Muzium Telekom", "attPrice": "79.00", "cartAttID": 57, "attLocation": "Jalan Raja Chulan, Kuala Lumpur"}, {"attID": "ChIJx2_KuMZJzDERboiFiS2RDyU", "cartID": "3-KVVoxCo81", "attName": "Muzium Etnologi Dunia Melayu", "attPrice": "79.00", "cartAttID": 58, "attLocation": "Jalan Damansara, Kuala Lumpur"}, {"attID": "ChIJwZUFgFs2zDERvM72M2ukZ1U", "cartID": "3-KVVoxCo81", "attName": "Art House Gallery Museum of Ethnic Arts", "attPrice": "78.00", "cartAttID": 59, "attLocation": "Lot 3.04 & 3.05, Level 2, Annexe Building, Central Market, 10,, Jalan Hang Kasturi, Kuala Lumpur"}, {"attID": "ChIJLTz0ccxJzDER0lOupg5YSmc", "cartID": "3-KVVoxCo81", "attName": "Galeri Ketua Polis Negara", "attPrice": "59.00", "cartAttID": 61, "attLocation": "Jalan Bukit Aman, Tasik Perdana, Kuala Lumpur"}, {"attID": "ChIJn7ct6mxIzDERAfOvaaTX5DM", "cartID": "3-KVVoxCo81", "attName": "National Art Gallery", "attPrice": "48.00", "cartAttID": 62, "attLocation": "Lembaga Pembangunan Seni Visual Negara, 2, Jalan Temerloh, off, Jalan Tun Razak, Kuala Lumpur"}]', 507.00, 'kelantan', 'kuala lumpur', '2024-11-29', '2024-12-02', 1, 605.00);
-
-CREATE TABLE user_engagement (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    event_type ENUM('visit', 'login') NOT NULL,
-    userId INT NULL,
-    event_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
+--
+-- AUTO_INCREMENT for table `user_engagement`
+--
+ALTER TABLE `user_engagement`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

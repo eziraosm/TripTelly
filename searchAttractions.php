@@ -188,9 +188,8 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 							?>
 							<div class="col">
 								<div class="card h-100 d-flex flex-column">
-									<img src="<?php echo $photoURL; ?>"
-										class="card-img-top img-fluid object-fit-cover" style="height: 200px;"
-										alt="Hotel Image">
+									<img src="<?php echo $photoURL; ?>" class="card-img-top img-fluid object-fit-cover"
+										style="height: 200px;" alt="Hotel Image">
 									<div class="card-body d-flex flex-column">
 										<h6 class="card-title"><?php echo $poi["name"] ?></h6>
 										<p class="card-text"><?php echo htmlspecialchars($poi['address']); ?></p>
@@ -221,7 +220,8 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 													echo "<button type='submit' class='btn btn-success'>Book</button>";
 												}
 												?>
-												<a class='btn btn-primary' href="placeDetail.php?placeID=<?php echo $poi['place_id'] ?>">Detail</a>
+												<a class='btn btn-primary'
+													href="placeDetail.php?placeID=<?php echo $poi['place_id'] ?>">Detail</a>
 											</div>
 										</form>
 									</div>

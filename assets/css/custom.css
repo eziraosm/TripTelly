@@ -1,20 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 * {
-	font-family: 'Poppins', sans-serif;
+	font-family: "Poppins", sans-serif;
 }
 
-
-.logo a, .logo a:hover, .logo a:focus{
-    color: #fff;
-    font-size:24px;
-    text-transform: capitalize;
-    font-weight: 600;
-    margin: 14px 0px 0;
-    padding: 10px 0 0 0;
+.logo a,
+.logo a:hover,
+.logo a:focus {
+	color: #fff;
+	font-size: 24px;
+	text-transform: capitalize;
+	font-weight: 600;
+	margin: 14px 0px 0;
+	padding: 10px 0 0 0;
 }
-.logo a span{
-    color: #00d8ff;
-    text-transform: capitalize;
+.logo a span {
+	color: #00d8ff;
+	text-transform: capitalize;
 }
 
 .cart-btn {
@@ -27,7 +28,7 @@
 	transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.cart-btn:hover{
+.cart-btn:hover {
 	color: #000000;
 	transform: scale(1.1); /* Slightly enlarges the icon/button on hover */
 }
@@ -58,4 +59,70 @@ h3 {
 
 .hotel-table {
 	margin-top: 20px;
+}
+
+.detail-content {
+	background-color: #c3c3c3;
+	border-radius: 14px;
+	padding: 50px;
+	width: 100%;
+	align-items: center;
+}
+
+.place-data {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+/* img part */
+.img-container {
+	width: 40%;
+}
+
+.main-img {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.main-img img {
+	width: 500px;
+	height: 500px;
+	object-fit: cover;
+	object-position: center;
+}
+
+.sub-img  {
+	display: flex;
+	justify-content: center;
+}
+
+.sub-img img {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	object-position: center;
+	margin: 10px;
+}
+
+.info-container {
+	width: 100%;
+}
+
+iframe {
+	height: 50%;
+	width: 100%;
+	border: #000000 1px solid;
+	border-radius: 14px;
+}
+
+.review-card {
+	border: 0;
+	border-radius: 14px;
+	background-color: #76767659;
+}
+
+.user-icon {
+	margin-right: 5px;
 }

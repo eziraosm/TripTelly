@@ -42,11 +42,24 @@ if (isset($_SESSION['success_msg'])) {
 	$toastClass = 'bg-danger';
 	unset($_SESSION['error_msg']);
 }
-$destination = $destination_location = isset($form_data['destination_loc']) ? $form_data['destination_loc'] : $form_data["destinationLocation"];
 
 
 $placeID = isset($_GET['placeID']) ? $_GET['placeID'] : null;
 $placeData = fetchPlaceDetail($placeID);
+
+$photos = $placeData['photos'];
+$reviews = $placeData['reviews'];
+$apiKey = "AIzaSyBpHdMS0pMIrrjewOeEpo5z-ykG0FMYbiQ";
+
+
+$firstPhoto = "";
+$otherPhoto = [];
+foreach ($photos as $photo) {
+	$firstPhoto = $photo['photo_reference'];
+	$otherPhoto[] = $photo['photo_reference'];
+}
+
+// var_dump($placeData);
 ?>
 
 <!DOCTYPE html>
@@ -127,19 +140,90 @@ $placeData = fetchPlaceDetail($placeID);
 				</div>
 			</div>
 		<?php endif;
-        // var_dump(json_encode($placeData));
-        ?>
+		?>
 
 
 		<div class="detail-container p-5 w-100 ">
 			<div class="detail-title">
-				<h3>Attractions in <?php echo $destination ?></h3>
-				<h5>Select places you would like to visit</h5>
+				<h3><?php echo $placeData['name'] ?></h3>
 			</div>
-			<div class="hotel-table">
-				
+			<div class="detail-content">
+				<div class="place-data">
+					<div class="img-container">
+						<div class="main-img">
+							<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $firstPhoto ?>&key=<?= $apiKey ?>"
+								alt="" class="primary-img">
+						</div>
+						<div class="sub-img">
+							<?php
+							for ($i = 0; $i < 5; $i++) {
+								?>
+								<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $otherPhoto[$i] ?>&key=<?= $apiKey ?>"
+									alt="" class="secondary-img">
+								<?php
+							}
+							?>
+						</div>
+					</div>
+					<div class="info-container">
+						<p><strong>Name:</strong> <?= htmlspecialchars($placeData['name']) ?></p>
+						<p><strong>Address:</strong> <?= htmlspecialchars($placeData['vicinity']) ?></p>
+						<p><strong>Rating:</strong>
+							<?= isset($placeData['rating']) ? htmlspecialchars($placeData['rating']) : 'N/A' ?> / 5</p>
+						<p><strong>Total Reviews:</strong>
+							<?= isset($placeData['user_ratings_total']) ? htmlspecialchars($placeData['user_ratings_total']) : '0' ?>
+							Reviews</p>
+						<p><strong>Type:</strong>
+							<?= isset($placeData['types']) ? htmlspecialchars(implode(", ", $placeData['types'])) : 'N/A' ?>
+						</p>
+						<p><strong>Opening Hours:</strong>
+							<?= isset($placeData['opening_hours']) ? (isset($placeData['opening_hours']['open_now']) && $placeData['opening_hours']['open_now'] ? 'Open Now' : 'Closed') : 'N/A' ?>
+						</p>
+						<p><strong>Phone Number:</strong>
+							<?= isset($placeData['formatted_phone_number']) ? htmlspecialchars($placeData['formatted_phone_number']) : 'N/A' ?>
+						</p>
+						<p><strong>Website:</strong> <a
+								href="<?= isset($placeData['website']) ? htmlspecialchars($placeData['website']) : '#' ?>"
+								target="_blank"><?= isset($placeData['website']) ? 'Visit Website' : 'N/A' ?></a></p>
+						<iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+							src="https://www.google.com/maps/embed/v1/place?key=<?= $apiKey ?>&q=place_id:<?= htmlspecialchars($placeID) ?>">
+						</iframe>
+					</div>
+				</div>
+				<div class="review-container mt-5">
+					<h4>Reviews</h4>
+					<?php if (!empty($reviews)): ?>
+						<?php foreach ($reviews as $review): ?>
+							<div class="mb-3 w-80 review-card">
+								<div class="row g-0">
+									<div class="col">
+										<div class="card-body">
+											
+											<h5 class="card-title d-flex align-items-center"><i class='bx bxs-user-circle user-icon'></i><?= htmlspecialchars($review['author_name']) ?></h5>
+											<p class="card-text fs-6"><?= htmlspecialchars($review['text']) ?></p>
+											<p class="card-text">
+												<span class="text-muted">Rating:
+													<?= isset($review['rating']) ? htmlspecialchars($review['rating']) : 'N/A' ?>
+													/ 5
+												</span>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					<?php else: ?>
+						<p>No reviews available for this attraction.</p>
+					<?php endif; ?>
+					<div class="review-form mb-3 w-80">
+						<form action="fn_review.php">
+							<input type="text" name="review_text">
+						</form>
+					</div>
+				</div>
+
 			</div>
-			
+
 		</div>
 	</main>
 
