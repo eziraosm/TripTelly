@@ -238,7 +238,8 @@ if (isset($_SESSION['success_msg'])) {
 													echo "<button type='submit' class='btn btn-success'>Book</button>";
 												}
 												?>
-												<a class='btn btn-primary' href="">Detail</a>
+												<a class='btn btn-primary'
+													href="placeDetail.php?placeID=<?php echo $hotel['place_id'] ?>">Detail</a>
 											</div>
 										</form>
 									</div>
