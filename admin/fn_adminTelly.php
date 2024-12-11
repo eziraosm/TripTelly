@@ -230,7 +230,49 @@ function fetchCartAndBook() {
     return $data;
 }
 
+function placeNameAndValue() {
+    return [
+        ['value' => 'johor', 'name' => 'Johor'],
+        ['value' => 'kedah', 'name' => 'Kedah'],
+        ['value' => 'kelantan', 'name' => 'Kelantan'],
+        ['value' => 'melaka', 'name' => 'Melaka'],
+        ['value' => 'negeri sembilan', 'name' => 'Negeri Sembilan'],
+        ['value' => 'pahang', 'name' => 'Pahang'],
+        ['value' => 'penang', 'name' => 'Penang'],
+        ['value' => 'perak', 'name' => 'Perak'],
+        ['value' => 'perlis', 'name' => 'Perlis'],
+        ['value' => 'selangor', 'name' => 'Selangor'],
+        ['value' => 'terengganu', 'name' => 'Terengganu'],
+        ['value' => 'kuala lumpur', 'name' => 'Wilayah Persekutuan Kuala Lumpur'],
+        ['value' => 'labuan', 'name' => 'Wilayah Persekutuan Labuan'],
+        ['value' => 'putrajaya', 'name' => 'Wilayah Persekutuan Putrajaya'],
+    ];
+}
 
+function calcTotalPriceWithDest($destination) {
+    global $conn;
 
+    $totalPriceSQL = "SELECT SUM(totalPrice) as total FROM payment WHERE destinationLocation = ?";
+    $stmt = $conn->prepare($totalPriceSQL);
+    $stmt->bind_param("s", $destination);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    return $row['total'] ?? 0;
+}
+
+function calcTripCountWithDest($destination) {
+    global $conn;
+
+    $tripSQL = "SELECT COUNT(*) AS trip FROM PAYMENT WHERE destinationLocation = ?";
+    $stmt = $conn->prepare($tripSQL);
+    $stmt->bind_param("s", $destination);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    return $row['trip'] ?? 0;
+}
 
 ?>

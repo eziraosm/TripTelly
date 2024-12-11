@@ -11,22 +11,7 @@ if (!isset($_SESSION["adminID"])) {
 $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
 // list of place location
-$places = [
-    ['value' => 'johor', 'name' => 'Johor'],
-    ['value' => 'kedah', 'name' => 'Kedah'],
-    ['value' => 'kelantan', 'name' => 'Kelantan'],
-    ['value' => 'melaka', 'name' => 'Melaka'],
-    ['value' => 'negeri sembilan', 'name' => 'Negeri Sembilan'],
-    ['value' => 'pahang', 'name' => 'Pahang'],
-    ['value' => 'penang', 'name' => 'Penang'],
-    ['value' => 'perak', 'name' => 'Perak'],
-    ['value' => 'perlis', 'name' => 'Perlis'],
-    ['value' => 'selangor', 'name' => 'Selangor'],
-    ['value' => 'terengganu', 'name' => 'Terengganu'],
-    ['value' => 'kuala lumpur', 'name' => 'Wilayah Persekutuan Kuala Lumpur'],
-    ['value' => 'labuan', 'name' => 'Wilayah Persekutuan Labuan'],
-    ['value' => 'putrajaya', 'name' => 'Wilayah Persekutuan Putrajaya'],
-];
+$places = placeNameAndValue();
 
 
 ?>
@@ -67,7 +52,6 @@ $places = [
                                     <tr>
                                         <th>No.</th>
                                         <th>Location</th>
-                                        <th>Hotel Numbers</th>
                                         <th>Sale</th>
                                         <th>Trip</th>
                                         <th>Action</th>
@@ -77,7 +61,6 @@ $places = [
                                     <tr>
                                         <th>No.</th>
                                         <th>Location</th>
-                                        <th>Hotel Numbers</th>
                                         <th>Sale</th>
                                         <th>Trip</th>
                                         <th>Action</th>
@@ -91,12 +74,11 @@ $places = [
                                     <tr>
                                         <td><?= $counter ?></td>
                                         <td><?= $place['name'] ?></td>
-                                        <td>test</td>
-                                        <td>etst</td>
-                                        <td>test</td>
+                                        <td>RM<?= number_format(calcTotalPriceWithDest($place['value']), 2) ?></td>
+                                        <td><?= calcTripCountWithDest($place['value']) ?></td>
                                         <td>
                                             <div class="action-btn w-100 d-flex justify-content-evenly">
-                                                <a href="locationDetail.php?locationName="
+                                                <a href="locationDetail.php?locationName=<?= $place['name'] ?>"
                                                     class="btn btn-info">Detail</a>
 
                                             </div>
