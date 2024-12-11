@@ -78,7 +78,7 @@ $places = placeNameAndValue();
                                         <td><?= calcTripCountWithDest($place['value']) ?></td>
                                         <td>
                                             <div class="action-btn w-100 d-flex justify-content-evenly">
-                                                <a href="locationDetail.php?locationName=<?= $place['name'] ?>"
+                                                <a href="locationDetail.php?placeType=Hotel&placeName=<?= $place['name'] ?>"
                                                     class="btn btn-info">Detail</a>
 
                                             </div>

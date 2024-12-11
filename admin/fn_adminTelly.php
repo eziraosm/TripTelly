@@ -275,4 +275,100 @@ function calcTripCountWithDest($destination) {
     return $row['trip'] ?? 0;
 }
 
+function fetchPlacesData($state, $placeType, $max_budget) {
+    $apiKey = 'AIzaSyBpHdMS0pMIrrjewOeEpo5z-ykG0FMYbiQ';
+
+    // Step 1: Convert state to latitude and longitude using Geocoding API
+    $geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($state) . "&key=$apiKey";
+
+    $geocodeResponse = file_get_contents($geocodeUrl);
+    if ($geocodeResponse === FALSE) {
+        die("Error occurred while fetching data from Google Geocoding API");
+    }
+
+    $geocodeData = json_decode($geocodeResponse, true);
+
+    if (!isset($geocodeData['results'][0])) {
+        return [
+            'error' => "Invalid location: Unable to fetch coordinates for $state."
+        ];
+    }
+
+    $latitude = $geocodeData['results'][0]['geometry']['location']['lat'];
+    $longitude = $geocodeData['results'][0]['geometry']['location']['lng'];
+
+    // Step 2: Define place type and radius
+    $radius = 50000; // Search within a 50 km radius
+    $type = $placeType === 'hotel' ? 'lodging' : 'museum|tourist_attraction|point_of_interest';
+
+    $placesUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$latitude,$longitude&radius=$radius&type=$type&key=$apiKey";
+
+    $placesResponse = file_get_contents($placesUrl);
+    if ($placesResponse === FALSE) {
+        die("Error occurred while fetching data from Google Places API");
+    }
+
+    $placesData = json_decode($placesResponse, true);
+
+    if (empty($placesData['results'])) {
+        return [
+            'error' => "No $placeType found near the specified location."
+        ];
+    }
+
+    $places = [];
+    foreach ($placesData['results'] as $place) {
+        $photoUrl = null; // Default to null if no photos are available
+        if (!empty($place['photos'][0]['photo_reference'])) {
+            $photoReference = $place['photos'][0]['photo_reference'];
+            $photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoReference&key=$apiKey";
+        }
+
+        $places[] = [
+            'name' => $place['name'],
+            'place_id' => $place['place_id'],
+            'address' => $place['vicinity'] ?? 'N/A',
+            'rating' => $place['rating'] ?? 'N/A',
+            'price' => $placeType === 'hotel' ? generateHotelPrice($max_budget) : generateAttractionPrice($max_budget),
+            'user_ratings_total' => $place['user_ratings_total'] ?? 0,
+            'photo_url' => $photoUrl
+        ];
+    }
+
+    shuffle($places); // Randomize the order of places
+
+    return $places;
+}
+
+function generateHotelPrice($maxHotelPrice)
+{
+    $hotel_budget = $maxHotelPrice * 0.25;
+    return rand(100, $hotel_budget);
+}
+
+function generateAttractionPrice($maxAttractionBudget)
+{
+    $attraction_budget = $maxAttractionBudget * 0.6;
+    // 5% chance to exceed 100
+    if (rand(1, 100) <= 10) {
+        // Ensure the price is more than 100 but within the maximum budget
+        return rand(101, $attraction_budget);
+    }
+
+    // Otherwise, return a regular price between 3 and 100
+    return rand(3, min(100, $attraction_budget));
+}
+
+function countReview($placeId) {
+    global $conn;
+
+    $sql = 'SELECT COUNT(*) AS reviewCount FROM review WHERE placeID = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $placeId) ;
+    $stmt->execute() ;
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['reviewCount'];
+}
+
 ?>
