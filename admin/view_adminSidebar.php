@@ -74,11 +74,11 @@
                 Customer
             </a>
             <div class="sb-sidenav-menu-heading">Product</div>
-            <a class="nav-link" href="hotelList.php">
+            <a class="nav-link" href="locationList.php?placeType=Hotel">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-hotel"></i></div>
                 Hotel
             </a>
-            <a class="nav-link" href="attractionList.php" >
+            <a class="nav-link" href="locationList.php?placeType=Attraction" >
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-map-pin"></i></div>
                 Attraction
             </a>

@@ -2,7 +2,10 @@
 session_start();
 include 'fn_adminTelly.php';
 include 'dbconnect.php';
-$pageTitle = "Hotel - TripTelly Admin";
+
+$placeType = $_GET['placeType'];
+
+$pageTitle = $placeType . " - TripTelly Admin";
 
 if (!isset($_SESSION["adminID"])) {
     header("../index.php");
@@ -12,7 +15,6 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
 // list of place location
 $places = placeNameAndValue();
-
 
 ?>
 <html lang="en">
@@ -37,14 +39,14 @@ $places = placeNameAndValue();
                 include "view_toaster.php";
                 ?>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Hotel</h1>
+                    <h1 class="mt-4"><?= $placeType ?></h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item">Product</li>
-                        <li class="breadcrumb-item active">Hotel</li>
+                        <li class="breadcrumb-item active"><?= $placeType ?></li>
                     </ol>
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h4>Hotel List</h4>
+                            <h4><?= $placeType ?> List</h4>
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
@@ -78,7 +80,7 @@ $places = placeNameAndValue();
                                         <td><?= calcTripCountWithDest($place['value']) ?></td>
                                         <td>
                                             <div class="action-btn w-100 d-flex justify-content-evenly">
-                                                <a href="locationDetail.php?placeType=Hotel&placeName=<?= $place['name'] ?>"
+                                                <a href="locationDetail.php?placeType=<?= $placeType ?>&placeName=<?= $place['name'] ?>"
                                                     class="btn btn-info">Detail</a>
 
                                             </div>
