@@ -16,7 +16,7 @@ if (!isset($_SESSION["adminID"])) {
 $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
 
-$places = fetchPlacesData($placeName, $placeType, $max_budget);
+$places = fetchPlacesData($placeName, strtolower($placeType), $max_budget);
 ?>
 <html lang="en">
 

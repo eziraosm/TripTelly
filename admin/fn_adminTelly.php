@@ -244,7 +244,6 @@ function placeNameAndValue() {
         ['value' => 'selangor', 'name' => 'Selangor'],
         ['value' => 'terengganu', 'name' => 'Terengganu'],
         ['value' => 'kuala lumpur', 'name' => 'Wilayah Persekutuan Kuala Lumpur'],
-        ['value' => 'labuan', 'name' => 'Wilayah Persekutuan Labuan'],
         ['value' => 'putrajaya', 'name' => 'Wilayah Persekutuan Putrajaya'],
     ];
 }
@@ -265,7 +264,7 @@ function calcTotalPriceWithDest($destination) {
 function calcTripCountWithDest($destination) {
     global $conn;
 
-    $tripSQL = "SELECT COUNT(*) AS trip FROM PAYMENT WHERE destinationLocation = ?";
+    $tripSQL = "SELECT COUNT(*) AS trip FROM payment WHERE destinationLocation = ?";
     $stmt = $conn->prepare($tripSQL);
     $stmt->bind_param("s", $destination);
     $stmt->execute();
@@ -297,48 +296,60 @@ function fetchPlacesData($state, $placeType, $max_budget) {
     $latitude = $geocodeData['results'][0]['geometry']['location']['lat'];
     $longitude = $geocodeData['results'][0]['geometry']['location']['lng'];
 
-    // Step 2: Define place type and radius
-    $radius = 50000; // Search within a 50 km radius
+    // Step 2: Define place type and initial radius
     $type = $placeType === 'hotel' ? 'lodging' : 'museum|tourist_attraction|point_of_interest';
-
-    $placesUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$latitude,$longitude&radius=$radius&type=$type&key=$apiKey";
-
-    $placesResponse = file_get_contents($placesUrl);
-    if ($placesResponse === FALSE) {
-        die("Error occurred while fetching data from Google Places API");
-    }
-
-    $placesData = json_decode($placesResponse, true);
-
-    if (empty($placesData['results'])) {
-        return [
-            'error' => "No $placeType found near the specified location."
-        ];
-    }
-
+    $radius = 50000; // Start with a 50 km radius
     $places = [];
-    foreach ($placesData['results'] as $place) {
-        $photoUrl = null; // Default to null if no photos are available
-        if (!empty($place['photos'][0]['photo_reference'])) {
-            $photoReference = $place['photos'][0]['photo_reference'];
-            $photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoReference&key=$apiKey";
+    $uniquePlaceIds = []; // Track unique place IDs
+
+    do {
+        $placesUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$latitude,$longitude&radius=$radius&type=$type&key=$apiKey";
+
+        $placesResponse = file_get_contents($placesUrl);
+        if ($placesResponse === FALSE) {
+            die("Error occurred while fetching data from Google Places API");
         }
 
-        $places[] = [
-            'name' => $place['name'],
-            'place_id' => $place['place_id'],
-            'address' => $place['vicinity'] ?? 'N/A',
-            'rating' => $place['rating'] ?? 'N/A',
-            'price' => $placeType === 'hotel' ? generateHotelPrice($max_budget) : generateAttractionPrice($max_budget),
-            'user_ratings_total' => $place['user_ratings_total'] ?? 0,
-            'photo_url' => $photoUrl
-        ];
+        $placesData = json_decode($placesResponse, true);
+
+        if (!empty($placesData['results'])) {
+            foreach ($placesData['results'] as $place) {
+                if (in_array($place['place_id'], $uniquePlaceIds)) {
+                    continue; // Skip duplicates
+                }
+
+                $photoUrl = null; // Default to null if no photos are available
+                if (!empty($place['photos'][0]['photo_reference'])) {
+                    $photoReference = $place['photos'][0]['photo_reference'];
+                    $photoUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoReference&key=$apiKey";
+                }
+
+                $places[] = [
+                    'name' => $place['name'],
+                    'place_id' => $place['place_id'],
+                    'address' => $place['vicinity'] ?? 'N/A',
+                    'rating' => $place['rating'] ?? 'N/A',
+                    'price' => $placeType === 'hotel' ? generateHotelPrice($max_budget) : generateAttractionPrice($max_budget),
+                    'user_ratings_total' => $place['user_ratings_total'] ?? 0,
+                    'photo_url' => $photoUrl
+                ];
+
+                $uniquePlaceIds[] = $place['place_id']; // Mark as added
+            }
+        }
+
+        $radius += 20000; // Increase radius by 20 km if places are less than 10
+    } while (count($places) < 10 && $radius <= 200000); // Stop if we exceed a 200 km radius or have 10+ places
+
+    if (count($places) < 10) {
+        return $places;
     }
 
     shuffle($places); // Randomize the order of places
 
     return $places;
 }
+
 
 function generateHotelPrice($maxHotelPrice)
 {
