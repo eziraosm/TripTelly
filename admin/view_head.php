@@ -12,3 +12,4 @@
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <!-- ajax -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">

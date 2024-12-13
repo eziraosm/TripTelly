@@ -154,13 +154,13 @@ foreach ($photos as $photo) {
 					<div class="img-container">
 						<div class="main-img">
 							<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $firstPhoto ?>&key=<?= $apiKey ?>"
-								alt="" class="primary-img">
+								alt="" class="primary-img" id="primary-img">
 						</div>
 						<div class="sub-img">
 							<?php
 							for ($i = 0; $i < 5; $i++) {
 								?>
-								<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $otherPhoto[$i] ?>&key=<?= $apiKey ?>"
+								<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $otherPhoto[$i] ?>&key=<?= $apiKey ?> " data-photo-reference="<?= $otherPhoto[$i] ?>"
 									alt="" class="secondary-img">
 								<?php
 							}
@@ -304,6 +304,23 @@ foreach ($photos as $photo) {
 				toast.show();
 			}
 		});
+	</script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const primaryImg = document.getElementById('primary-img');
+			const secondaryImgs = document.querySelectorAll('.secondary-img');
+			const imageReferences = Array.from(secondaryImgs).map(img => img.getAttribute('data-photo-reference'));
+
+			let currentIndex = 0;
+			function changePrimaryImage() {
+				currentIndex = (currentIndex + 1) % imageReferences.length;
+				primaryImg.src = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageReferences[currentIndex]}&key=<?= googleApiKey() ?>`;
+			}
+
+			setInterval(changePrimaryImage, 5000); // Change every 5 seconds
+		});
+		console.log(imageReferences);
 	</script>
 
 </body>
