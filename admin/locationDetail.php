@@ -5,7 +5,7 @@ include 'dbconnect.php';
 
 $placeName = $_GET['placeName'];
 $placeType = $_GET['placeType'];
-$max_budget = 500;
+$max_budget = 1000;
 
 $pageTitle = $placeType . " in " . $placeName;
 
@@ -16,7 +16,7 @@ if (!isset($_SESSION["adminID"])) {
 $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
 
-$places = fetchPlacesData($placeName, strtolower($placeType), $max_budget);
+$places = fetchPlacesDataWithState($placeName, strtolower($placeType), $max_budget);
 ?>
 <html lang="en">
 
@@ -51,7 +51,7 @@ $places = fetchPlacesData($placeName, strtolower($placeType), $max_budget);
                             <h4>List <?= $placeType ?> in <?= $placeName ?></h4>
                         </div>
                         <div class="card-body">
-                        <table id="datatablesSimple">
+                            <table id="datatablesSimple">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -72,19 +72,24 @@ $places = fetchPlacesData($placeName, strtolower($placeType), $max_budget);
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                        $counter = 1;
-                                        foreach ($places as $place) {   
-                                    ?>
-                                    <tr>
-                                        <td><?= $counter ?></td>
-                                        <td><?= $place['name'] ?></td>
-                                        <td><?= $place['rating'] ?></td>
-                                        <td><?= countReview($place['place_id']) ?></td>
-                                        <td>test</td>
-                                    </tr>
-                                    <?php
-                                            $counter++;
-                                        }
+                                    $counter = 1;
+                                    foreach ($places as $place) {
+                                        ?>
+                                        <tr>
+                                            <td><?= $counter ?></td>
+                                            <td><?= $place['name'] ?></td>
+                                            <td><?= $place['rating'] ?></td>
+                                            <td><?= countReview($place['place_id']) ?></td>
+                                            <td>
+                                                <div class="action-btn w-100 d-flex justify-content-evenly">
+                                                    <a href="placeInfo.php?placeID=<?= $place['place_id'] ?>&placeType=<?= $placeType ?>&placeState=<?= $placeName ?>"
+                                                        class="btn btn-info">Detail</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        $counter++;
+                                    }
                                     ?>
                                 </tbody>
                             </table>

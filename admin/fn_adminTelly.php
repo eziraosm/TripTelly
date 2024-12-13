@@ -274,8 +274,12 @@ function calcTripCountWithDest($destination) {
     return $row['trip'] ?? 0;
 }
 
-function fetchPlacesData($state, $placeType, $max_budget) {
-    $apiKey = 'AIzaSyBpHdMS0pMIrrjewOeEpo5z-ykG0FMYbiQ';
+function googleApiKey() {
+    return 'AIzaSyBpHdMS0pMIrrjewOeEpo5z-ykG0FMYbiQ';
+}
+
+function fetchPlacesDataWithState($state, $placeType, $max_budget) {
+    $apiKey = googleApiKey();
 
     // Step 1: Convert state to latitude and longitude using Geocoding API
     $geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($state) . "&key=$apiKey";
@@ -350,7 +354,6 @@ function fetchPlacesData($state, $placeType, $max_budget) {
     return $places;
 }
 
-
 function generateHotelPrice($maxHotelPrice)
 {
     $hotel_budget = $maxHotelPrice * 0.25;
@@ -380,6 +383,90 @@ function countReview($placeId) {
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     return $row['reviewCount'];
+}
+
+function fetchPlacesDataWithID ($placeID) {
+    $apiKey = googleApiKey();
+
+    // Google Places Details API endpoint
+    $url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" . urlencode($placeID) . "&key=" . $apiKey;
+
+    // Initialize cURL
+    $ch = curl_init();
+
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Execute the request
+    $response = curl_exec($ch);
+
+    // Check for errors
+    if (curl_errno($ch)) {
+        echo 'cURL Error: ' . curl_error($ch);
+        curl_close($ch);
+        return null;
+    }
+
+    // Close the cURL session
+    curl_close($ch);
+
+    // Decode the JSON response
+    $placeDetails = json_decode($response, true);
+
+    // Check if the request was successful
+    if (isset($placeDetails['status']) && $placeDetails['status'] === 'OK') {
+        $result = $placeDetails['result'];
+
+        // Fetch local reviews from the database
+        $localReviews = fetchLocalReviews($placeID);
+
+        // Merge local reviews with Google reviews
+        if (isset($result['reviews'])) {
+            $result['reviews'] = array_merge($result['reviews'], $localReviews);
+        } else {
+            $result['reviews'] = $localReviews;
+        }
+
+        return $result;
+    } else {
+        // Log error for debugging
+        if (isset($placeDetails['status'])) {
+            echo 'Error: ' . $placeDetails['status'];
+        }
+        return null;
+    }
+}
+
+function fetchLocalReviews($placeID)
+{
+    // Database connection (use your database connection details)
+    global $conn;
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Query to fetch local reviews
+    $sql = "SELECT userID, reviewText, reviewRating FROM review WHERE placeID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $placeID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $reviews = [];
+    while ($row = $result->fetch_assoc()) {
+        $author = fetchUserData($row['userID']);
+        $author_name = $author['username'];
+        $reviews[] = [
+            'author_name' => $author_name, // Map userID to author_name
+            'text' => $row['reviewText'],
+            'rating' => $row['reviewRating']
+        ];
+    }
+
+    return $reviews;
 }
 
 ?>

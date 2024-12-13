@@ -82,7 +82,6 @@ $places = placeNameAndValue();
                                             <div class="action-btn w-100 d-flex justify-content-evenly">
                                                 <a href="locationDetail.php?placeType=<?= $placeType ?>&placeName=<?= $place['name'] ?>"
                                                     class="btn btn-info">Detail</a>
-
                                             </div>
                                         </td>
                                     </tr>
