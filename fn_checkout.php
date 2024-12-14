@@ -91,7 +91,7 @@ if (isset($_GET['cartID'])) {
     if ($paymentStmt) {
         // Bind parameters to the SQL query
         $paymentStmt->bind_param(
-            "ssssdssssdd",
+            "ssssdssssids",
             $cartID,
             $userID,
             $hotelJson,
