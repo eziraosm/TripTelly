@@ -10,6 +10,9 @@ if (isset($_SESSION['deleteAdminID'])) {
 } elseif (isset($_SESSION['deleteCustomerID'])) {
     $deleteID = $_SESSION['deleteCustomerID'];
     $fnDeletePage = "fn_accountDelete.php?deleteCustomerID=";
+} elseif (isset($_SESSION["reviewURL"])) {
+    $deleteID = $_SESSION['reviewURL'];
+    $fnDeletePage = "fn_reviewDelete.php?deleteURL=";
 }
 ?>
 
@@ -20,8 +23,7 @@ if (isset($_SESSION['deleteAdminID'])) {
             <div class="toast-body text-white">
                 <?php echo htmlspecialchars($delete_msg); ?>
                 <div class="mt-2 pt-2 border-top">
-                    <a href="<?php echo $fnDeletePage . $deleteID ?>"
-                        class="btn btn-warning btn-sm">Delete</a>
+                    <a href="<?php echo $fnDeletePage . $deleteID ?>" class="btn btn-warning btn-sm">Delete</a>
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast"
                         onclick="removeGetURL()">Close</button>
                 </div>

@@ -16,6 +16,7 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 // list of place location
 $places = placeNameAndValue();
 
+
 ?>
 <html lang="en">
 

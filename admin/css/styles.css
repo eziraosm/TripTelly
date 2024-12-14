@@ -11751,3 +11751,9 @@ iframe,
 	box-sizing: border-box;
   text-align: justify;
 }
+
+.dlt-btn {
+  font-size: 25px;
+  color: red;
+  cursor: pointer;
+}

@@ -421,11 +421,25 @@ function fetchPlacesDataWithID ($placeID) {
         // Fetch local reviews from the database
         $localReviews = fetchLocalReviews($placeID);
 
+        // Filter local reviews by removing those listed in the review_delete table
+        $filteredLocalReviews = array_filter($localReviews, function ($review) {
+            $deletedReview = fetchDeletedReviews($review['reviewID']); // Assuming local reviews have 'reviewID'
+            return $deletedReview === null; // Keep only reviews not found in review_delete
+        });
+
         // Merge local reviews with Google reviews
         if (isset($result['reviews'])) {
-            $result['reviews'] = array_merge($result['reviews'], $localReviews);
+            $allReviews = array_merge($result['reviews'], $localReviews);
+
+            // Filter reviews by removing those listed in the review_delete table
+            $filteredReviews = array_filter($allReviews, function ($review) {
+                $deletedReview = fetchDeletedReviews($review['author_url']);
+                return $deletedReview === null; // Keep only reviews not found in review_delete
+            });
+
+            $result['reviews'] = array_values($filteredReviews); // Re-index the array
         } else {
-            $result['reviews'] = $localReviews;
+            $result['reviews'] = array_values($filteredLocalReviews); // Use only local reviews if no Google reviews exist
         }
 
         return $result;
@@ -434,6 +448,40 @@ function fetchPlacesDataWithID ($placeID) {
         if (isset($placeDetails['status'])) {
             echo 'Error: ' . $placeDetails['status'];
         }
+        return null;
+    }
+}
+
+function fetchCustomerData($userID) {
+    global $conn;
+
+    $userSQL = "SELECT * FROM user WHERE userID = ?";
+    $stmt = $conn->prepare($userSQL);
+
+    if ($stmt) {
+        // Bind the parameter to the prepared statement
+        $stmt->bind_param("i", $userID);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->get_result();
+
+        // Check if user data is found
+        if ($result->num_rows > 0) {
+            // Fetch associative array
+            $userData = $result->fetch_assoc();
+
+            // Return user data
+            return $userData;
+        } else {
+            // Return null if no data is found
+            return null;
+        }
+
+    } else {
+        // Handle SQL preparation error
         return null;
     }
 }
@@ -449,7 +497,7 @@ function fetchLocalReviews($placeID)
     }
 
     // Query to fetch local reviews
-    $sql = "SELECT userID, reviewText, reviewRating FROM review WHERE placeID = ?";
+    $sql = "SELECT reviewID, userID, reviewText, reviewRating FROM review WHERE placeID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $placeID);
     $stmt->execute();
@@ -457,16 +505,38 @@ function fetchLocalReviews($placeID)
 
     $reviews = [];
     while ($row = $result->fetch_assoc()) {
-        $author = fetchUserData($row['userID']);
+        $author = fetchCustomerData($row['userID']);
         $author_name = $author['username'];
         $reviews[] = [
             'author_name' => $author_name, // Map userID to author_name
             'text' => $row['reviewText'],
-            'rating' => $row['reviewRating']
+            'rating' => $row['reviewRating'],
+            'author_url' => $row['reviewID']
         ];
     }
 
     return $reviews;
 }
+
+function fetchDeletedReviews($reviewURL) {
+    global $conn;
+    $sql = 'SELECT * FROM review_delete WHERE reviewURL = ?';
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $reviewURL);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        // Fetch associative array
+        $deletedReview = $result->fetch_assoc();
+
+        // Return deleted review data
+        return $deletedReview;
+    } else {
+        // Return null if no review is found
+        return null;
+    }
+}
+
 
 ?>

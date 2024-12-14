@@ -13,6 +13,10 @@ if (!isset($_SESSION["adminID"])) {
     header("../index.php");
 }
 
+if (isset($_SESSION['reviewURL'])) {
+    unset($_SESSION['reviewURL']);
+}
+
 $adminData = fetchCurrentAdminData($_SESSION['adminID']);
 
 //place data get here
@@ -20,9 +24,11 @@ $photos = $placeData['photos'];
 $reviews = $placeData['reviews'];
 $firstPhoto = "";
 $otherPhoto = [];
-foreach ($photos as $photo) {
-    $firstPhoto = $photo['photo_reference'];
-    $otherPhoto[] = $photo['photo_reference'];
+if (!empty($photos)) {
+    foreach ($photos as $photo) {
+        $firstPhoto = $photo['photo_reference'];
+        $otherPhoto[] = $photo['photo_reference'];
+    }
 }
 
 ?>
@@ -44,8 +50,16 @@ foreach ($photos as $photo) {
             <main>
                 <?php
                 // for testing purpose. comment when not use
-                // var_dump($reviews[1]);
-                include "view_toaster.php";
+                var_dump($reviews);
+                if (isset($_GET['reviewURL'])) {
+                    $_SESSION['delete_msg'] = "This review will be deleted";
+                    $_SESSION['reviewURL'] = $_GET['reviewURL'];
+                    include "view_alertToaster.php";
+                }
+                if (isset($_SESSION['success_msg']) || isset($_SESSION['error_msg'])) {
+                    include "view_toaster.php";
+                }
+
                 ?>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4"><?= $placeData['name'] ?></h1>
@@ -63,17 +77,31 @@ foreach ($photos as $photo) {
                             <div class="place-data w-100 d-flex justify-content-between">
                                 <div class="img-container w-40">
                                     <div class="main-img w-100 d-flex justify-content-center">
-                                        <img id="primary-img"
-                                            src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $firstPhoto ?>&key=<?= googleApiKey() ?>"
-                                            class="primary-img">
+                                        <?php if (!empty($firstPhoto)) { ?>
+                                            <img id="primary-img"
+                                                src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $firstPhoto ?>&key=<?= googleApiKey() ?>"
+                                                class="primary-img">
+                                        <?php } else { ?>
+                                            <img id="primary-img"
+                                                src="https://ih1.redbubble.net/image.4905811447.8675/flat,750x,075,f-pad,750x1000,f8f8f8.jpg"
+                                                class="primary-img">
+                                        <?php } ?>
                                     </div>
                                     <div class="sub-img d-flex justify-content-center">
                                         <?php
                                         for ($i = 0; $i < 5; $i++) {
-                                            ?>
-                                            <img class="secondary-img" data-photo-reference="<?= $otherPhoto[$i] ?>"
-                                                src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $otherPhoto[$i] ?>&key=<?= googleApiKey() ?>">
-                                            <?php
+                                            if (!empty($otherPhoto[$i])) {
+                                                ?>
+                                                <img class="secondary-img" data-photo-reference="<?= $otherPhoto[$i] ?>"
+                                                    src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $otherPhoto[$i] ?>&key=<?= googleApiKey() ?>">
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <img id="secondary-img"
+                                                    src="https://ih1.redbubble.net/image.4905811447.8675/flat,750x,075,f-pad,750x1000,f8f8f8.jpg"
+                                                    class="secondary-img">
+                                                <?php
+                                            }
                                         }
                                         ?>
                                     </div>
@@ -93,7 +121,8 @@ foreach ($photos as $photo) {
                                         <tr>
                                             <th>Rating</th>
                                             <td>:</td>
-                                            <td><?= htmlspecialchars($placeData['rating']) ?></td>
+                                            <td><?= isset($placeData['rating']) ? htmlspecialchars($placeData['rating']) : 'N/A' ?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Total Reviews</th>
@@ -160,11 +189,20 @@ foreach ($photos as $photo) {
                                                 <div class="row g-0">
                                                     <div class="col">
                                                         <div class="card-body">
-
-                                                            <h5 class="card-title d-flex align-items-center"><i
-                                                                    class='bx bxs-user-circle user-icon'></i><?= htmlspecialchars($review['author_name']) ?>
-                                                            </h5>
-                                                            <p class="card-text fs-6"><?= htmlspecialchars($review['text']) ?>
+                                                            <div class="review-header d-flex justify-content-between">
+                                                                <h5 class="card-title d-flex align-items-center">
+                                                                    <i
+                                                                        class='bx bxs-user-circle user-icon'></i><?= htmlspecialchars($review['author_name']) ?>
+                                                                </h5>
+                                                                <div class="more-option">
+                                                                    <a
+                                                                        href="placeInfo.php?<?= http_build_query(array_merge($_GET, ['reviewURL' => $review['author_url']])) ?>">
+                                                                        <i class='bx bx-x dlt-btn'></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <p class="card-text fs-6">
+                                                                <?= htmlspecialchars($review['text']) ?>
                                                             </p>
                                                             <p class="card-text">
                                                                 <span class="text-muted">Rating:
@@ -211,7 +249,7 @@ foreach ($photos as $photo) {
             const panorama = new google.maps.StreetViewPanorama(
                 document.getElementById('street-view'), {
                 position: placeLatLng,
-                pov: { heading: 0, pitch: 0 },  // Adjust these for a better view
+                pov: { heading: 34, pitch: 10 },  // Adjust these for a better view
                 zoom: 1,
                 maxZoom: 5,  // Max zoom for better quality
                 minZoom: 1   // Min zoom to avoid too much zooming out
@@ -222,24 +260,32 @@ foreach ($photos as $photo) {
         document.addEventListener('DOMContentLoaded', function () {
             const primaryImg = document.getElementById('primary-img');
             const secondaryImgs = document.querySelectorAll('.secondary-img');
-            const imageReferences = Array.from(secondaryImgs).map(img => img.getAttribute('data-photo-reference'));
+            const imageReferences = Array.from(secondaryImgs)
+                .map(img => img.getAttribute('data-photo-reference'))
+                .filter(photoRef => photoRef !== null && photoRef.trim() !== ""); // Filter out empty or null photo references
 
-            let currentIndex = 0;
-            function changePrimaryImage() {
-                currentIndex = (currentIndex + 1) % imageReferences.length;
-                primaryImg.src = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageReferences[currentIndex]}&key=<?= googleApiKey() ?>`;
+            // Only proceed if there are valid photo references
+            if (imageReferences.length > 0) {
+                let currentIndex = 0;
+
+                function changePrimaryImage() {
+                    currentIndex = (currentIndex + 1) % imageReferences.length;
+                    primaryImg.src = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageReferences[currentIndex]}&key=<?= googleApiKey() ?>`;
+                }
+
+                setInterval(changePrimaryImage, 5000); // Change every 5 seconds
+            } else {
+                console.warn("No valid photo references available for image rotation.");
             }
 
-            setInterval(changePrimaryImage, 5000); // Change every 5 seconds
-
-
-            // street view
+            // Initialize Street View
             const script = document.createElement('script');
             script.src = `https://maps.googleapis.com/maps/api/js?key=<?= googleApiKey() ?>&libraries=places&callback=initializeStreetView`;
             script.async = true;
             script.defer = true;
             document.body.appendChild(script);
         });
+
     </script>
 </body>
 
