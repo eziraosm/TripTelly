@@ -235,9 +235,12 @@ if (!empty($photos)) {
         // Google Maps API callback initialization
         function initializeStreetView() {
             const placeLatLng = {
-                lat: <?= htmlspecialchars($placeData['geometry']['location']['lat']) ?>,
-                lng: <?= htmlspecialchars($placeData['geometry']['location']['lng']) ?>
+                lat: <?= htmlspecialchars($placeData['geometry']['location']['lat'] ?? 'null') ?>,
+                lng: <?= htmlspecialchars($placeData['geometry']['location']['lng'] ?? 'null') ?>
             };
+            if (!placeLatLng.lat || !placeLatLng.lng) {
+                console.error("Invalid coordinates:", placeLatLng);
+            }
 
             // Check if coordinates are valid
             if (isNaN(placeLatLng.lat) || isNaN(placeLatLng.lng)) {
@@ -249,7 +252,7 @@ if (!empty($photos)) {
             const panorama = new google.maps.StreetViewPanorama(
                 document.getElementById('street-view'), {
                 position: placeLatLng,
-                pov: { heading: 34, pitch: 10 },  // Adjust these for a better view
+                pov: { heading: 0, pitch: 0 },  // Adjust these for a better view
                 zoom: 1,
                 maxZoom: 5,  // Max zoom for better quality
                 minZoom: 1   // Min zoom to avoid too much zooming out
