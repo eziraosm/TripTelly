@@ -50,7 +50,7 @@ if (!empty($photos)) {
             <main>
                 <?php
                 // for testing purpose. comment when not use
-                var_dump($reviews);
+                // var_dump($reviews);
                 if (isset($_GET['reviewURL'])) {
                     $_SESSION['delete_msg'] = "This review will be deleted";
                     $_SESSION['reviewURL'] = $_GET['reviewURL'];
