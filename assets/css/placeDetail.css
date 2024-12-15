@@ -54,6 +54,10 @@ iframe {
 	border-radius: 14px;
 }
 
+#street-view {
+	border-radius: 14px;
+}
+
 .review-card {
 	border: 0;
 	border-radius: 14px;

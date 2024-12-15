@@ -153,16 +153,31 @@ foreach ($photos as $photo) {
 				<div class="place-data">
 					<div class="img-container">
 						<div class="main-img">
-							<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $firstPhoto ?>&key=<?= $apiKey ?>"
-								alt="" class="primary-img" id="primary-img">
+							<?php if (!empty($firstPhoto)) { ?>
+								<img id="primary-img"
+									src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $firstPhoto ?>&key=<?= $apiKey ?>"
+									class="primary-img">
+							<?php } else { ?>
+								<img id="primary-img"
+									src="https://ih1.redbubble.net/image.4905811447.8675/flat,750x,075,f-pad,750x1000,f8f8f8.jpg"
+									class="primary-img">
+							<?php } ?>
 						</div>
 						<div class="sub-img">
 							<?php
 							for ($i = 0; $i < 5; $i++) {
-								?>
-								<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $otherPhoto[$i] ?>&key=<?= $apiKey ?> " data-photo-reference="<?= $otherPhoto[$i] ?>"
-									alt="" class="secondary-img">
-								<?php
+								if (!empty($otherPhoto[$i])) {
+									?>
+									<img class="secondary-img" data-photo-reference="<?= $otherPhoto[$i] ?>"
+										src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<?= $otherPhoto[$i] ?>&key=<?= $apiKey ?>">
+									<?php
+								} else {
+									?>
+									<img id="secondary-img"
+										src="https://ih1.redbubble.net/image.4905811447.8675/flat,750x,075,f-pad,750x1000,f8f8f8.jpg"
+										class="secondary-img">
+									<?php
+								}
 							}
 							?>
 						</div>
@@ -192,7 +207,29 @@ foreach ($photos as $photo) {
 						</iframe>
 					</div>
 				</div>
-				<div class="review-container mt-5">
+
+
+			</div>
+
+			<div class="detail-content mt-5">
+				<div class="icard-header">
+					<h4>Maps and Street View</h4>
+				</div>
+				<div class="icard-body">
+					<div class="map-container w-100 mb-3">
+						<iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+							style="height: 350px"
+							src="https://www.google.com/maps/embed/v1/place?key=<?= $apiKey ?>&q=place_id:<?= htmlspecialchars($placeID) ?>">
+						</iframe>
+					</div>
+					<div class="street-container w-100">
+						<div id="street-view" style="width: 100%; height: 350px;"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="detail-content mt-5">
+				<div class="review-container">
 					<h4>Reviews</h4>
 					<?php if (!empty($reviews)): ?>
 						<?php foreach ($reviews as $review): ?>
@@ -286,7 +323,6 @@ foreach ($photos as $photo) {
 						</form>
 					</div>
 				</div>
-
 			</div>
 
 		</div>
@@ -307,20 +343,63 @@ foreach ($photos as $photo) {
 	</script>
 
 	<script>
+		// Google Maps API callback initialization
+		function initializeStreetView() {
+			const placeLatLng = {
+				lat: <?= htmlspecialchars($placeData['geometry']['location']['lat'] ?? 'null') ?>,
+				lng: <?= htmlspecialchars($placeData['geometry']['location']['lng'] ?? 'null') ?>
+			};
+			if (!placeLatLng.lat || !placeLatLng.lng) {
+				console.error("Invalid coordinates:", placeLatLng);
+			}
+
+			// Check if coordinates are valid
+			if (isNaN(placeLatLng.lat) || isNaN(placeLatLng.lng)) {
+				console.error("Invalid coordinates for Street View:", placeLatLng);
+				return;
+			}
+
+			// Initialize Street View
+			const panorama = new google.maps.StreetViewPanorama(
+				document.getElementById('street-view'), {
+				position: placeLatLng,
+				pov: { heading: 0, pitch: 0 },  // Adjust these for a better view
+				zoom: 1,
+				maxZoom: 5,  // Max zoom for better quality
+				minZoom: 1   // Min zoom to avoid too much zooming out
+			}
+			);
+		}
+
 		document.addEventListener('DOMContentLoaded', function () {
 			const primaryImg = document.getElementById('primary-img');
 			const secondaryImgs = document.querySelectorAll('.secondary-img');
-			const imageReferences = Array.from(secondaryImgs).map(img => img.getAttribute('data-photo-reference'));
+			const imageReferences = Array.from(secondaryImgs)
+				.map(img => img.getAttribute('data-photo-reference'))
+				.filter(photoRef => photoRef !== null && photoRef.trim() !== ""); // Filter out empty or null photo references
 
-			let currentIndex = 0;
-			function changePrimaryImage() {
-				currentIndex = (currentIndex + 1) % imageReferences.length;
-				primaryImg.src = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageReferences[currentIndex]}&key=<?= googleApiKey() ?>`;
+			// Only proceed if there are valid photo references
+			if (imageReferences.length > 0) {
+				let currentIndex = 0;
+
+				function changePrimaryImage() {
+					currentIndex = (currentIndex + 1) % imageReferences.length;
+					primaryImg.src = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageReferences[currentIndex]}&key=<?= $apiKey ?>`;
+				}
+
+				setInterval(changePrimaryImage, 5000); // Change every 5 seconds
+			} else {
+				console.warn("No valid photo references available for image rotation.");
 			}
 
-			setInterval(changePrimaryImage, 5000); // Change every 5 seconds
+			// Initialize Street View
+			const script = document.createElement('script');
+			script.src = `https://maps.googleapis.com/maps/api/js?key=<?= $apiKey ?>&libraries=places&callback=initializeStreetView`;
+			script.async = true;
+			script.defer = true;
+			document.body.appendChild(script);
 		});
-		console.log(imageReferences);
+
 	</script>
 
 </body>
