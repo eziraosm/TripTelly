@@ -11712,7 +11712,7 @@ body {
 }
 
 img {
-	border-radius: 14px;
+	border-radius: 0.375rem;
 }
 
 .info-container {

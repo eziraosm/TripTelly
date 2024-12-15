@@ -107,7 +107,7 @@ if (!empty($photos)) {
                                     </div>
                                 </div>
                                 <div class="info-container w-100 ms-2">
-                                    <table class="table table-success table-hover table-striped h-100">
+                                    <table class="table table-success table-hover table-striped h-100 place-info-table">
                                         <tr>
                                             <th>Name</th>
                                             <td>:</td>
