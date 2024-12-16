@@ -205,12 +205,20 @@ unset($_SESSION['form_data']);
 									<li>
 										<?php
 										if (isset($_SESSION['userID']) && isset($username)) {
-											echo '<button class="book-btn" onclick="window.location.href = \'fn_signout.php\'">' . htmlspecialchars($username) . '</button>';
+											echo '
+        <div class="dropdown">
+            <button class="book-btn" id="btn-user" onclick="toggleDropdown()">' . htmlspecialchars($username) . '</button>
+            <div class="dropdown-content" id="dropdown-content">
+                <a href="userSettings.php">Account Settings</a>
+                <a href="fn_signout.php">Log Out</a>
+            </div>
+        </div>';
 										} else {
 											echo '<button class="book-btn" onclick="window.location.href = \'signin.php\'">Sign In</button>';
 										}
 										?>
-									</li><!--/.project-btn-->
+									</li>
+
 								</ul>
 							</div><!-- /.navbar-collapse -->
 						</div><!-- /.main-menu-->
@@ -794,6 +802,24 @@ unset($_SESSION['form_data']);
 			document.getElementById('returnDate').min = departureDate;
 		});
 	</script>
+	<script>
+		function toggleDropdown() {
+			const dropdownContent = document.getElementById('dropdown-content');
+			dropdownContent.style.display =
+				dropdownContent.style.display === 'block' ? 'none' : 'block';
+		}
+
+		// Close dropdown if clicked outside
+		window.addEventListener('click', function (e) {
+			const dropdownContent = document.getElementById('dropdown-content');
+			const btnUser = document.getElementById('btn-user');
+			if (!btnUser.contains(e.target) && !dropdownContent.contains(e.target)) {
+				dropdownContent.style.display = 'none';
+			}
+		});
+	</script>
+
+
 </body>
 
 </html>

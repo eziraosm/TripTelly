@@ -140,3 +140,43 @@ iframe {
 	padding-top: 10px;
 	box-sizing: border-box;
 }
+/* Keep dropdown hidden by default */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #232323;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #303030;
+}
+
+/* Style for the dropdown button */
+#btn-user {
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+#btn-user:hover {
+    background-color: #3e8e41;
+}
+
