@@ -130,10 +130,11 @@ foreach ($photos as $photo) {
 							<li><a class="dropdown-item"
 									href="userEdit.php?editUserID=<?php echo $_SESSION['userID']; ?>">Account
 									Setting</a></li>
+							<li><a class="dropdown-item" href="purchaseHistory.php">Purchase History</a></li>
 							<li>
 								<hr class="dropdown-divider" />
 							</li>
-							<li><a class="dropdown-item" href="../fn_signout.php">Logout</a></li>
+							<li><a class="dropdown-item" href="fn_signout.php">Logout</a></li>
 						</ul>
 					</li>
 				</ul>

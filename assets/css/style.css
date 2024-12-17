@@ -219,6 +219,9 @@ html,body{
     -o-transition: all 0.25s ease-in-out 0s;
     transition: all 0.25s ease-in-out 0s;
 }
+.main-menu .nav li:last-child a {
+    padding: 0; /* Adjust padding as needed */
+}
 .main-menu  .nav  li.active a,
 .main-menu  .nav  li a:hover,
 .main-menu .nav  li a:focus{

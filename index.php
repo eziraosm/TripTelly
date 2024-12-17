@@ -209,7 +209,8 @@ unset($_SESSION['form_data']);
         <div class="dropdown">
             <button class="book-btn" id="btn-user" onclick="toggleDropdown()">' . htmlspecialchars($username) . '</button>
             <div class="dropdown-content" id="dropdown-content">
-                <a href="userSettings.php">Account Settings</a>
+                <a href="userEdit.php?editUserID=' . $_SESSION['userID'] . '"">Account Settings</a>
+                <a href="purchaseHistory.php">Purchase History</a>
                 <a href="fn_signout.php">Log Out</a>
             </div>
         </div>';

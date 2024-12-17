@@ -199,4 +199,41 @@ function fetchUserData($userID) {
         return null;
     }
 }
+
+function fetchTripData($userID) {
+    global $conn;
+
+    $userSQL = "SELECT * FROM payment WHERE userID = ?";
+    $stmt = $conn->prepare($userSQL);
+
+    if ($stmt) {
+        // Bind the parameter to the prepared statement
+        $stmt->bind_param("s", $userID);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->get_result();
+
+        // Check if user data is found
+        if ($result->num_rows > 0) {
+            // Fetch all rows into an associative array
+            $tripData = [];
+            while ($row = $result->fetch_assoc()) {
+                $tripData[] = $row;
+            }
+
+            // Return all rows
+            return $tripData;
+        } else {
+            // Return an empty array if no data is found
+            return [];
+        }
+    } else {
+        // Handle SQL preparation error
+        return [];
+    }
+}
+
 ?>
