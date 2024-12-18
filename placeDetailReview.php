@@ -197,57 +197,29 @@ foreach ($photos as $photo) {
 							?>
 						</div>
 					</div>
-					<div class="info-container w-100 ms-2">
-						<table class="table table-success table-hover table-striped h-100 place-info-table">
-							<tr>
-								<th>Name</th>
-								<td>:</td>
-								<td><?= htmlspecialchars($placeData['name']) ?></td>
-							</tr>
-							<tr>
-								<th>Address</th>
-								<td>:</td>
-								<td><?= htmlspecialchars($placeData['vicinity']) ?></td>
-							</tr>
-							<tr>
-								<th>Rating</th>
-								<td>:</td>
-								<td><?= isset($placeData['rating']) ? htmlspecialchars($placeData['rating']) : 'N/A' ?>
-								</td>
-							</tr>
-							<tr>
-								<th>Total Reviews</th>
-								<td>:</td>
-								<td><?= isset($placeData['user_ratings_total']) ? htmlspecialchars($placeData['user_ratings_total']) : '0' ?>
-									Reviews</td>
-							</tr>
-							<tr>
-								<th>Type</th>
-								<td>:</td>
-								<td><?= isset($placeData['types']) ? htmlspecialchars(implode(", ", $placeData['types'])) : 'N/A' ?>
-								</td>
-							</tr>
-							<tr>
-								<th>Opening Hours</th>
-								<td>:</td>
-								<td><?= isset($placeData['opening_hours']) ? (isset($placeData['opening_hours']['open_now']) && $placeData['opening_hours']['open_now'] ? 'Open Now' : 'Closed') : 'N/A' ?>
-								</td>
-							</tr>
-							<tr>
-								<th>Phone Number</th>
-								<td>:</td>
-								<td><?= isset($placeData['formatted_phone_number']) ? htmlspecialchars($placeData['formatted_phone_number']) : 'N/A' ?>
-								</td>
-							</tr>
-							<tr>
-								<th>Website</th>
-								<td>:</td>
-								<td>
-									<a href="<?= isset($placeData['website']) ? htmlspecialchars($placeData['website']) : '#' ?>"
-										target="_blank"><?= isset($placeData['website']) ? 'Visit Website' : 'N/A' ?></a>
-								</td>
-							</tr>
-						</table>
+					<div class="info-container">
+						<p><strong>Name:</strong> <?= htmlspecialchars($placeData['name']) ?></p>
+						<p><strong>Address:</strong> <?= htmlspecialchars($placeData['vicinity']) ?></p>
+						<p><strong>Rating:</strong>
+							<?= isset($placeData['rating']) ? htmlspecialchars($placeData['rating']) : 'N/A' ?> / 5</p>
+						<p><strong>Total Reviews:</strong>
+							<?= isset($placeData['user_ratings_total']) ? htmlspecialchars($placeData['user_ratings_total']) : '0' ?>
+							Reviews</p>
+						<p><strong>Type:</strong>
+							<?= isset($placeData['types']) ? htmlspecialchars(implode(", ", $placeData['types'])) : 'N/A' ?>
+						</p>
+						<p><strong>Opening Hours:</strong>
+							<?= isset($placeData['opening_hours']) ? (isset($placeData['opening_hours']['open_now']) && $placeData['opening_hours']['open_now'] ? 'Open Now' : 'Closed') : 'N/A' ?>
+						</p>
+						<p><strong>Phone Number:</strong>
+							<?= isset($placeData['formatted_phone_number']) ? htmlspecialchars($placeData['formatted_phone_number']) : 'N/A' ?>
+						</p>
+						<p><strong>Website:</strong> <a
+								href="<?= isset($placeData['website']) ? htmlspecialchars($placeData['website']) : '#' ?>"
+								target="_blank"><?= isset($placeData['website']) ? 'Visit Website' : 'N/A' ?></a></p>
+						<iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+							src="https://www.google.com/maps/embed/v1/place?key=<?= $apiKey ?>&q=place_id:<?= htmlspecialchars($placeID) ?>">
+						</iframe>
 					</div>
 				</div>
 
@@ -302,8 +274,8 @@ foreach ($photos as $photo) {
 					<br>
 					<hr>
 					<br>
-					<div class="mb-3 w-80">
-						<!-- <form action="fn_review.php" method="POST" class="review-form">
+					<div class="mb-3 w-80" id="review">
+						<form action="fn_review.php" method="POST" class="review-form">
 							<h4>Send Review as <?= $username ?></h4>
 							<div class="rating">
 								<input type="radio" id="star5" name="rate" value="5" />
@@ -363,7 +335,7 @@ foreach ($photos as $photo) {
 								</button>
 							</div>
 
-						</form> -->
+						</form>
 					</div>
 				</div>
 			</div>

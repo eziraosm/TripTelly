@@ -167,7 +167,7 @@ $tripData = fetchTripData($userID);
                                         <th>Departure Date</th>
                                         <th>Return Date</th>
                                         <th>Person</th>
-                                        <th>Budget</th>
+                                        <th>Total Price</th>
                                         <th>Payment Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -179,7 +179,7 @@ $tripData = fetchTripData($userID);
                                         <th>Departure Date</th>
                                         <th>Return Date</th>
                                         <th>Person</th>
-                                        <th>Budget</th>
+                                        <th>Total Price</th>
                                         <th>Payment Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -195,7 +195,7 @@ $tripData = fetchTripData($userID);
                                             <td><?= htmlspecialchars($trip['departureDate']) ?></td>
                                             <td><?= htmlspecialchars($trip['returnDate']) ?></td>
                                             <td><?= htmlspecialchars($trip['person']) ?></td>
-                                            <td>RM <?= htmlspecialchars($trip['max_budget']) ?></td>
+                                            <td>RM <?= htmlspecialchars($trip['totalPrice']) ?></td>
                                             <td><?= htmlspecialchars($trip['paymentDate']) ?></td>
                                             <td><a href="purchaseHistory.php?paymentID=<?= htmlspecialchars(strtoupper($trip['paymentID'])) ?>"
                                                     class="btn btn-success">Detail</a></td>
@@ -253,10 +253,10 @@ $tripData = fetchTripData($userID);
                                             if (!empty($placeHotelData['hotelName'])) {
                                                 ?>
                                                 <tr>
-                                                    <td><?= htmlspecialchars($placeHotelData['hotelName'] ?? 'N/A') ?></td>
+                                                    <td><i class='bx bxs-hotel' ></i> <?= htmlspecialchars($placeHotelData['hotelName'] ?? 'N/A') ?></td>
                                                     <td>RM <?= htmlspecialchars($placeHotelData['hotelPrice'] ?? 'N/A') ?></td>
                                                     <td><?= htmlspecialchars($placeHotelData['hotelLocation'] ?? 'N/A') ?></td>
-                                                    <td><a href="placeDetailReview.php?placeID=<?= $placeHotelData['hotelID'] ?>"
+                                                    <td><a href="placeDetailReview.php?placeID=<?= $placeHotelData['hotelID'] ?>#review"
                                                             class="btn btn-success">Review</a></td>
                                                 </tr>
                                                 <?php
@@ -266,10 +266,10 @@ $tripData = fetchTripData($userID);
                                                 if (!empty($place['attName']) || !empty($place['attPrice']) || !empty($place['attLocation'])) {
                                                     ?>
                                                     <tr>
-                                                        <td><?= htmlspecialchars($place['attName'] ?? 'N/A') ?></td>
+                                                        <td><i class='bx bxs-landmark'></i> <?= htmlspecialchars($place['attName'] ?? 'N/A') ?></td>
                                                         <td>RM <?= htmlspecialchars($place['attPrice'] ?? 'N/A') ?></td>
                                                         <td><?= htmlspecialchars($place['attLocation'] ?? 'N/A') ?></td>
-                                                        <td><a href="placeDetailReview.php?placeID=<?= $place['attID'] ?>"
+                                                        <td><a href="placeDetailReview.php?placeID=<?= $place['attID'] ?>#review"
                                                                 class="btn btn-success">Review</a></td>
                                                     </tr>
                                                     <?php

@@ -169,9 +169,19 @@ if (!isset($_SESSION['form_data_cart'])) {
                 </li>
             </ul>
             <div class="action-btn">
-                <button class="cart-btn">
+                <button class="cart-btn position-relative">
                     <a href="cart.php"><i class="bx bxs-cart"></i></a>
+                    <?php
+                    if (isset($_SESSION['cartID'])) {
+                        ?>
+                        <span
+                            class="position-absolute bottom-60 start-70 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                        <?php
+                    }
+                    ?>
                 </button>
+                <!-- <button type="button" class="btn btn-secondary"
+                    onclick="window.location.href='fn_signout.php'"></button> -->
                 <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
