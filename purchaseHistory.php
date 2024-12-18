@@ -63,7 +63,7 @@ $tripData = fetchTripData($userID);
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <style>
         main {
-            height: 92vh;
+            min-height: 92vh;
         }
     </style>
 
@@ -159,7 +159,7 @@ $tripData = fetchTripData($userID);
                             </div>
                         </div>
                         <div class="card-body">
-                            <table id="datatablesSimple">
+                            <table class="datatablesSimple">
                                 <thead>
                                     <tr>
                                         <th>From Location</th>
@@ -169,6 +169,7 @@ $tripData = fetchTripData($userID);
                                         <th>Person</th>
                                         <th>Budget</th>
                                         <th>Payment Date</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -180,6 +181,7 @@ $tripData = fetchTripData($userID);
                                         <th>Person</th>
                                         <th>Budget</th>
                                         <th>Payment Date</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -195,6 +197,8 @@ $tripData = fetchTripData($userID);
                                             <td><?= htmlspecialchars($trip['person']) ?></td>
                                             <td>RM <?= htmlspecialchars($trip['max_budget']) ?></td>
                                             <td><?= htmlspecialchars($trip['paymentDate']) ?></td>
+                                            <td><a href="purchaseHistory.php?paymentID=<?= htmlspecialchars(strtoupper($trip['paymentID'])) ?>"
+                                                    class="btn btn-success">Detail</a></td>
                                         </tr>
                                         <?php
                                     }
@@ -204,6 +208,90 @@ $tripData = fetchTripData($userID);
                             </table>
                         </div>
                     </div>
+
+                    <?php
+                    if (isset($_GET['paymentID'])) {
+                        $paymentID = $_GET['paymentID'];
+                        $placeHotelData = fetchTripDataArrayPlace($paymentID);
+                        $trip = fetchTripDataWithPaymentID($paymentID);
+                        // var_dump($trip);
+                        // echo $placeHotelData['hotelName'];
+                        ?>
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="table-title">
+                                    <i class="fas fa-table me-1"></i>
+                                    <?= strtoupper($trip['fromLocation']) . " <i class='bx bx-right-arrow-alt' ></i> " . strtoupper($trip['destinationLocation']) ?>
+                                </div>
+                                <div class="register-btn">
+                                    <button class="btn btn-danger" style="font-size: 20px" onclick="removeGetData()"><i class='bx bx-x'></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Place Name</th>
+                                            <th>Place Price</th>
+                                            <th>Place Location</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Place Name</th>
+                                            <th>Place Price</th>
+                                            <th>Place Location</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <?php
+                                        // Ensure we have data before rendering
+                                        if (!empty($placeHotelData)) {
+                                            // Render hotel details first
+                                            if (!empty($placeHotelData['hotelName'])) {
+                                                ?>
+                                                <tr>
+                                                    <td><?= htmlspecialchars($placeHotelData['hotelName'] ?? 'N/A') ?></td>
+                                                    <td>RM <?= htmlspecialchars($placeHotelData['hotelPrice'] ?? 'N/A') ?></td>
+                                                    <td><?= htmlspecialchars($placeHotelData['hotelLocation'] ?? 'N/A') ?></td>
+                                                    <td><a href="placeDetailReview.php?placeID=<?= $placeHotelData['hotelID'] ?>"
+                                                            class="btn btn-success">Review</a></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                            // Render attractions
+                                            foreach ($placeHotelData as $place) {
+                                                if (!empty($place['attName']) || !empty($place['attPrice']) || !empty($place['attLocation'])) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?= htmlspecialchars($place['attName'] ?? 'N/A') ?></td>
+                                                        <td>RM <?= htmlspecialchars($place['attPrice'] ?? 'N/A') ?></td>
+                                                        <td><?= htmlspecialchars($place['attLocation'] ?? 'N/A') ?></td>
+                                                        <td><a href="placeDetailReview.php?placeID=<?= $place['attID'] ?>"
+                                                                class="btn btn-success">Review</a></td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+                                        } else {
+                                            ?>
+                                            <tr>
+                                                <td colspan="3">No data available</td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+
 
                 </div>
             </div>
@@ -227,7 +315,29 @@ $tripData = fetchTripData($userID);
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="admin/js/datatables-simple-demo.js"></script>
-    <script src="admin/js/scripts.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Select all tables with the "datatablesSimple" class
+            const tables = document.querySelectorAll(".datatablesSimple");
+
+            // Loop through the NodeList and initialize DataTables for each
+            tables.forEach((table) => {
+                new simpleDatatables.DataTable(table);
+            });
+        });
+
+        function removeGetData() {
+            // Create a URL object for the current page
+            var currentUrl = new URL(window.location.href);
+
+            // Remove the query parameters (GET data)
+            currentUrl.search = ''; // Clears all query parameters
+
+            // Reload the page without the query string
+            window.location.href = currentUrl.toString();
+        }
+
+    </script>
 
 </body>
 

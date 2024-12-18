@@ -236,4 +236,71 @@ function fetchTripData($userID) {
     }
 }
 
+function fetchTripDataArrayPlace($paymentID) {
+    global $conn;
+
+    $userSQL = "SELECT placeData, hotelData FROM payment WHERE paymentID = ?";
+    $stmt = $conn->prepare($userSQL);
+
+    if ($stmt) {
+        // Bind the parameter
+        $stmt->bind_param("i", $paymentID);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $data = $result->fetch_assoc();
+
+            // Decode placeData and hotelData if they are JSON
+            $placeData = json_decode($data['placeData'], true) ?? [];
+            $hotelData = json_decode($data['hotelData'], true) ?? [];
+
+            // Merge placeData and hotelData
+            $mergedData = array_merge($hotelData, $placeData);
+
+            return $mergedData;
+        }
+    }
+
+    // Return empty array if no data found or query fails
+    return [];
+}
+
+function fetchTripDataWithPaymentID ($paymentID) {
+    global $conn;
+
+    $userSQL = "SELECT * FROM payment WHERE paymentID = ?";
+    $stmt = $conn->prepare($userSQL);
+
+    if ($stmt) {
+        // Bind the parameter to the prepared statement
+        $stmt->bind_param("i", $paymentID);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->get_result();
+
+        // Check if user data is found
+        if ($result->num_rows > 0) {
+            // Fetch all rows into an associative array
+            $tripData = $result->fetch_assoc();
+
+            // Return all rows
+            return $tripData;
+        } else {
+            // Return an empty array if no data is found
+            return [];
+        }
+    } else {
+        // Handle SQL preparation error
+        return [];
+    }
+}
+
 ?>
