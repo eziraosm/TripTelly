@@ -524,7 +524,7 @@ unset($_SESSION['form_data']);
 						top destination
 					</h2>
 					<p>
-						Duis aute irure dolor in velit esse cillum dolore eu fugiat nulla.
+					Explore the beauty and diversity of Malaysia's top destinations.
 					</p>
 				</div><!--/.gallery-header-->
 				<div class="gallery-box">
