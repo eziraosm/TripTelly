@@ -67,8 +67,9 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
                                 <!-- Password -->
                                 <div class="mb-3">
                                     <label for="adminPassword" class="form-label">Password</label>
-                                    <input type="password" name="adminPassword" id="adminPassword" class="form-control"
+                                    <input type="password" name="adminPassword" id="passwordChecker" class="form-control"
                                         placeholder="Enter password" required autocomplete="off" />
+                                    <div class="feedback mt-15 position-relative" id="feedback"></div>
                                 </div>
                                 <!-- Confirm Password -->
                                 <div class="mb-4">
@@ -79,7 +80,7 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
                                 </div>
                                 <!-- Submit Button -->
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success">Register</button>
+                                    <button type="submit" id="submit" class="btn btn-success">Register</button>
                                     <button type="reset" class="btn btn-secondary">Reset</button>
                                 </div>
                             </form>
@@ -96,6 +97,10 @@ $adminData = fetchCurrentAdminData($_SESSION['adminID']);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
+    <script src="../assets/js/passwordChecker.js"></script>
+    <script>
+        checkPasswordStrength('passwordChecker');
+    </script>
 </body>
 
 </html>
