@@ -20,14 +20,9 @@ if (isset($_SESSION['userID'])) {
 	}
 }
 
-// Check if attraction data exists in the session
-if (!isset($_SESSION['attraction_data'])) {
-	echo "No search results found.";
-	exit();
-}
 
-$form_data = $_SESSION['form_data'];
-$attraction_data = $_SESSION['attraction_data'];
+// $form_data = $_SESSION['form_data'];
+// $attraction_data = $_SESSION['attraction_data'];
 
 // Toast controller
 $toastMessage = '';
