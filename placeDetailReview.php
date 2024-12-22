@@ -313,6 +313,7 @@ foreach ($photos as $photo) {
 							<textarea name="review_text" class="review-text"></textarea>
 							<input type="hidden" name="userID" value="<?= $userID ?>">
 							<input type="hidden" name="placeID" value="<?= $placeID ?>">
+							<input type="hidden" name="pageFrom" value="placeDetailReview">
 							<div class="btn-container">
 								<button class="ui-btn" type="submit" name="submit">
 									<div class="svg-wrapper-1">
@@ -411,6 +412,15 @@ foreach ($photos as $photo) {
 		});
 
 	</script>
+	<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var toastEl = document.getElementById('liveToast');
+            if (toastEl) {
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }
+        });
+    </script>
 
 </body>
 

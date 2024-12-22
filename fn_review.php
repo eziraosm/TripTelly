@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             $_SESSION["success_msg"] = "Review added successfully!";
         } else {
-            $_SESSION["error_nsg"] = "Error: " . $stmt->error;
+            $_SESSION["error_msg"] = "Error: " . $stmt->error;
         }
 
         // Close the statement
@@ -44,7 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 
     // Redirect back to the previous page
-    header("Location: placeDetail.php?placeID=" . $placeID);
+    if (!isset($_POST['pageFrom'])) {
+        header("Location: placeDetail.php?placeID=" . $placeID);
+    } else {
+        header("Location: placeDetailReview.php?placeID=" . $placeID);
+    }
     exit;
 }
 ?>
