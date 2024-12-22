@@ -24,7 +24,10 @@ session_start(); // Start session to access session variables
         <input type="text" name="email" placeholder="Enter your email" required>
       </div>
       <div class="input-box">
-        <input type="password" name="password" placeholder="Create password" required>
+        <input type="password" id="passwordChecker" name="password" placeholder="Create password" required>
+      </div>
+      <div class="input-box" id="input-feedback" style="display: none">
+        <div class="feedback mt-15 position-relative" id="feedback"></div>
       </div>
       <div class="input-box">
         <input type="password" name="confirm_password" placeholder="Confirm password" required>
@@ -34,7 +37,7 @@ session_start(); // Start session to access session variables
         <h3>I accept all terms & conditions</h3>
       </div>
       <div class="input-box button">
-        <input type="submit" value="Register Now">
+        <input type="submit" id="submit" value="Register Now">
       </div>
       <div class="text">
         <h3>Already have an account? <a href="signin.php">Sign In Now</a></h3>
@@ -54,5 +57,24 @@ session_start(); // Start session to access session variables
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="assets/js/passwordChecker.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const passwordInput = document.getElementById("passwordChecker");
+    const feedbackContainer = document.getElementById("input-feedback");
+
+    passwordInput.addEventListener("input", function () {
+      if (passwordInput.value.length > 0) {
+        feedbackContainer.style.display = "block";
+      } else {
+        feedbackContainer.style.display = "none";
+      }
+    });
+
+    // Initialize the password strength checker
+    checkPasswordStrength('passwordChecker');
+  });
+</script>
+
 </body>
 </html>

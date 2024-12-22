@@ -155,7 +155,7 @@ $tripCount = count(fetchTripData(userID: $_SESSION['userID']));
                                     User Info
                                 </div>
                                 <div class="register-btn">
-                                    <button type="submit" class="btn btn-success">
+                                    <button type="submit" id="submit" class="btn btn-success">
                                         <i class="bx bxs-save" style="font-size: 20px"></i>
                                     </button>
                                 </div>
@@ -181,7 +181,12 @@ $tripCount = count(fetchTripData(userID: $_SESSION['userID']));
                                     </tr>
                                     <tr>
                                         <th>Password</th>
-                                        <td><input type="password" name="password" value="" class="form-control"></td>
+                                        <td>
+                                            <input type="password" name="password" id="passwordChecker" value="" class="form-control">
+                                            <div class="feedback mt-15 position-absolute" id="feedback"></div>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color: #fff">
                                     </tr>
                                 </table>
                             </div>
@@ -207,6 +212,11 @@ $tripCount = count(fetchTripData(userID: $_SESSION['userID']));
             }
         });
     </script>
+    <script src="assets/js/passwordChecker.js"></script>
+    <script>
+        checkPasswordStrength('passwordChecker');
+    </script>
+
 
 </body>
 
