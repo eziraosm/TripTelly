@@ -264,10 +264,15 @@ if (!isset($_SESSION['form_data_cart'])) {
                                                 </div>
                                                 <hr>
                                             <?php }
-                                            if (!$hasHotelItems) { ?>
+                                            $disable = "";
+                                            if (!isset($form_data))  {
+                                                $disable = "disabled";
+                                            } 
+                                            if (!$hasHotelItems) {  
+                                            ?>
                                                 <div class="row">
                                                     <div class="col-12 text-center">
-                                                        <a href="fn_searchTravel.php" class="btn btn-primary">Search
+                                                        <a href="searchHotel.php" class="btn btn-primary" <?= $disable ?>>Search
                                                             Hotels</a>
                                                     </div>
                                                 </div>
@@ -302,7 +307,7 @@ if (!isset($_SESSION['form_data_cart'])) {
                                             if (!$hasAttractionItems) { ?>
                                                 <div class="row">
                                                     <div class="col-12 text-center">
-                                                        <a href="searchAttractions.php" class="btn btn-primary">Search
+                                                        <a href="searchAttractions.php" class="btn btn-primary" <?= $disable ?>>Search
                                                             Attractions</a>
                                                     </div>
                                                 </div>

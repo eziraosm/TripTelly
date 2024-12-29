@@ -51,10 +51,13 @@ if (isset($_SESSION['userID'])) {
 	}
 }
 
-// Check if attraction data exists in the session
-if (!isset($_SESSION['attraction_data'])) {
-	echo "No search results found.";
-	exit();
+// Check if hotel data exists in the session
+if (!isset($_SESSION['hotel_data'])) {
+    echo "<script>
+        alert('No hotel data found! Redirecting to the index page.');
+        window.location.href = 'index.php';
+    </script>";
+    exit();
 }
 
 $form_data = $_SESSION['form_data'];

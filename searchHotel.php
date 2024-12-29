@@ -68,8 +68,11 @@ if (isset($_SESSION['userID'])) {
 
 // Check if hotel data exists in the session
 if (!isset($_SESSION['hotel_data'])) {
-	echo "No search results found.";
-	exit();
+    echo "<script>
+        alert('No hotel data found! Redirecting to the index page.');
+        window.location.href = 'index.php';
+    </script>";
+    exit();
 }
 
 $hotel_data = $_SESSION['hotel_data'];
