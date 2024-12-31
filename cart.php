@@ -333,7 +333,7 @@ if (!isset($_SESSION['form_data_cart'])) {
                                     }
                                     ?>
                                     <div
-                                        class="col-lg-4 bg-body-tertiary budget-container <?php echo $containerClass ?>">
+                                        class="col-lg-4 budget-container <?php echo $containerClass ?>">
                                         <div class="p-5 ">
                                             <h3 class="fw-bold">Summary</h3>
                                             <hr>
