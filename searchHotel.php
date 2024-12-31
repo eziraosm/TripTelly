@@ -252,10 +252,10 @@ if (isset($_SESSION['success_msg'])) {
 												<?php
 												if ($hasBookedHotel) {
 													echo "<button type='button' class='btn btn-secondary booked-btn'
-                            							title='You can only book one hotel'>Booked</button>"
+                            							title='You can only book one hotel'>In Cart</button>"
 													;
 												} else {
-													echo "<button type='submit' class='btn btn-success'>Book</button>";
+													echo "<button type='submit' class='btn btn-success'>Add to cart</button>";
 												}
 												?>
 												<a class='btn btn-primary'
