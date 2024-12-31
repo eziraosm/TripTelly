@@ -154,7 +154,7 @@ foreach ($photos as $photo) {
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="logo">
-			<a href="index.php">
+			<a href="index.php" style="text-decoration: none">
 				trip<span>Telly</span>
 			</a>
 		</div>
