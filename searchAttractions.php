@@ -239,7 +239,7 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 												}
 												?>
 												<a class='btn btn-primary'
-													href="placeDetail.php?placeID=<?php echo $poi['place_id'] ?>">Detail</a>
+													href="placeDetail.php?placeID=<?php echo $poi['place_id'] ?>&placeType=Attraction&placeAdd=<?= $poi['address'] ?>&placeRating=<?= $poi['rating'] ?? 'N/A' ?>&placePrice=<?= number_format($poi['price'], 2) ?>">Detail</a>
 											</div>
 										</form>
 									</div>

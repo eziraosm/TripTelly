@@ -20,6 +20,73 @@ if (isset($_SESSION['userID'])) {
 	}
 }
 
+$placeType = $_GET["placeType"];
+
+if ($placeType == "Hotel") {
+	// Fetch the cartID associated with this user
+	$cartQuery = "SELECT cartID FROM cart WHERE userID = ?";
+	$stmt = $conn->prepare($cartQuery);
+	$stmt->bind_param("s", $userID);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	$userCarts = [];
+	while ($row = $result->fetch_assoc()) {
+		$userCarts[] = $row['cartID'];
+		$_SESSION['cartID'] = $row['cartID'];
+	}
+
+	// Check if any hotel is already booked
+	$hasBookedHotel = false;
+	if (!empty($userCarts)) {
+		$cartPlaceholders = implode(',', array_fill(0, count($userCarts), '?'));
+		$cartHotelQuery = "SELECT COUNT(*) AS bookedCount FROM cart_hotel WHERE cartID IN ($cartPlaceholders)";
+		$stmt = $conn->prepare($cartHotelQuery);
+		$stmt->bind_param(str_repeat('s', count($userCarts)), ...$userCarts);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		if ($row = $result->fetch_assoc()) {
+			$hasBookedHotel = $row['bookedCount'] > 0;
+		}
+	}
+} else {
+	// Fetch current cartID
+	$cartQuery = "SELECT cartID FROM cart WHERE userID = ?";
+	$stmt = $conn->prepare($cartQuery);
+	$stmt->bind_param("s", $userID);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	$cartID = null;
+	if ($result->num_rows > 0) {
+		$row = $result->fetch_assoc();
+		$cartID = $row['cartID'];
+	}
+
+	// Fetch attractions already in the cart
+	$bookedAttractions = [];
+	if ($cartID) {
+		$bookedQuery = "SELECT attID FROM cart_attractions WHERE cartID = ?";
+		$stmt = $conn->prepare($bookedQuery);
+		$stmt->bind_param("s", $cartID);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		while ($row = $result->fetch_assoc()) {
+			$bookedAttractions[] = $row['attID'];
+		}
+	}
+
+	// Check if the GET['placeID'] exists in bookedAttractions
+	$placeID = $_GET['placeID'] ?? null; // Get placeID from the URL
+	$isBooked = false;
+	if ($placeID && in_array($placeID, $bookedAttractions)) {
+		$isBooked = true;
+	}
+}
+
+
 // Check if attraction data exists in the session
 if (!isset($_SESSION['attraction_data'])) {
 	echo "No search results found.";
@@ -51,7 +118,6 @@ $photos = $placeData['photos'];
 $reviews = $placeData['reviews'];
 $apiKey = "AIzaSyBpHdMS0pMIrrjewOeEpo5z-ykG0FMYbiQ";
 
-
 $firstPhoto = "";
 $otherPhoto = [];
 foreach ($photos as $photo) {
@@ -59,8 +125,7 @@ foreach ($photos as $photo) {
 	$otherPhoto[] = $photo['photo_reference'];
 }
 
-
-// var_dump($placeData);
+// var_dump(value: $_SESSION['attraction_data']);
 ?>
 
 <!DOCTYPE html>
@@ -247,6 +312,63 @@ foreach ($photos as $photo) {
 										target="_blank"><?= isset($placeData['website']) ? 'Visit Website' : 'N/A' ?></a>
 								</td>
 							</tr>
+							<tr>
+								<td colspan="3">
+									<div class="d-flex justify-content-center align-items-center">
+										<?php
+											if ($placeType == "Hotel") {
+												?>
+												<form action='fn_bookHotel.php' method='post' class="mt-auto">
+													<input type='hidden' name='hotel_name'
+														value='<?php echo htmlspecialchars($placeData['name']) ?>'>
+													<input type='hidden' name='hotel_address'
+														value='<?php echo htmlspecialchars($_GET['placeAdd']) ?>'>
+													<input type='hidden' name='hotel_rating'
+														value='<?php echo htmlspecialchars($_GET['placeRating'] ?? 'N/A') ?>'>
+													<input type='hidden' name='hotel_price'
+														value='<?php echo number_format($_GET['placePrice'], 2) ?>'>
+													<input type='hidden' name='place_id'
+														value='<?php echo htmlspecialchars(string: $placeID) ?>'>
+													<?php
+														if ($hasBookedHotel) {
+															echo "<button type='button' class='btn btn-secondary booked-btn'
+																title='You can only book one hotel'>In Cart</button>"
+															;
+														} else {
+															echo "<button type='submit' class='btn btn-success'>Add to cart</button>";
+														}
+													?>
+												</form>
+												<?php
+											} else {
+												?>
+												<form action='fn_bookAttractions.php' method='post' class="mt-auto">
+													<input type='hidden' name='place_name'
+														value='<?php echo htmlspecialchars($placeData['name']) ?>'>
+													<input type='hidden' name='place_address'
+														value='<?php echo htmlspecialchars($poi['address']) ?>'>
+													<input type='hidden' name='place_rating'
+														value='<?php echo htmlspecialchars($poi['rating'] ?? 'N/A') ?>'>
+													<input type='hidden' name='place_price'
+														value='<?php echo number_format($poi['price'], 2) ?>'>
+													<input type='hidden' name='place_id'
+														value='<?php echo htmlspecialchars($placeID) ?>'>
+													<div class="w-100 d-flex justify-content-between">
+														<?php
+														if ($isBooked) {
+															echo "<button type='button' class='btn btn-secondary' disabled title='Already in cart'>In Cart</button>";
+														} else {
+															echo "<button type='submit' class='btn btn-success'>Add to cart</button>";
+														}
+														?>
+													</div>
+												</form>
+												<?php
+											}
+										?>
+									</div>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -299,72 +421,8 @@ foreach ($photos as $photo) {
 					<?php else: ?>
 						<p>No reviews available for this attraction.</p>
 					<?php endif; ?>
-					<br>
 					<hr>
-					<br>
-					<div class="mb-3 w-80">
-						<!-- <form action="fn_review.php" method="POST" class="review-form">
-							<h4>Send Review as <?= $username ?></h4>
-							<div class="rating">
-								<input type="radio" id="star5" name="rate" value="5" />
-								<label for="star5" title="text"><svg viewBox="0 0 576 512" height="1em"
-										xmlns="http://www.w3.org/2000/svg" class="star-solid">
-										<path
-											d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z">
-										</path>
-									</svg></label>
-								<input type="radio" id="star4" name="rate" value="4" />
-								<label for="star4" title="text"><svg viewBox="0 0 576 512" height="1em"
-										xmlns="http://www.w3.org/2000/svg" class="star-solid">
-										<path
-											d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z">
-										</path>
-									</svg></label>
-								<input type="radio" id="star3" name="rate" value="3" />
-								<label for="star3" title="text"><svg viewBox="0 0 576 512" height="1em"
-										xmlns="http://www.w3.org/2000/svg" class="star-solid">
-										<path
-											d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z">
-										</path>
-									</svg></label>
-								<input checked="" type="radio" id="star2" name="rate" value="2" />
-								<label for="star2" title="text"><svg viewBox="0 0 576 512" height="1em"
-										xmlns="http://www.w3.org/2000/svg" class="star-solid">
-										<path
-											d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z">
-										</path>
-									</svg></label>
-								<input type="radio" id="star1" name="rate" value="1" />
-								<label for="star1" title="text"><svg viewBox="0 0 576 512" height="1em"
-										xmlns="http://www.w3.org/2000/svg" class="star-solid">
-										<path
-											d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z">
-										</path>
-									</svg></label>
-							</div>
-
-							<textarea name="review_text" class="review-text"></textarea>
-							<input type="hidden" name="userID" value="<?= $userID ?>">
-							<input type="hidden" name="placeID" value="<?= $placeID ?>">
-							<div class="btn-container">
-								<button class="ui-btn" type="submit" name="submit">
-									<div class="svg-wrapper-1">
-										<div class="svg-wrapper">
-											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
-												height="24">
-												<path fill="none" d="M0 0h24v24H0z"></path>
-												<path fill="currentColor"
-													d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z">
-												</path>
-											</svg>
-										</div>
-									</div>
-									<span>Send</span>
-								</button>
-							</div>
-
-						</form> -->
-					</div>
+					
 				</div>
 			</div>
 
