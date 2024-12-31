@@ -346,14 +346,13 @@ foreach ($photos as $photo) {
 													<input type='hidden' name='place_name'
 														value='<?php echo htmlspecialchars($placeData['name']) ?>'>
 													<input type='hidden' name='place_address'
-														value='<?php echo htmlspecialchars($poi['address']) ?>'>
+														value='<?php echo htmlspecialchars($_GET['placeAdd']) ?>'>
 													<input type='hidden' name='place_rating'
-														value='<?php echo htmlspecialchars($poi['rating'] ?? 'N/A') ?>'>
+														value='<?php echo htmlspecialchars($_GET['placeRating'] ?? 'N/A') ?>'>
 													<input type='hidden' name='place_price'
-														value='<?php echo number_format($poi['price'], 2) ?>'>
+														value='<?php echo number_format($_GET['placePrice'], 2) ?>'>
 													<input type='hidden' name='place_id'
-														value='<?php echo htmlspecialchars($placeID) ?>'>
-													<div class="w-100 d-flex justify-content-between">
+														value='<?php echo htmlspecialchars(string: $placeID) ?>'>
 														<?php
 														if ($isBooked) {
 															echo "<button type='button' class='btn btn-secondary' disabled title='Already in cart'>In Cart</button>";
@@ -361,7 +360,6 @@ foreach ($photos as $photo) {
 															echo "<button type='submit' class='btn btn-success'>Add to cart</button>";
 														}
 														?>
-													</div>
 												</form>
 												<?php
 											}

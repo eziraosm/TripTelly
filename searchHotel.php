@@ -259,7 +259,7 @@ if (isset($_SESSION['success_msg'])) {
 												}
 												?>
 												<a class='btn btn-primary'
-												href="placeDetail.php?placeID=<?php echo $hotel['place_id'] ?>&placeType=Attraction&placeAdd=<?= $hotel['address'] ?>&placeRating=<?= $hotel['rating'] ?? 'N/A' ?>&placePrice=<?= number_format($hotel['price'], 2) ?>">Detail</a>
+												href="placeDetail.php?placeID=<?php echo $hotel['place_id'] ?>&placeType=Hotel&placeAdd=<?= $hotel['address'] ?>&placeRating=<?= $hotel['rating'] ?? 'N/A' ?>&placePrice=<?= number_format($hotel['price'], 2) ?>">Detail</a>
 											</div>
 										</form>
 									</div>
