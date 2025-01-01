@@ -233,13 +233,13 @@ if (getTotalCartPrice() > $form_data['max_budget']) {
 											<div class="w-100 d-flex justify-content-between">
 												<?php
 												if ($isBooked) {
-													echo "<button type='button' class='btn btn-secondary' disabled title='Already in cart'>Booked</button>";
+													echo "<button type='button' class='btn btn-secondary' disabled title='Already in cart'>In Cart</button>";
 												} else {
-													echo "<button type='submit' class='btn btn-success'>Book</button>";
+													echo "<button type='submit' class='btn btn-success'>Add to cart</button>";
 												}
 												?>
 												<a class='btn btn-primary'
-													href="placeDetail.php?placeID=<?php echo $poi['place_id'] ?>">Detail</a>
+													href="placeDetail.php?placeID=<?php echo $poi['place_id'] ?>&placeType=Attraction&placeAdd=<?= $poi['address'] ?>&placeRating=<?= $poi['rating'] ?? 'N/A' ?>&placePrice=<?= number_format($poi['price'], 2) ?>">Detail</a>
 											</div>
 										</form>
 									</div>

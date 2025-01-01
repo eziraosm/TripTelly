@@ -97,13 +97,17 @@ a {
 }
 
 .price-display {
-	position: absolute; 
-	top: 0; 
-	right: 0; 
-	pointer-events: auto; 
-	background: #F8FBFE; 
+	position: absolute;
+	top: 0;
+	right: 0;
+	pointer-events: auto;
+	background: #f8fbfe;
 	width: auto;
+<<<<<<< HEAD
 	margin-top: 300px;
+=======
+	margin-top: 400px;
+>>>>>>> 087968e3d1920f13c70088aadc600344849eabb8
 	margin-right: 20px;
 	padding: 10px;
 	border-radius: 8px;
@@ -122,13 +126,13 @@ a {
 }
 
 .over-budget {
-	position: absolute; 
-	top: 0; 
-	right: 0; 
-	pointer-events: auto; 
-	background: #232323; 
+	position: absolute;
+	top: 0;
+	right: 0;
+	pointer-events: auto;
+	background: #232323;
 	width: auto;
-	margin-top: 300px;
+	margin-top: 400px;
 	margin-right: 20px;
 	padding: 10px;
 	border-radius: 8px;
