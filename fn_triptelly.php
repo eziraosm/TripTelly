@@ -142,7 +142,7 @@ function fetchLocalReviews($placeID)
     }
 
     // Query to fetch local reviews
-    $sql = "SELECT userID, reviewText, reviewRating FROM review WHERE placeID = ?";
+    $sql = "SELECT userID, placeID, reviewID, reviewText, reviewRating FROM review WHERE placeID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $placeID);
     $stmt->execute();
@@ -154,6 +154,9 @@ function fetchLocalReviews($placeID)
         $author_name = $author['username'];
         $reviews[] = [
             'author_name' => $author_name, // Map userID to author_name
+            'author_id' => $row['userID'],
+            'place_id' => $row['placeID'],
+            'review_id' => $row['reviewID'],
             'text' => $row['reviewText'],
             'rating' => $row['reviewRating']
         ];

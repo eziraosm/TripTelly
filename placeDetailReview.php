@@ -55,7 +55,7 @@ foreach ($photos as $photo) {
 }
 
 
-// var_dump($placeData);
+// var_dump($reviews);
 ?>
 
 <!DOCTYPE html>
@@ -243,14 +243,32 @@ foreach ($photos as $photo) {
 					<h4>Reviews</h4>
 					<?php if (!empty($reviews)): ?>
 						<?php foreach ($reviews as $review): ?>
-							<div class="mb-3 w-80 review-card">
+							<div class="mb-3 w-80 review-card"
+								id="<?= isset($review['review_id']) ? $review['review_id'] : 'noID'; ?>">
 								<div class="row g-0">
 									<div class="col">
 										<div class="card-body">
-
-											<h5 class="card-title d-flex align-items-center"><i
-													class='bx bxs-user-circle user-icon'></i><?= htmlspecialchars($review['author_name']) ?>
-											</h5>
+											<div class="title-btn d-flex justify-content-between">
+												<h5 class="card-title d-flex align-items-center"><i
+														class='bx bxs-user-circle user-icon'></i><?= htmlspecialchars($review['author_name']) ?>
+												</h5>
+												<?php
+												if (isset($review['author_id']) && $review['author_id'] == $userID) {
+													?>
+													<div class="d-flex">
+														<button type="button" class='btn btn-success mr-3' data-bs-toggle="modal"
+															data-bs-target="#exampleModal"
+															data-review-id="<?= $review['review_id'] ?>"
+															data-review-text="<?= htmlspecialchars($review['text']) ?>"
+															style='font-size: 18px'><i class='bx bx-edit'></i></button>
+														<a class="btn btn-danger"
+															href="fn_deleteReview.php?reviewID=<?= $review['review_id'] ?>"
+															style="font-size: 20px; color: white;"><i class='bx bx-trash'></i></a>
+													</div>
+													<?php
+												}
+												?>
+											</div>
 											<p class="card-text fs-6"><?= htmlspecialchars($review['text']) ?></p>
 											<p class="card-text">
 												<span class="text-muted">Rating:
@@ -338,7 +356,7 @@ foreach ($photos as $photo) {
 
 		</div>
 	</main>
-
+	<?php include "view_reviewModal.php" ?>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
@@ -413,15 +431,39 @@ foreach ($photos as $photo) {
 
 	</script>
 	<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var toastEl = document.getElementById('liveToast');
-            if (toastEl) {
-                var toast = new bootstrap.Toast(toastEl);
-                toast.show();
-            }
-        });
-    </script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var toastEl = document.getElementById('liveToast');
+			if (toastEl) {
+				var toast = new bootstrap.Toast(toastEl);
+				toast.show();
+			}
+		});
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const modal = document.getElementById('exampleModal');
 
+			// Event listener for when the modal is about to be shown
+			modal.addEventListener('show.bs.modal', (event) => {
+				const button = event.relatedTarget; // Button that triggered the modal
+				const reviewText = button.getAttribute('data-review-text'); // Review text from data-* attribute
+				const reviewID = button.getAttribute('data-review-id'); // Review ID from data-* attribute
+
+				// Select the modal input elements
+				const reviewTextArea = modal.querySelector('#reviewText');
+				const reviewIDInput = modal.querySelector('.reviewID');
+
+				// Set the value of the textarea and hidden input
+				if (reviewTextArea) {
+					reviewTextArea.value = reviewText;
+				}
+				if (reviewIDInput) {
+					reviewIDInput.value = reviewID;
+				}
+			});
+		});
+
+	</script>
 </body>
 
 </html>

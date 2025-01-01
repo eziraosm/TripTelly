@@ -1,5 +1,6 @@
 <?php
 include("dbconnect.php"); // Include your database connection file
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize user inputs
