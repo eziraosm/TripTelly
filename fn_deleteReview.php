@@ -3,23 +3,27 @@ include 'dbconnect.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    $reviewURL = $_GET['reviewID'];
-    $insertDltSQL = "INSERT INTO review_delete (reviewURL, deleteTimestamp)
-                        VALUES (?, NOW())";
+    $reviewID = $_GET['reviewID'];
+    $dltSQL = "DELETE FROM review WHERE reviewID = ?";
 
-    $stmt = $conn->prepare($insertDltSQL);
-
-    if ($stmt) {
-        $stmt->bind_param("s", $reviewURL);
-
-        if ($stmt->execute()) {
-            $_SESSION['success_msg'] = "Review deleted successfully";
+    // Prepare the statement
+    if ($stmt = mysqli_prepare($conn, $dltSQL)) {
+        // Bind the parameter
+        mysqli_stmt_bind_param($stmt, "i", $reviewID); // "i" means integer type
+        
+        // Execute the statement
+        if (mysqli_stmt_execute($stmt)) {
+            $_SESSION['success_msg'] = "Review deleted successfully.";
         } else {
-            $_SESSION["error_msg"] = "Error: " . $stmt->error;
+            // Log and display detailed error information
+            $_SESSION['error_msg'] = "Error deleting: " . mysqli_stmt_error($stmt) . " | MySQL Error: " . mysqli_error($conn);
         }
-        $stmt->close();
+        
+        // Close the statement
+        mysqli_stmt_close($stmt);
     } else {
-        $_SESSION["error_msg"] = "Error: Unable to prepare the SQL statement. " . $conn->error;
+        $_SESSION['error_msg'] = "Error preparing the SQL query: " . mysqli_error($conn);
+        exit;
     }
 
     // Close the database connection

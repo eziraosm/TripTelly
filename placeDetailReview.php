@@ -261,9 +261,20 @@ foreach ($photos as $photo) {
 															data-review-id="<?= $review['review_id'] ?>"
 															data-review-text="<?= htmlspecialchars($review['text']) ?>"
 															style='font-size: 18px'><i class='bx bx-edit'></i></button>
-														<a class="btn btn-danger"
-															href="fn_deleteReview.php?reviewID=<?= $review['review_id'] ?>"
-															style="font-size: 20px; color: white;"><i class='bx bx-trash'></i></a>
+														<a class="btn btn-danger" href="javascript:void(0);"
+															style="font-size: 20px; color: white;"
+															onclick="confirmDelete(<?= $review['review_id'] ?>)">
+															<i class='bx bx-trash'></i>
+														</a>
+														<script>
+															function confirmDelete(reviewID) {
+																const userConfirmed = confirm("Are you sure you want to delete this review?");
+																if (userConfirmed) {
+																	// Redirect to the delete script with the reviewID
+																	window.location.href = `fn_deleteReview.php?reviewID=${reviewID}`;
+																}
+															}
+														</script>
 													</div>
 													<?php
 												}
