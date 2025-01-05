@@ -166,7 +166,7 @@ $tripCount = count(fetchTripData(userID: $_SESSION['userID']));
 
                                     <tr>
                                         <th>Full Name</th>
-                                        <td><input type="text name=" userFname" value="<?= $userData['userFname'] ?>"
+                                        <td><input type="text" name="userFname" value="<?= $userData['userFname'] ?>"
                                                 class="form-control"></td>
                                     </tr>
                                     <tr>
