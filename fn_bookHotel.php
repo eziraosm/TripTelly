@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         if (!$stmt->execute()) {
             $_SESSION['error_msg'] = "Error inserting cart: " . $stmt->error;
-            header("Location: errorPage.php");
+            header("Location: searchHotel.php");
             exit;
         }
     }
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: searchAttractions.php");
     } else {
         $_SESSION['error_msg'] = "Error inserting hotel: " . $stmt_hotel->error;
-        header("Location: errorPage.php");
+        header("Location: searchHotel.php");
     }
 }
 ?>
