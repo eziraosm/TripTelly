@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Content
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Request';
-        $mail->Body = 'Click the link to reset your password: <a href="http://localhost//triptellyformResetPassword.php?token=' . $token . '">Reset Password</a>';
+        $mail->Body = 'Click the link to reset your password: <a href="http://localhost/triptelly/formResetPassword.php?token=' . $token . '">Reset Password</a>';
 
         $mail->send();
         $_SESSION['successMsg'] = "Please check your email.";
