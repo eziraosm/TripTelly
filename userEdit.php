@@ -58,6 +58,8 @@ $tripCount = count(fetchTripData(userID: $_SESSION['userID']));
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         main {
             height: 92vh;
@@ -182,7 +184,13 @@ $tripCount = count(fetchTripData(userID: $_SESSION['userID']));
                                     <tr>
                                         <th>Password</th>
                                         <td>
-                                            <input type="password" name="password" id="passwordChecker" value="" class="form-control">
+                                            <input type="password" name="password" id="passwordChecker" value=""
+                                                class="form-control">
+                                            <div class="input-box h-25" id="show-pwd">
+                                                <i class="bi bi-eye-fill"></i><span id="pwd-text"
+                                                    style="cursor: pointer; user-select: none;"> Show Password</span>
+                                            </div>
+
                                             <div class="feedback mt-15 position-absolute" id="feedback"></div>
                                         </td>
                                     </tr>
@@ -216,7 +224,26 @@ $tripCount = count(fetchTripData(userID: $_SESSION['userID']));
     <script>
         checkPasswordStrength('passwordChecker');
     </script>
-
+    <script>
+        // show password
+        const showPwd = document.getElementById("show-pwd");
+        const pwdText = document.getElementById("pwd-text");
+        const pwdInput = document.querySelector("input[name='password']");
+        const eyeIcon = document.querySelector(".bi-eye-fill");
+        showPwd.addEventListener("click", function () {
+            if (pwdInput.type === "password") {
+                pwdInput.type = "text";
+                pwdText.textContent = "  Hide Password";
+                eyeIcon.classList.remove("bi-eye-fill");
+                eyeIcon.classList.add("bi-eye-slash-fill");
+            } else {
+                pwdInput.type = "password";
+                pwdText.textContent = "  Show Password";
+                eyeIcon.classList.remove("bi-eye-slash-fill");
+                eyeIcon.classList.add("bi-eye-fill");
+            }
+        });
+    </script>
 
 </body>
 
