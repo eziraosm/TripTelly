@@ -54,37 +54,40 @@ if (isset($_GET['editCustomerID'])) {
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Short Name</label>
                                     <input type="text" name="username" id="username" class="form-control"
-                                        placeholder="Enter short name"  autocomplete="off" 
+                                        placeholder="Enter short name" autocomplete="off"
                                         value="<?php echo $editCustomerData['username'] ?>" />
                                 </div>
                                 <!-- Full Name -->
                                 <div class="mb-3">
                                     <label for="userFName" class="form-label">Full Name</label>
                                     <input type="text" name="userFName" id="userFName" class="form-control"
-                                        placeholder="Enter full name"  autocomplete="off"
+                                        placeholder="Enter full name" autocomplete="off"
                                         value="<?php echo $editCustomerData['userFname'] ?>" />
                                 </div>
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="userEmail" class="form-label">Email</label>
                                     <input type="email" name="userEmail" id="userEmail" class="form-control"
-                                        placeholder="Enter email address"  autocomplete="off"
+                                        placeholder="Enter email address" autocomplete="off"
                                         value="<?php echo $editCustomerData['userEmail'] ?>" />
                                 </div>
                                 <!-- Password -->
                                 <div class="mb-3">
                                     <label for="userPassword" class="form-label">Password</label>
                                     <input type="password" name="userPassword" id="userPassword" class="form-control"
-                                        placeholder="Enter password"  autocomplete="off" />
+                                        placeholder="Enter password" autocomplete="off" />
                                 </div>
                                 <!-- Confirm Password -->
                                 <div class="mb-4">
                                     <label for="confirmPassword" class="form-label">Confirm Password</label>
                                     <input type="password" name="confirmPassword" id="confirmPassword"
-                                        class="form-control" placeholder="Confirm your password" 
-                                        autocomplete="off" />
+                                        class="form-control" placeholder="Confirm your password" autocomplete="off" />
                                 </div>
-                                <input type="text" name="userID" value="<?php echo $editCustomerID ?>" hidden/>
+                                <div class="input-box h-25" id="show-pwd">
+                                    <i class="bi bi-eye-fill"></i><span id="pwd-text"
+                                        style="cursor: pointer; user-select: none;"> Show Password</span>
+                                </div>
+                                <input type="text" name="userID" value="<?php echo $editCustomerID ?>" hidden />
                                 <!-- Submit Button -->
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success">Update</button>
@@ -101,6 +104,30 @@ if (isset($_GET['editCustomerID'])) {
             </footer>
         </div>
     </div>
+    <script>
+        const showPwd = document.getElementById("show-pwd"); // Match the ID
+        const pwdText = document.getElementById("pwd-text");
+        const pwdInput = document.querySelector("input[name='userPassword']");
+        const repwdInput = document.querySelector("input[name='confirmPassword']");
+        const eyeIcon = document.querySelector(".bi-eye-fill");
+
+        showPwd.addEventListener("click", function () {
+            if (pwdInput.type === "password") {
+                pwdInput.type = "text";
+                repwdInput.type = "text";
+                pwdText.textContent = "  Hide Password";
+                eyeIcon.classList.remove("bi-eye-fill");
+                eyeIcon.classList.add("bi-eye-slash-fill");
+            } else {
+                pwdInput.type = "password";
+                repwdInput.type = "password";
+                pwdText.textContent = "  Show Password";
+                eyeIcon.classList.remove("bi-eye-slash-fill");
+                eyeIcon.classList.add("bi-eye-fill");
+            }
+        });
+
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
