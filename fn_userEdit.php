@@ -18,42 +18,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Prepare update query dynamically based on non-empty inputs
     $updateFields = [];
     $queryParams = [];
+    $paramTypes = '';
 
     if (!empty($fullName)) {
         $updateFields[] = 'userFname = ?';
         $queryParams[] = $fullName;
+        $paramTypes .= 's'; // Add a type for this parameter
     }
     if (!empty($username)) {
         $updateFields[] = 'username = ?';
         $queryParams[] = $username;
+        $paramTypes .= 's'; // Add a type for this parameter
     }
     if (!empty($email)) {
         $updateFields[] = 'userEmail = ?';
         $queryParams[] = $email;
+        $paramTypes .= 's'; // Add a type for this parameter
     }
     if (!empty($password)) {
         // Hash the password before storing it
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $updateFields[] = 'userPassword = ?';
         $queryParams[] = $hashedPassword;
+        $paramTypes .= 's'; // Add a type for this parameter
     }
 
     if (!empty($updateFields)) {
         // Add userID to the query parameters
         $queryParams[] = $userID;
+        $paramTypes .= 's'; // Add a type for the userID parameter
 
         // Prepare the SQL query
         $sql = "UPDATE user SET " . implode(', ', $updateFields) . " WHERE userID = ?";
 
-        // Prepare and execute the statement
+        // Prepare the statement
         $stmt = $conn->prepare($sql);
 
-        if ($stmt->execute($queryParams)) {
-            $_SESSION["success_msg"] = "Data updated successfully.";
-            header("Location: userEdit.php");
+        if ($stmt) {
+            // Bind the parameters
+            $stmt->bind_param($paramTypes, ...$queryParams);
+
+            // Execute the statement
+            if ($stmt->execute()) {
+                $_SESSION["success_msg"] = "Data updated successfully.";
+                header("Location: userEdit.php");
+                exit;
+            } else {
+                $_SESSION["error_msg"] = "Data update failed: " . $stmt->error;
+                header("Location: userEdit.php");
+                exit;
+            }
         } else {
-            $_SESSION["error_msg"] = "Data update failed.";
+            // Error preparing the statement
+            $_SESSION["error_msg"] = "Failed to prepare the statement: " . $conn->error;
             header("Location: userEdit.php");
+            exit;
         }
     } else {
         echo "<script>alert('No changes were made.'); window.location.href='userEdit.php';</script>";
